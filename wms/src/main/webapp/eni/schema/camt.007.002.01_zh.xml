@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.007.002.01" longName="camt.007.002.01" type="camt.007.002.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.007.002.01">
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="Undrlyg" longName="原因" type="PaymentInstructionExtract"/>
+		<element shortName="Mod" longName="修改" type="RequestedModification"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="指派人指令标识" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="受派人指令标识" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="币种与金额" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="起息日期" type="ISODateTime"/>
+		
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<type shortName="RequestedModification">
+		<element shortName="RltdRef" longName="相关参考号" type="Max35Text"/>
+		<element shortName="BkOprCd" longName="银行操作代码" type="SWIFTServiceLevel2Code">
+			<enumeration shortName="SPAY" longName="SWIFT支付" />
+			<enumeration shortName="SSTD" longName="标准" />
+		</element>
+		<element shortName="InstrCd" longName="指令码" type="Instruction1Code">
+			<enumeration shortName="PBEN" longName="支付受益人" />
+			<enumeration shortName="TTIL" longName="到期时间" />
+			<enumeration shortName="TFRO" longName="开始时间" />
+		</element>
+		<element shortName="ReqdExctnDt" longName="请求执行日期" type="ISODate"/>
+		<element shortName="ValDt" longName="起息日期" type="ISODate"/>
+		<element shortName="IntrBkSttldAmt" longName="中间行结算金额" type="CurrencyAndAmount"/>
+		<element shortName="Dbtr" longName="借方" type="PartyIdentification1"/>
+		<element shortName="DbtrAcct" longName="借方账户" type="CashAccount3"/>
+		<element shortName="IntrmySttlmAgt" longName="中间结算代理行" type="BranchAndFinancialInstitutionIdentification"/>
+		<element shortName="LastSttlmAgt" longName="最终结算代理行" type="BranchAndFinancialInstitutionIdentification"/>
+		<element shortName="PmtSchme" longName="支付" type="PaymentSchemeChoice"/>
+		<element shortName="BnfcryInstnAcct" longName="受益人机构帐户" type="CashAccount3"/>
+		<element shortName="Cdtr" longName="贷方" type="PartyIdentification1"/>
+		<element shortName="CdtrAcct" longName="贷方帐户" type="CashAccount3"/>
+		<element shortName="RmtInf" longName="汇款人信息" type="RemittanceInformation3Choice"/>
+		<element shortName="Purp" longName="Purp" type="PurposeChoice"/>
+		<element shortName="InstrForFnlAgt" longName="给最终代理行的指令" type="InstructionForFinalAgent"/>
+		<element shortName="DtlsOfChrgs" longName="收费明细" type="ChargeBearer1Code">
+			<enumeration shortName="OUR" longName="借方支付" />
+			<enumeration shortName="BEN" longName="贷方支付" />
+			<enumeration shortName="SHA" longName="分担支付" />
+		</element>
+		<element shortName="SndrToRcvrInf" longName="发送方给接收方信息" type="Max35Text"/>
+	</type>
+	
+	<type shortName="SWIFTServiceLevel2Code"/>
+	
+	<type shortName="Instruction1Code"/>
+	
+	<type shortName="ISODate"/>
+	
+	<type shortName="PartyIdentification1">
+		<element shortName="Nm" longName="名称" type="Max70Text"/>
+		<element shortName="PstlAdr" longName="邮政地址" type="PostalAddress1"/>
+		<element shortName="Id" longName="标识" type="Party1Choice"/>
+	</type>
+	
+	<type shortName="Max70Text"/>
+	
+	<type shortName="PostalAddress1">
+		<element shortName="AdrTp" longName="地址类型" type="AddressType2Code">
+			<enumeration shortName="ADDR" longName="邮政" />
+			<enumeration shortName="PBOX" longName="邮政信箱" />
+			<enumeration shortName="HOME" longName="居住地" />
+			<enumeration shortName="BIZZ" longName="工作地" />
+			<enumeration shortName="MLTO" longName="通过邮寄" />
+			<enumeration shortName="DLVY" longName="通过投递" />
+		</element>
+		<element shortName="AdrLine" longName="地址栏" type="Max70Text"/>
+		<element shortName="StrtNm" longName="街道名" type="Max70Text"/>
+		<element shortName="BldgNb" longName="门牌号" type="Max16Text"/>
+		<element shortName="PstCd" longName="邮编" type="Max16Text"/>
+		<element shortName="TwnNm" longName="城市" type="Max35Text"/>
+		<element shortName="CtrySubDvsn" longName="国家地区" type="Max35Text"/>
+		<element shortName="Ctry" longName="国家" type="CountryCode"/>
+	</type>
+	
+	<type shortName="AddressType2Code"/>
+	
+	<type shortName="Max16Text"/>
+	
+	<type shortName="CountryCode"/>
+	
+	<type shortName="Party1Choice">
+		<element shortName="OrgId" longName="OrgId" type="NonFinancialInstitutionIdentification1"/>
+		<element shortName="PrvtId" longName="PrvtId" type="PersonIdentification2"/>
+	</type>
+	
+	<type shortName="NonFinancialInstitutionIdentification1">
+		<element shortName="BEI" longName="企业实体号（BEI）" type="BEIIdentifier"/>
+		<element shortName="EANGLN" longName="EANGLN" type="EANGLNIdentifier"/>
+		<element shortName="USCHU" longName="CHIPS识别号" type="CHIPSUniversalIdentifier"/>
+		<element shortName="DUNS" longName="DUNS" type="DunsIdentifier"/>
+		<element shortName="BkPtyId" longName="银行标识" type="Max35Text"/>
+		<element shortName="TaxIdNb" longName="税务号码" type="Max35Text"/>
+		<element shortName="PrtryId" longName="所有人标识" type="GenericIdentification3"/>
+	</type>
+	
+	<type shortName="BEIIdentifier"/>
+	
+	<type shortName="EANGLNIdentifier"/>
+	
+	<type shortName="CHIPSUniversalIdentifier"/>
+	
+	<type shortName="DunsIdentifier"/>
+	
+	<type shortName="GenericIdentification3">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Issr" longName="Issr" type="Max35Text"/>
+	</type>
+	
+	<type shortName="PersonIdentification2">
+		<element shortName="DrvrsLicNb" longName="驾照号码" type="Max35Text"/>
+		<element shortName="SclSctyNb" longName="社会保险号码" type="Max35Text"/>
+		<element shortName="AlnRegnNb" longName="外国人登记号" type="Max35Text"/>
+		<element shortName="PsptNb" longName="护照号码" type="Max35Text"/>
+		<element shortName="TaxIdNb" longName="税务号码" type="Max35Text"/>
+		<element shortName="IdntyCardNb" longName="汽车牌照" type="Max35Text"/>
+		<element shortName="MplyrIdNb" longName="雇主号" type="Max35Text"/>
+		<element shortName="OthrId" longName="其它标识" type="GenericIdentification4"/>
+	</type>
+	
+	<type shortName="GenericIdentification4">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="IdTp" longName="标示类型" type="Max35Text"/>
+	</type>
+	
+	<type shortName="CashAccount3">
+		<element shortName="Id" longName="标识" type="AccountIdentification1Choice"/>
+		<element shortName="Tp" longName="类型" type="CashAccountType3Code">
+			<enumeration shortName="CASH" longName="现金支付" />
+			<enumeration shortName="CHAR" longName="赊购" />
+			<enumeration shortName="SACC" longName="结算" />
+			<enumeration shortName="CACC" longName="现在" />
+			<enumeration shortName="SVGS" longName="存款" />
+		</element>
+		<element shortName="Ccy" longName="币种" type="CurrencyCode"/>
+		<element shortName="Nm" longName="名称" type="Max70Text"/>
+	</type>
+	
+	<type shortName="AccountIdentification1Choice">
+		<element shortName="IBAN" longName="国际银行帐户号码（IBAN）" type="IBANIdentifier"/>
+		<element shortName="BBAN" longName="宽带无线电接入号（BRAN）" type="IBANIdentifier"/>
+		<element shortName="UPIC" longName="通用支付识别码（UPIC）" type="UPICIdentifier"/>
+		<element shortName="DmstAcct" longName="国内账号" type="SimpleIdentificationInformation"/>
+	</type>
+	
+	<type shortName="IBANIdentifier"/>
+	
+	<type shortName="UPICIdentifier"/>
+	
+	<type shortName="SimpleIdentificationInformation">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+	</type>
+	
+	<type shortName="CashAccountType3Code"/>
+	
+	<type shortName="CurrencyCode"/>
+	
+	<type shortName="BranchAndFinancialInstitutionIdentification">
+		<element shortName="FinInstnId" longName="金融机构标识" type="FinancialInstitutionIdentification1"/>
+		<element shortName="BrnchId" longName="分行标识号" type="BranchData"/>
+	</type>
+	
+	<type shortName="FinancialInstitutionIdentification1">
+		<element shortName="BIC" longName="银行识别码（BIC）" type="BICIdentifier"/>
+		<element shortName="ClrSysMmbId" longName="清算系统成员标识" type="ClearingSystemMemberIdentificationChoice"/>
+		<element shortName="Nm" longName="名称" type="Max70Text"/>
+		<element shortName="PstlAdr" longName="邮政地址" type="PostalAddress1"/>
+		<element shortName="PrtryId" longName="所有人标识" type="GenericIdentification3"/>
+	</type>
+	
+	<type shortName="BICIdentifier"/>
+	
+	<type shortName="ClearingSystemMemberIdentificationChoice">
+		<element shortName="USCHU" longName="CHIPS通用标识" type="CHIPSUniversalIdentifier"/>
+		<element shortName="NZNCC" longName="新西兰NCC标识" type="NewZealandNCCIdentifier"/>
+		<element shortName="IENSC" longName="爱尔兰NCS标识" type="IrishNSCIdentifier"/>
+		<element shortName="GBSC" longName="英国国内排序号" type="UKDomesticSortCodeIdentifier"/>
+		<element shortName="USCH" longName="CHIPS参与者标识" type="CHIPSParticipantIdentifier"/>
+		<element shortName="CHBC" longName="瑞士BC标识" type="SwissBCIdentifier"/>
+		<element shortName="USFW" longName="FEDWIRE路由号" type="FedwireRoutingNumberIdentifier"/>
+		<element shortName="PTNCC" longName="波兰NCC标识" type="PortugueseNCCIdentifier"/>
+		<element shortName="RUCB" longName="俄罗斯央行标识号" type="RussianCentralBankIdentificationCodeIdentifier"/>
+		<element shortName="ITNCC" longName="意大利本币标识号" type="ItalianDomesticIdentifier"/>
+		<element shortName="ATBLZ" longName="澳大利亚银行标识" type="AustrianBankleitzahlIdentifier"/>
+		<element shortName="CACPA" longName="加拿大支付联盟路由号标识" type="CanadianPaymentsARNIdentifier"/>
+		<element shortName="CHSIC" longName="瑞士SIC标识" type="SwissSICIdentifier"/>
+		<element shortName="DEBLZ" longName="德国银行标识" type="GermanBankleitzahlIdentifier"/>
+		<element shortName="ESNCC" longName="西班牙国内行间标识" type="SpanishDomesticInterbankingIdentifier"/>
+		<element shortName="ZANCC" longName="南非NCC标识" type="SouthAfricanNCCIdentifier"/>
+		<element shortName="HKNCC" longName="香港银行代码" type="HongKongBankIdentifier"/>
+		<element shortName="AUBSBx" longName="澳大利亚泛分行网络标识" type="ExtensiveBranchNetworkIdentifier"/>
+		<element shortName="AUBSBs" longName="澳大利亚小网络标识号" type="SmallNetworkIdentifier"/>
+	</type>
+	
+	<type shortName="CHIPSUniversalIdentifier"/>
+	
+	<type shortName="NewZealandNCCIdentifier"/>
+	
+	<type shortName="IrishNSCIdentifier"/>
+	
+	<type shortName="UKDomesticSortCodeIdentifier"/>
+	
+	<type shortName="CHIPSParticipantIdentifier"/>
+	
+	<type shortName="SwissBCIdentifier"/>
+	
+	<type shortName="FedwireRoutingNumberIdentifier"/>
+	
+	<type shortName="PortugueseNCCIdentifier"/>
+	
+	<type shortName="RussianCentralBankIdentificationCodeIdentifier"/>
+	
+	<type shortName="ItalianDomesticIdentifier"/>
+	
+	<type shortName="AustrianBankleitzahlIdentifier"/>
+	
+	<type shortName="CanadianPaymentsARNIdentifier"/>
+	
+	<type shortName="SwissSICIdentifier"/>
+	
+	<type shortName="GermanBankleitzahlIdentifier"/>
+	
+	<type shortName="SpanishDomesticInterbankingIdentifier"/>
+	
+	<type shortName="SouthAfricanNCCIdentifier"/>
+	
+	<type shortName="HongKongBankIdentifier"/>
+	
+	<type shortName="ExtensiveBranchNetworkIdentifier"/>
+	
+	<type shortName="SmallNetworkIdentifier"/>
+	
+	<type shortName="BICIdentifier"/>
+	
+	<type shortName="BranchData">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Nm" longName="名称"  type="Max35Text"/>
+		<element shortName="PstlAdr" longName="邮政地址" type="PostalAddress1"/>
+	</type>
+	
+	<type shortName="PaymentSchemeChoice">
+		<element shortName="Cd" longName="代码" type="CashClearingSystem2Code">
+			<enumeration shortName="RTG" longName="RTGS" />
+			<enumeration shortName="ACH" longName="ACH" />
+			<enumeration shortName="CHI" longName="CHIPS" />
+			<enumeration shortName="FDN" longName="FedNet" />
+		</element>
+		<element shortName="PrtryInf" longName="私有信息" type="Max35Text"/>
+	</type>
+	
+	<type shortName="CashClearingSystem2Code"/>
+	
+	<type shortName="RemittanceInformation3Choice">
+		<element shortName="Ustrd" longName="非结构化的" type="Max140Text"/>
+		<element shortName="Strd" longName="结构化的" type="StructuredRemittanceInformation2"/>
+	</type>
+	
+	<type shortName="Max140Text"/>
+	
+	<type shortName="StructuredRemittanceInformation2">
+		<element shortName="RfrdDocTp" longName="参考文档类型" type="DocumentType1Code">
+			<enumeration shortName="MSIN" longName="Metered服务发票" />
+			<enumeration shortName="CNFA" longName="贷方相关金融单据" />
+			<enumeration shortName="DNFA" longName="借方相关金融单据" />
+			<enumeration shortName="CINV" longName="商业发票" />
+			<enumeration shortName="DEBN" longName="借方票据" />
+			<enumeration shortName="HIRI" longName="雇佣发票" />
+			<enumeration shortName="SBIN" longName="自付发票" />
+			<enumeration shortName="RADM" longName="汇款消息" />
+			<enumeration shortName="RPIN" longName="相关支付指令" />
+			<enumeration shortName="CMCN" longName="商业合同" />
+			<enumeration shortName="FXDR" longName="国际交易委托凭证" />
+			<enumeration shortName="SOAC" longName="帐户结算单" />
+			<enumeration shortName="CREN" longName="贷方票据" />
+		</element>
+		<element shortName="RfrdDocRltdDt" longName="参考文档相关日期" type="ISODate"/>
+		<element shortName="RfrdDocAmt" longName="参考文档金额" type="ReferredDocumentAmount1Choice"/>
+		<element shortName="DocRefNb" longName="文档参考号" type="Max35Text"/>
+		<element shortName="CdtrRef" longName="贷方参考号" type="Max35Text"/>
+		<element shortName="Invcr" longName="开票人" type="PartyIdentification1"/>
+		<element shortName="Invcee" longName="收票人（Invoicee）" type="PartyIdentification1"/>
+	</type>
+	
+	<type shortName="DocumentType1Code"/>
+	
+	<type shortName="ReferredDocumentAmount1Choice">
+		<element shortName="DuePyblAmt" longName="到期支付金额" type="CurrencyAndAmount"/>
+		<element shortName="DscntApldAmt" longName="折扣金额" type="CurrencyAndAmount"/>
+		<element shortName="RmtdAmt" longName="汇款金额" type="CurrencyAndAmount"/>
+		<element shortName="CdtNoteAmt" longName="贷记" type="CurrencyAndAmount"/>
+		<element shortName="TaxAmt" longName="税金" type="CurrencyAndAmount"/>
+	</type>
+	
+	<type shortName="PurposeChoice">
+		<element shortName="Prtry" longName="私有的" type="Max35Text"/>
+		<element shortName="Cd" longName="代码" type="PaymentPurpose1Code">
+			<enumeration shortName="SALA" longName="薪水费用" />
+			<enumeration shortName="TREA" longName="经费支付" />
+			<enumeration shortName="ADVA" longName="预支付" />
+			<enumeration shortName="AGRT" longName="农业转换" />
+			<enumeration shortName="ALMY" longName="赡养费支付" />
+			<enumeration shortName="BECH" longName="儿童津贴" />
+			<enumeration shortName="BENE" longName="失业人员津贴" />
+			<enumeration shortName="BONU" longName="额外津贴支付" />
+			<enumeration shortName="CASH" longName="现金管理转移" />
+			<enumeration shortName="CBFF" longName="资本积累" />
+			<enumeration shortName="CHAR" longName="慈善事业支付" />
+			<enumeration shortName="COLL" longName="募捐支付" />
+			<enumeration shortName="CMDT" longName="日用品转移" />
+			<enumeration shortName="COMC" longName="商业信贷" />
+			<enumeration shortName="COMM" longName="佣金" />
+			<enumeration shortName="COST" longName="成本" />
+			<enumeration shortName="CPYR" longName="版权" />
+			<enumeration shortName="DIVI" longName="红利" />
+			<enumeration shortName="FREX" longName="国际交易" />
+			<enumeration shortName="GDDS" longName="货物买卖" />
+			<enumeration shortName="GOVT" longName="政府支出" />
+			<enumeration shortName="IHRP" longName="协定的分期付款" />
+			<enumeration shortName="INTC" longName="跨国公司支付" />
+			<enumeration shortName="INSU" longName="保险费" />
+			<enumeration shortName="INTE" longName="股权" />
+			<enumeration shortName="LICF" longName="执照费" />
+			<enumeration shortName="LOAN" longName="借出" />
+			<enumeration shortName="LOAR" longName="借出还款" />
+			<enumeration shortName="NETT" longName="网" />
+			<enumeration shortName="PAYR" longName="薪金总额" />
+			<enumeration shortName="PENS" longName="退休金支付" />
+			<enumeration shortName="REFU" longName="还款" />
+			<enumeration shortName="RENT" longName="租金" />
+			<enumeration shortName="ROYA" longName="专利权税" />
+			<enumeration shortName="SCVE" longName="服务费" />
+			<enumeration shortName="SECU" longName="债券" />
+			<enumeration shortName="SSBE" longName="社保津贴" />
+			<enumeration shortName="SUBS" longName="捐款" />
+			<enumeration shortName="TAXS" longName="税费" />
+			<enumeration shortName="VATX" longName="附加税" />
+			<enumeration shortName="COMT" longName="社交花费" />
+			<enumeration shortName="DBTC" longName="借方积累费" />
+			<enumeration shortName="SUPP" longName="供应者支付" />
+			<enumeration shortName="HEDG" longName="对冲交易" />
+		</element>
+	</type>
+	
+	<type shortName="PaymentPurpose1Code"/>
+	
+	<type shortName="InstructionForFinalAgent">
+		<element shortName="Cd" longName="代码" type="Instruction3Code"/>
+		<element shortName="Prtry" longName="私有的" type="Max140Text"/>
+	</type>
+	
+	<type shortName="Instruction3Code"/>
+	
+	<type shortName="ChargeBearer1Code"/>
+</names>

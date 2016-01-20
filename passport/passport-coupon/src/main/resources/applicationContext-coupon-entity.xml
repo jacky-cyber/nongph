@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+           
+    <!-- Entity mappings - override for extensibility -->
+    <bean id="cn.globalph.coupon.domain.Coupon" class="cn.globalph.coupon.domain.CouponImpl" scope="prototype"/>
+    <bean id="cn.globalph.coupon.domain.CouponAttribute" class="cn.globalph.coupon.domain.CouponAttributeImpl" scope="prototype"/>
+    <bean id="cn.globalph.coupon.domain.CustomerCoupon" class="cn.globalph.coupon.domain.CustomerCouponImpl" scope="prototype"/>
+</beans>

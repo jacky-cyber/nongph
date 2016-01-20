@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='我的订单 - 品荟', noDefaultCss=true)"></head>
+<nph:bundle mapping-prefix="/static/css/" files="style.css"/>
+<nph:bundle mapping-prefix="/static/css/" files="base.css"/>
+<nph:bundle mapping-prefix="/static/css/" files="order.css"/>
+<nph:bundle mapping-prefix="/static/css/" files="header.css"/>
+
+<body>
+<!-- <div id="notification_bar"></div>   -->
+<header th:substituteby="layout/partials/header(pageTitle='我的订单',type='normal')"/>
+<div th:substituteby="${templateName}"/>
+
+
+<div th:substituteby="layout/partials/divfootermenu"/>
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script>
+	/*<![CDATA[*/
+	function comfirmReceive(){
+		var u = $(".comfirmReceive").attr("data-redirect-url");
+		var yes = confirm("您确认收货？");
+		if(yes){
+			location.href = u;
+		}
+	}	
+	
+	function cancelOrder(){
+		var u = $(".cancelOrder").attr("data-redirect-url");
+		var yes = confirm("您确认取消订单？");
+		if(yes){
+			location.href = u;
+		}
+	}
+	
+	$(function(){
+		$("#page").val(1);
+		$("#con_more").on("click", function(){
+			var page = $("#page").val() - 1 + 2;
+			var type = $("#type").val();
+			$.ajax({
+				type : "GET",
+				url : "/account/orders/ajax?page=" + page+"&type="+ type,
+				dataType : "json",
+				success : function(datas){
+					if(datas){
+						for(var i=0; i<datas.length; i++){
+							var data = datas[i],
+							orderNumber = data.orderNumber,
+							primaryImgUrl = data.primaryImgUrl,
+							name = data.name,
+							price = data.price,
+							submitDate = data.submitDate,
+							orderStatus = data.orderStatus,
+							isRefundAvailable = data.isRefundAvailable,
+							hasRefundItem = data.hasRefundItem,
+							isReview = data.isReview;
+							var ct1 = "<li class='order' data-order-number='" + orderNumber + "'>"
+										+"<div class='order-box'>" 
+											+"<a class='new-mu_12a new-p-re' href='/account/orders/" + orderNumber + "'>"
+												+"<div class='order-msg'>"
+													+"<img src='" + primaryImgUrl + "'>"
+													+"<div class='order-msg'>"
+														+"<p class='title'>" + name + "</p>"
+														+"<p class='price'>" + price + "</p>"
+														+"<p class='order-data'>" + submitDate + "</p>"
+													+"</div>"
+												+"</div>"
+											+"</a>";
+							var ct3 = 	"</div>"
+									+ "</li>"
+							var ct2 ="";
+							if(orderStatus =='SUBMITTED'){
+								ct2 = ct2
+								+ "<div class='pay-order'>"
+									+ "<a href='/checkout/" + orderNumber + "'>去付款</a>"
+								+ "</div>" +"&nbsp;"
+								+ "<div class='pay-order'>"
+									+ "<a href='javascript:cancelOrder()' class='cancelOrder' data-redirect-url='/checkout/" + orderNumber + "/cancel'>取消订单</a>"
+								+ "</div>" +"&nbsp;";
+							}
+							
+							if(orderStatus == 'CONFIRMED'){
+								ct2 = ct2
+								+ "<div class='pay-order'>"
+									+ "<a href='javascript:comfirmReceive()' class='comfirmReceive' data-redirect-url='/checkout/" + orderNumber + "/complete'>确认收货</a>"
+								+ "</div>" +"&nbsp;"
+								+ "<div class='pay-order'>"
+									+ "<a href='/checkout/orders/log/" + orderNumber + "'>订单追踪</a>"
+								+ "</div>" +"&nbsp;";
+							}
+							
+							if(orderStatus == 'COMPLETED' && !isReview){
+								ct2 = ct2
+								+ "<div class='pay-order'>"
+									+ "<a href='/review/" + orderNumber + "/items'>评价商品</a>"
+								+ "</div>" +"&nbsp;";
+							}
+							
+							if(orderStatus == 'COMPLETED' && isReview){
+								ct2 = ct2
+								+ "<div class='pay-order'>"
+									+ "<a href='/review/" + orderNumber + "/items'>查看评价</a>"
+								+ "</div>" +"&nbsp;";
+							}
+							
+							if(isRefundAvailable){
+								ct2 = ct2
+								+ "<div class='pay-order'>"
+									+ "<a href='/refund/" + orderNumber + "/items'>申请退货</a>"
+								+ "</div>" +"&nbsp;";
+							}
+							
+							if(hasRefundItem){
+								ct2 = ct2
+								+ "<div class='pay-order'>"
+									+ "<a href='/refund/" + orderNumber + "/items?v=1'>查看退货进度</a>"
+								+ "</div>" +"&nbsp;";
+							}
+							
+							$("#orders_list").append(ct1 + ct2 + ct3);		
+							$("#page").val(page);
+						}
+					}
+				}
+			});
+		})
+	});
+	/*]]>*/
+</script>
+</body>
+</html>

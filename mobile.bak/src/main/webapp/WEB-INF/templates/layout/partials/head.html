@@ -1,0 +1,34 @@
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title th:unless="${pageTitle == 'TEMPLATE'}" th:text="${#strings.isEmpty(pageTitle) ? '品荟' : pageTitle}"></title>
+    
+    <title th:if="${pageTitle == 'TEMPLATE'}" th:remove="tag">
+        <title th:inline="text" th:include="${templateName} :: title" />
+    </title>
+    
+    <meta name="description" content="品荟" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+    <nph:bundle th:unless="${noDefaultCss}" name="style.css"
+                mapping-prefix="/static/css/"
+                files="style.css,
+                       jquery.rating.css,
+                       cart.css,
+                       login.css,
+                       header.css,
+                       newaddr.css,
+                       myhome.css,
+                       order.css,
+                       shopping-cart.css,
+                       mycoupon.css,
+                       order-coupon.css,
+                       goods.css" />
+    
+    <link rel="stylesheet" th:unless="${#strings.isEmpty(additionalCss)}" />
+    
+
+    <script src="../../static/js/libs/modernizr-2.5.3.min.js" th:src="@{/static/js/libs/modernizr-2.5.3.min.js}"></script>
+    
+    <nph:googleAnalytics th:attr="orderNumber=${order != null ? order.orderNumber : null}" />
+    <script th:utext="${analytics}"></script>

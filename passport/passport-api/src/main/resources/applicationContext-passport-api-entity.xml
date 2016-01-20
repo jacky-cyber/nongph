@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+           
+    <!-- Entity mappings - override for extensibility -->
+    <bean id="cn.globalph.passport.domain.Address" class="cn.globalph.passport.domain.AddressImpl" scope="prototype">
+        <!-- <property name="country">
+            <bean class="cn.globalph.passport.domain.CountryImpl">
+                <property name="abbreviation" value="US"/>
+                <property name="name" value="United States"/>
+            </bean>
+        </property> -->
+    </bean>
+    <bean id="cn.globalph.passport.domain.ChallengeQuestion" class="cn.globalph.passport.domain.ChallengeQuestionImpl" scope="prototype"/>
+    <bean id="cn.globalph.passport.domain.Customer" class="cn.globalph.passport.domain.CustomerImpl" scope="prototype"/>
+    <bean id="cn.globalph.passport.domain.CustomerForgotPasswordSecurityToken" class="cn.globalph.passport.domain.CustomerForgotPasswordSecurityTokenImpl" scope="prototype"/>  
+    <bean id="cn.globalph.passport.domain.CustomerPayment" class="cn.globalph.passport.domain.CustomerPaymentImpl" scope="prototype"/>
+    <bean id="cn.globalph.passport.domain.Role" class="cn.globalph.passport.domain.RoleImpl" scope="prototype"/>
+    <bean id="cn.globalph.passport.domain.Community" class="cn.globalph.passport.domain.CommunityImpl" scope="prototype"/>
+    <bean id="cn.globalph.passport.domain.NetNode" class="cn.globalph.passport.domain.NetNodeImpl" scope="prototype"/>
+    <bean id="cn.globalph.passport.domain.WechatCustomer" class="cn.globalph.passport.domain.WechatCustomerImpl" scope="prototype"/>
+    <bean id="cn.globalph.passport.domain.CustomerMessage" class="cn.globalph.passport.domain.CustomerMessageImpl" scope="prototype"/>
+</beans>

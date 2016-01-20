@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="detail_standard">
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<title>支付宝支付 - 品荟</title>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="x-dns-prefetch-control" content="on" />
+	<link rel="stylesheet" href="/static/css/header.css" />
+	<link rel="stylesheet" href="/static/css/alipayinwechat.css" />
+</head>
+
+<body>
+<header
+		th:substituteby="layout/partials/header(pageTitle='支付宝支付 ',type='normal')" />
+<div>
+	<div  class="alipay-logo">
+		<img src="/static/img/alipay-icon.png" />
+	</div>
+	<div>
+		<div class="tip-b" style="font-size:1.3em;font-weight:bold;">如何通过支付宝支付订单？</div>
+		<div class="tip-s">由于微信屏蔽了支付宝，<br />您需要按照以下步骤操作。</div>
+	</div>
+	<div style="display:inline-block;width:100%;">
+		<div class="steps">
+			<span><img style="width:100%;" id="alipaystep1" src="/static/img/alipayinwechat-step1-android.jpg" /></span>
+			<span><img style="width:100%;" id="alipaystep2" src="/static/img/alipayinwechat-step2-android.jpg" /></span>
+		</div>
+	</div>
+	<input id="orderId" type="hidden" th:value="${order.orderNumber}"/>
+</div>
+</body>
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script th:inline="javascript">
+	$(function(){
+		if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+			$("#alipaystep1").attr('src','/static/img/alipayinwechat-step1-ios.jpg');
+			$("#alipaystep2").attr('src','/static/img/alipayinwechat-step2-ios.jpg');
+		}
+	});
+	/*5秒钟刷一次若支付成功则直接跳转 */
+	var orderNumber = $("#orderId").val();
+	function orderIsPayed(){
+		 $.ajax({
+			 url:"/alipay/status/"+ orderNumber,
+			 dataType:"json",
+			 success:function(data){
+				 if(data.obj){
+					 location.href="/account/orders/" + orderNumber;
+				 }
+			 }
+		 });
+	}
+	setInterval(orderIsPayed, 5000);
+</script>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='使用积分- 品荟')"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+            files="checkout.css" />
+<style>
+    .txt-input{
+        width: 60%;
+        height: 44px;
+        padding-left: 10px;
+        padding-top:10px;
+        padding-bottom:10px;
+        background: #FFF none repeat scroll 0% 0%;
+        color: #252525;
+        border-radius: 3px;
+        border: 1px solid #D7D7D7;
+        line-height: normal;
+        font-family: "微软雅黑";
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    #pointTip{
+        border:solid 1px #ccc;
+        background-color: white;
+        width: 94%;
+        margin-left: 3%;
+        padding: 10px;
+        font-size: 0.9em;
+        margin-top: 20px;;
+    }
+    #rule{
+        width: 60%;
+        height: 30px;
+        display: inline-block;
+        line-height: 30px;
+        text-align: center;
+        background-color: #33cc99;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        color:white;
+        font-weight: bold;
+        position: relative;
+        top:-20px;
+        left:20%;
+    }
+</style>
+<body>
+<div id="notification_bar"></div>
+<header
+        th:substituteby="layout/partials/header(pageTitle='使用积分',type='normal')" />
+<div id="checkout_content" class="width_setter group" role="main">
+    <p class="warn" th:if="${responseMsg}" th:text="${responseMsg}"></p>
+
+
+
+    <nph:form method="post" id = "applyBonusPoint" action="/checkout/applyBonusPoint">
+        <div>
+            <div style="padding:10px;">
+                当前积分(分): <span th:text="${customer.bonusPoint}" style="color:orange;padding-left: 10px;"></span>
+            </div>
+            <div style="padding:10px;">
+                使用积分(分): <input id="bonus" name="bonus" type="text" class="txt-input"  th:value="${cart.deductionBonusPoint > 0 ? cart.deductionBonusPoint : ''}"/>
+            </div>
+
+            <div  id="pointTip">
+                    <span id="rule">积分使用规则</span>
+                    <p>1. 拥有积分的用户可以在提交订单时填入抵扣积分,100分抵用0.01元。</p><br />
+                    <p>2. 用户提交订单后将扣除抵用的积分,如取消将返还。</p><br />
+                    <p>3. 用户确认收货后将获得与实付金额相等的积分。</p><br />
+                    <p>4. 用户退款/退货后将不再返还抵扣的积分并扣除获得的积分。</p>
+            </div>
+            <div style="padding:10px;">
+                <a href="javascript:submitForm()" class="new-abtn-type mgn">使用</a>
+            </div>
+
+            <div th:if="${cart.deductionBonusPoint > 0}" style="padding:10px;">
+                <a href="javascript:cancelCode()" class="new-abtn-type mgn">不使用积分</a>
+            </div>
+        </div>
+    </nph:form>
+
+</div>
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script>
+    /*<![CDATA[*/
+    function submitForm(){
+        $("#applyBonusPoint").submit();
+    }
+
+    function cancelCode(){
+        location.href = "/checkout/cancelBonus";
+    }
+    /*]]>*/
+</script>
+</body>
+</html>
+
+

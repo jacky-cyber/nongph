@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="blPU" transaction-type="RESOURCE_LOCAL">
+        <mapping-file>config/bc/jpa/domain/Page.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/StructuredContent.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/StaticAsset.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/URLHandler.orm.xml</mapping-file>
+        <class>cn.globalph.cms.field.domain.FieldDefinitionImpl</class>
+        <class>cn.globalph.cms.field.domain.FieldGroupImpl</class>
+        <class>cn.globalph.cms.page.domain.PageImpl</class>
+        <class>cn.globalph.cms.page.domain.PageFieldImpl</class>
+        <class>cn.globalph.cms.page.domain.PageTemplateImpl</class>
+        <class>cn.globalph.cms.page.domain.PageRuleImpl</class>
+        <class>cn.globalph.cms.page.domain.PageItemCriteriaImpl</class>
+        <class>cn.globalph.cms.file.domain.StaticAssetImpl</class>
+        <class>cn.globalph.cms.file.domain.ImageStaticAssetImpl</class>
+        <class>cn.globalph.cms.file.domain.StaticAssetDescriptionImpl</class>
+        <class>cn.globalph.cms.structure.domain.StructuredContentTypeImpl</class>
+        <class>cn.globalph.cms.structure.domain.StructuredContentFieldTemplateImpl</class>
+        <class>cn.globalph.cms.structure.domain.StructuredContentFieldImpl</class>
+        <class>cn.globalph.cms.structure.domain.StructuredContentImpl</class>
+        <class>cn.globalph.cms.structure.domain.StructuredContentRuleImpl</class>
+        <class>cn.globalph.cms.structure.domain.StructuredContentItemCriteriaImpl</class>
+        <class>cn.globalph.cms.structure.domain.CriteriaStructuredContentXref</class>
+        <class>cn.globalph.cms.url.domain.URLHandlerImpl</class>
+    </persistence-unit>
+
+    <persistence-unit name="blCMSStorage" transaction-type="RESOURCE_LOCAL">
+        <mapping-file>config/bc/jpa/domain/StaticAssetStorage.orm.xml</mapping-file>
+        <class>cn.globalph.cms.file.domain.StaticAssetStorageImpl</class>
+    </persistence-unit>
+</persistence>

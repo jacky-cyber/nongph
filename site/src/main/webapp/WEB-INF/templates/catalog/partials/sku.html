@@ -1,0 +1,36 @@
+<div th:if="*{product.featuredProduct}" class="new_badge">New!</div>
+
+<div class="image">
+    <a th:href="@{*{product.url} + '/' + *{id}}">
+    <img th:if="*{skuMedia['primary']}" th:src="@{*{skuMedia['primary'].url} + '?browse'}" th:alt="*{name}" />
+    <div class="price">
+        <div nph:price="*{salePrice}" th:if="*{onSale}" th:classappend="*{onSale}? 'sale'"></div>
+        <div nph:price="*{retailPrice}" th:classappend="*{onSale}? 'has-sale'"></div>
+    </div>
+    </a>
+</div>
+
+<div class="content">
+    <div class="title" th:text="*{name}"></div>
+    <p th:if="*{description}" th:utext="*{description}"></p>
+</div>
+
+<div th:class="*{'productActions productActions' + id}"
+     th:with="checkInventory=*{inventoryType?.type == 'CHECK_QUANTITY'},
+              availableInventory=${checkInventory ? #object.quantityAvailable != null and #object.quantityAvailable != 0 : true},
+              inCart=${cart.containsSku(#object.id)}">
+
+    <div th:if="${checkInventory and !availableInventory}" class="out_of_stock">
+        <a disabled="disabled" class="inCart">无货</a>
+    </div>
+    <div class="in_cart" th:classappend="${!inCart}? ' hidden'">
+        <a class="modalcart inCart" th:href="@{/cart}"><span>已加入购物</span></a>
+    </div>
+    <div class="add_to_cart" th:classappend="${inCart or !availableInventory}? ' hidden'">
+        <nph:form method="POST" th:action="@{/cart/add}">
+            <input type="hidden" name="skuId" th:value="*{id}" />
+            <input type="hidden" name="quantity" value="1" />
+            <input type="submit" class="addToCart" th:value="加入购物车"/>
+        </nph:form>
+    </div>
+</div>

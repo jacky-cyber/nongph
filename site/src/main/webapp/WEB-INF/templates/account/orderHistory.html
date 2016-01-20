@@ -1,0 +1,22 @@
+<div>
+    <ul id="order-history" th:unless="${#lists.isEmpty(orders)}">
+        <li>
+            <span class="order-number">订单编号</span>
+            <span class="submit-date">交易日期</span>
+            <span class="status">订单状态</span>
+            <span class="total">订单金额</span>
+        </li>
+        <li class="order" th:each="order : ${orders}" th:object="${order}" th:attr="data-order-number=*{orderNumber}">
+            <div class="order-info-row">
+             <span class="order-number"><a th:href="@{/account/orders/} + *{orderNumber}" class="view-order-details" th:text="*{orderNumber}"></a></span>
+             <span class="submit-date" th:text="*{#dates.format(submitDate, 'MM-dd-yyyy')}"></span>
+             <span class="status" th:text="*{status.friendlyType}">Processing</span>
+             <span class="total" nph:price="*{total}"></span>
+         </div>
+            <div class="order-details"></div>
+        </li>
+    </ul>
+    
+    <h3 th:if="${#lists.isEmpty(orders)}">您还没有任何订单信息！</h3>
+
+</div>

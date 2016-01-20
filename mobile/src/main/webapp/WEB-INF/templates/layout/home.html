@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh">
+<head th:include="/layout/partials/head (pageTitle='品荟')"></head>
+<body>
+	<div id="notification_bar"></div>
+	<div class="floor"
+		style="border-width: 0 0 1px;background-color:#fff; position: relative; padding: 7px;margin: 0 auto 10px auto;">
+		<div style="position: absolute;">
+			<a id="logo" th:href="@{/}"></a>
+			<span style="color:#3c9;vertical-align: 50%;">苏州</span>
+		</div>
+		<div style="position: relative; margin-left: 65px;">
+			<div
+				style="margin-right: 40px; position: relative; border: 1px solid #3c9;">
+				<nph:form id="doSearch" th:action="@{/search}" method="GET">
+					<input type="search"
+						style="line-height: 16px; height: 28px; font-size: 12px; border: none; width: 80%; box-sizing: border-box; padding-right: 48px;"
+						name="q" th:value="${originalQuery}" />
+					<a
+						style="display: block; position: absolute; right: 0px; top: 0px;"
+						id="searchbtn"></a>
+				</nph:form>
+			</div>
+		</div>
+		<a id="catBtn"
+		   style="display: block; position: absolute; right: 0; top: 0; margin-right: 10px; margin-top: 9px;"
+		   href="javascript:"> <img src="/static/img/cat.png" />
+		</a>
+		<a id="scanBtn"
+		   style="display: none; position: absolute; right: 0; top: 0; margin-right: 10px; margin-top: 7px;"
+		   href="javascript:"> <img src="/static/img/qrcode.png" />
+		</a>
+	</div>
+	<div class="clearfix" />
+
+
+	<div id="content" class="width_setter group" role="main">
+		<div class="slide-floor">
+			<nph:content contentType="Homepage Banner Ad" />
+			<div>
+				<div id="banners_outer">
+					<div th:if="${contentList !=null}" style="height:100%;position:relative;">
+						<ul style="height:100%;display:inline-block;position:absolute;">
+							<li style="height:100%;float:left;" th:each="item : ${contentList}" th:object="${item}" th:id="'banner_image'+${itemStat.index}"
+								th:class="banner_image">
+								<a style="display:inline-block;width:100%;height:100%;" th:href="@{${item['targetUrl']}}">
+									<img style="width:100%;height:100%;" th:src="@{${item['imageUrl']}}" />
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div id="banners_triggers" th:if="${contentList !=null}"
+						style="position: relative; z-index: 3; margin: 0 auto; text-align: center; top: -20px;">
+						<a th:each="item : ${contentList}"
+							href="javascript:void()"
+							th:attr="data-item=${itemStat.index}" />
+					</div>
+				</div>
+			</div>
+			<nav th:substituteby="layout/partials/nav" />
+		</div>
+		<div class="clearfix" />
+		<nph:content contentType="Homepage Middle Promo Snippet" />
+		<a th:href="@{/register}"
+			th:if="${contentItem !=null and contentItem['htmlContent'] !=null}"
+			style="text-decoration: none">
+			<div id="home_feature" th:utext="${contentItem['htmlContent']}"></div>
+		</a>
+		<nph:content contentType="Homepage Featured Products Title" />
+
+		<nph:categories resultVar="childCategories" parentCategory="首页" />
+		<div class="floor" th:each="cat : ${childCategories}">
+			<div class="title_bar" th:text="${cat.name}"></div>
+			<nph:category_skus categoryId="${cat.id}" quantity="20"
+				relatedSkusResultVar="secondSkus" />
+			<ul id="products" class="group">
+				<li th:each="sku : ${secondSkus}" th:object="${sku}"
+					th:include="catalog/partials/sku" class="product_container"></li>
+			</ul>
+		</div>
+	</div>
+
+	<footer th:substituteby="layout/partials/footer" />
+	<div th:substituteby="layout/partials/divfootermenu" />
+
+	<script th:src="@{/static/js/jweixin-1.0.0.js}"></script>
+	<!--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>-->
+	<script th:src="@{/static/js/libs/jquery.lazyload.min.js}"></script>
+	<script>
+		$("img.lazy").lazyload({
+		    threshold : 200,
+			effect : "fadeIn"
+		});
+
+		var isWechatBrowser = function () {
+			var ua = window.navigator.userAgent.toLowerCase();
+			return ua.match(/MicroMessenger/i) == 'micromessenger';
+		};
+
+		$(document).ready(function () {
+			if (isWechatBrowser()) {
+				$.ajax({
+					url: "/api/requestJssdkSign",
+					type: "POST",
+					dataType: "json",
+					data: {
+						url: location.href
+					},
+					success: function (data) {
+						wx.config({
+							debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+							appId: data.appid, // 必填，公众号的唯一标识
+							timestamp: data.timestamp, // 必填，生成签名的时间戳
+							nonceStr: data.nonceStr, // 必填，生成签名的随机串
+							signature: data.sign,// 必填，签名，见附录1
+							jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+						});
+
+//						wx.error(function(res){
+//							alert(JSON.stringify(res));
+//						});
+
+						wx.ready(function () {
+							$('#catBtn').css("display", "none");
+							$('#scanBtn').css("display", "block");
+							$('#scanBtn').click(function () {
+								if (isWechatBrowser()) {
+									wx.scanQRCode({
+										needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+										scanType: ["qrCode"], // 可以指定扫二维码还是一维码，默认二者都有
+										success: function (res) {
+//											alert(JSON.stringify(res))
+//											var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+										}
+									});
+								}
+							})
+						});
+					}
+				});
+			}
+		});
+	</script>
+
+</body>
+</html>

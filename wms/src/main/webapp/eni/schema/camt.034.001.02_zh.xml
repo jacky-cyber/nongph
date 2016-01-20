@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.034.001.02" longName="camt.034.001.02" type="camt.034.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.034.001.02">
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="DplctData" longName="重复数据" type="ProprietaryData"/>
+	</type>
+
+	<type shortName="AnyBICIdentifier"/>
+
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator" minOccurs="0" maxOccurs="1"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+
+	<type shortName="ISODateTime"/>
+	<type shortName="Max35Text"/>
+	
+	<type shortName="ProprietaryData">
+		<element shortName="Tp" longName="类型" type="Max35Text"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="DebitAuthorisationConfirmation">
+		<element shortName="DbtAuthstn" longName="借记授权" type="YesNoIndicator"/>
+		<element shortName="AmtToDbt" longName="借入金额" type="CurrencyAndAmount"/>
+		<element shortName="ValDtToDbt" longName="借记起息日" type="ISODate"/>
+		<element shortName="Rsn" longName="原因" type="Max140Text"/>
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<type shortName="ISODate"/>
+	
+	<type shortName="Max140Text"/>
+</names>

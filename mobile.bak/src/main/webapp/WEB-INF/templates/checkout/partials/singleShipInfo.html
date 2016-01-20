@@ -1,0 +1,170 @@
+<div th:fragment="singleship-info">
+
+    <nph:form th:object="${shippingInfoForm}"
+              th:action="@{/checkout/singleship}" method="post" id="shipping_info"
+              novalidate="novalidate">
+
+        <div
+                th:if="${'SAVED' == sectionDTO.state.type and !#fields.hasErrors('*')}"
+                th:inline="text" class="clearfix">
+
+            <div class="shipping-info-read-only">
+                <div>
+                    [[*{address.receiver}]] <span th:if="*{address.phone}">[[*{address.phone}]]<br/> </span>
+                    <span th:if="*{address.postalCode}">[[*{address.postalCode}]]<br/> </span>
+                    [[*{address.province}]]-[[*{address.city}]]-[[*{address.district}]]-[[*{address.address}]]<br/>
+                </div>
+            </div>
+            <div class="shipping-info-read-only">
+                [[*{fulfillmentOption.name}]]<br/>
+                ([[*{fulfillmentOption.longDescription}]])
+            </div>
+        </div>
+
+        <!--/* We still have to render the shipping form so the JavaScript can copy the fields, we will just add the class of 'hide' */-->
+        <!--/* This only applies if you have the copy shipping to billing flow  */-->
+        <div id="shipping_info_form"
+             th:classappend="${('SAVED' == sectionDTO.state.type or 'INACTIVE' == sectionDTO.state.type)
+                and !#fields.hasErrors('*')} ? 'hide'">
+
+            <div class="left_content">
+                <div th:unless="${#lists.isEmpty(customersAddresses)}">
+                    <div th:each="customerAddress : ${customersAddresses}"
+                         th:inline="text" style="margin-bottom:5px;">
+                        <div class="shipping_address">
+                            <input type="radio" th:field="*{address.id}"
+                                   th:value="${customerAddress.id}"/>
+                            [[${customerAddress.receiver}+' ']] [[${customerAddress.phone}+'']]
+                            [[${customerAddress.province}]]-[[${customerAddress.city}]]-[[${customerAddress.district}]]-[[${customerAddress.address}+'']]
+                        </div>
+                    </div>
+                </div>
+                <div class="shipping_address">
+                    <input type="radio" th:field="*{address.id}" value="0"/>使用新地址
+                </div>
+                <div id="shipping_address">
+                    <div class="form100" th:if="${showBillingInfoSection}">
+                        <input id="use_billing_address" type="checkbox"
+                               th:field="*{useBillingAddress}"/> <span
+                            th:text="#{cart.useBillingInfo}">Use Billing Information</span>
+                    </div>
+
+                    <div>
+                        <label for="receiver"><span>收货人姓名</span></label>
+                        <span class="error" th:if="${#fields.hasErrors('address.receiver')}"
+                              th:errors="*{address.receiver}"></span>
+                        <input type="text" id="receiver" th:field="*{address.receiver}" class="addr"
+                               th:classappend="${#fields.hasErrors('address.receiver')}? 'fieldError'"/>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div>
+                        <label for="address.phone"><span>联系电话</span></label>
+                        <span class="error" th:if="${#fields.hasErrors('address.phone')}"
+                              th:errors="*{address.phone}"></span>
+                        <input type="tel" id="address.phone" name="address.phone" th:value="*{address.phone}"
+                               class="addr"/>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div>
+                        <label for="province">省份</label>
+                        <span class="error" th:if="${#fields.hasErrors('address.province')}"
+                              th:errors="*{address.province}">
+
+                        </span> <select class="addr" id="province" th:field="*{address.province}"
+                                        th:classappend="${#fields.hasErrors('address.province')}? 'fieldError'">
+                    </select>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div>
+                        <label for="city">市</label>
+                        <span class="error" th:if="${#fields.hasErrors('address.city')}"
+                              th:errors="*{address.city}"></span>
+                        <select class="addr" id="city" th:field="*{address.city}"
+                                th:classappend="${#fields.hasErrors('address.city')}? 'fieldError'">
+                        </select>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div>
+                        <label for="district">区/县</label>
+						<span class="error" th:if="${#fields.hasErrors('address.district')}"
+                              th:errors="*{address.district}"></span>
+                        <select class="addr" id="district" th:field="*{address.district}"
+                                th:classappend="${#fields.hasErrors('address.district')}? 'fieldError'">
+                        </select>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div>
+                        <label for="address"><span>地址</span></label>
+                        <span class="error" th:if="${#fields.hasErrors('address.address')}"
+                              th:errors="*{address.address}"></span>
+                        <input type="text" th:field="*{address.address}" class="addr"
+                               th:classappend="${#fields.hasErrors('address.address')}? 'fieldError'"/>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div>
+                        <label for="postalCode"><span>邮政编码</span></label>
+                        <span class="error" th:if="${#fields.hasErrors('address.postalCode')}"
+                              th:errors="*{address.postalCode}"></span>
+                        <input type="text" th:field="*{address.postalCode}" class="addr"
+                               th:classappend="${#fields.hasErrors('address.postalCode')}? 'fieldError'"/>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="right_content">
+                <div class="cart_title">
+                    <span th:text="#{cart.shppingMethod}">Shipping Method</span>
+                </div>
+                <h3 id="loading_shipping" style="display: none;">
+                    <img src="/img/loading.gif"/> <span
+                        th:text="#{cart.shppingMethod}">Shipping Method</span>
+                </h3>
+
+				<span class="error"
+                      th:if="${#fields.hasErrors('fulfillmentOptionId')}"
+                      th:errors="*{fulfillmentOptionId}"></span>
+                <table cellspacing="0" cellpadding="5" id="shippingoptions"
+                       class="checkoutTable">
+                    <tr th:each="fulfillmentOption : ${fulfillmentOptions}">
+                        <td><input class="shipping_method_option" type="radio" checked="checked"
+                                   th:field="*{fulfillmentOptionId}"
+                                   th:value="${fulfillmentOption.id}"/></td>
+                        <td><span th:text="${fulfillmentOption.name}"/>&nbsp;(<span
+                                th:text="${fulfillmentOption.longDescription}"/>) <span
+                                th:if="${estimateResponse != null}"
+                                nph:price="${estimateResponse.fulfillmentOptionPrices.get(fulfillmentOption)}"/>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+
+                <div th:if="${validShipping}">
+                    <h3>
+                        <span th:text="#{cart.shppingTotal}">Shipping Total</span>
+                    </h3>
+
+                    <div id="shipping_total" nph:price="${cart.totalShipping}"/>
+                </div>
+
+                <div style="text-align: center; margin: 5px;">
+                    <input id="select_shipping" type="submit" class="small dark"
+                           th:value="确认发货信息"/>
+                </div>
+
+            </div>
+        </div>
+
+    </nph:form>
+
+</div>

@@ -1,0 +1,25 @@
+// JavaScript Document
+var Constants={
+today:"Today",
+tomorrow:"TMR",
+yesterday:"Y'DAY",
+Sunday:"S",
+Monday:"M",
+Tuesday:"T",
+Wednesday:"W",
+Thursday:"T",
+Friday:"F",
+Saturday:"S",
+Jan:"Jan",
+Feb:"Feb",
+Mar:"Mar",
+Apr:"Apr",
+May:"May",
+Jun:"Jun",
+Jul:"Jul",
+Aug:"Aug",
+Sep:"Sep",
+Oct:"Oct",
+Nov:"Nov",
+Dec:"Dec"
+}

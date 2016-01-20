@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.030.001.01" longName="camt.030.001.01" type="camt.030.001.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.030.001.01">
+		<element shortName="Hdr" longName="头信息" type="ReportHeader"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Ntfctn" longName="通知" type="CaseForwardingNotification"/>
+	</type>
+	
+	<type shortName="ReportHeader">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Fr" longName="自" type="AnyBICIdentifier"/>
+		<element shortName="To" longName="至" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="CaseForwardingNotification">
+		<element shortName="Justfn" longName="理由" type="CaseForwardingNotification1Code">
+			<enumeration shortName="FTHI" longName="进一步调查" />
+			<enumeration shortName="CANC" longName="请求取消" />
+			<enumeration shortName="MODI" longName="请求更改" />
+			<enumeration shortName="DTAU" longName="请求借方授权" />
+			<enumeration shortName="SAIN" longName="发送附加信息" />
+		</element>
+
+	</type>
+	
+	<type shortName="CaseForwardingNotification1Code"/>
+</names>

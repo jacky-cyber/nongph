@@ -1,0 +1,47 @@
+<div id="account">
+    <div style="display:none;" th:fragment="title" th:inline="text">Register - Broadleaf Demo - Heat Clinic</div>
+
+    <div id="register">
+        <h3><span>欢迎注册</span></h3>
+        <p><span>还没有账号？ 现在注册一个吧，成为我们的会员！</span>.</p>
+
+        <nph:form id="registrationForm" action="#" th:object="${registrationForm}" th:action="@{/register}" method="post" class="clearfix">
+            <input type="hidden" th:field="*{redirectUrl}" />
+                
+            <div class="form50">
+                <label for="customer.emailAddress"><span>邮箱地址</span></label>
+                <span class="error" th:if="${#fields.hasErrors('customer.emailAddress')}" th:errors="*{customer.emailAddress}"></span>
+                <input type="email" th:field="*{customer.emailAddress}" class="field50" th:classappend="${#fields.hasErrors('customer.emailAddress')}? 'fieldError'" />
+            </div>
+            <div class="form50">
+                <label for="customer.name"><span>用户名</span></label>
+                <span class="error" th:if="${#fields.hasErrors('customer.name')}" th:errors="*{customer.name}"></span>
+                <input type="text" th:field="*{customer.name}" class="field50" th:classappend="${#fields.hasErrors('customer.name')}? 'fieldError'" />
+            </div>
+              <div class="form50">
+                <label for="customer.phone"><span>手机号码</span></label>
+                <span class="error" th:if="${#fields.hasErrors('customer.phone')}" th:errors="*{customer.phone}"></span>
+                <input type="text" th:field="*{customer.phone}" class="field50" th:classappend="${#fields.hasErrors('customer.phone')}? 'fieldError'" />
+            </div>            
+            <div class="form50">
+                <label for="password"><span>密码</span></label>
+                <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                <input type="password" th:field="*{password}" class="field50" th:classappend="${#fields.hasErrors('password')}? 'fieldError'" />
+            </div>
+            <div class="form50">
+                <label for="confirmPassword"><span>确认密码</span></label>
+                <span class="error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
+                <input type="password" th:field="*{passwordConfirm}" class="field50" th:classappend="${#fields.hasErrors('passwordConfirm')}? 'fieldError'" />
+            </div>          
+            
+            <div class="login_register">
+                <input class="register_button big red" type="submit" value="立即注册"/>
+            </div>
+            <div class="login_register_alt_links">
+                <a class="account" th:href="@{/login}"><span>登录</span></a>
+                <br/>
+                <a class="account" th:href="@{/login/forgotPassword}"><span>忘记密码？</span></a>
+            </div>
+        </nph:form>
+    </div>  
+</div>

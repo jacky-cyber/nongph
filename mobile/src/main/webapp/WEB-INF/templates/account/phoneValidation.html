@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='手机认证 - 品荟 ')"></head>
+
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='手机认证',type='normal')" />
+
+	<div id="content" class="width_setter group" role="main">
+		<div class="manage-account-form-wrapper">
+			<nph:form action="/sms/resetPhone" method="POST">
+				<p class="success" th:if="${successMessage}"
+					th:text="${successMessage}"></p>
+				<p class="warn" th:if="${errorInfo}"
+					th:text="${errorInfo}"></p>
+				<input type="hidden" id="oldPhone" name="oldPhone" th:value="${oldPhone}"/>
+				<div class="item">
+					<div class="item-phone">
+						<input type="text" class="txt-input" id="newPhone" name="newPhone" th:value="${newPhone}"/>
+					</div>
+					<div class="vc-btn">获取短信验证码</div>
+				</div>
+				<div id="validationCode" class="item">
+					<input type="text" maxlength="6" placeholder="请输入手机短信验证码"
+						class="txt-input" id="validationCode" name="validationCode" th:value="${validationCode}"/>
+				</div>
+				<input type="submit" class="register_button big red" value="确认提交" />
+			</nph:form>
+		</div>
+	</div>
+
+	<footer th:substituteby="layout/partials/footer" />
+	<div th:substituteby="layout/partials/divfootermenu" />
+</body>
+</html>

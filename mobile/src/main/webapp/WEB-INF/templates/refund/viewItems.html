@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>申请退货 - 品荟</title>
+<meta name="description" content="品荟" />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/css/header.css" />
+<link rel="stylesheet" href="/static/css/refund/view-items.css" />
+</head>
+
+<body>
+	<div id="notification_bar"></div>
+
+	<header
+		th:substituteby="layout/partials/header(pageTitle='申请退货',type='normal')" />
+	<div class="new-ct">
+		<div class="p-section" th:each="item : ${order.orderItems}" th:object="${item}">
+			<div th:remove="tag" th:if="${item.refund ==null and !vhr}">
+				<div class="p-img">
+					<img th:if="*{sku.skuMedia['primary']}"
+						th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}"
+						th:alt="*{sku.name}" width="79"
+						height="54"/>
+				</div>
+				<div class="p-cont">
+					<span class="name">商品名称</span> <span class="name2" th:text="*{sku.name}"></span>
+				</div>
+				
+				<a  th:unless="*{refund}"
+					th:href="@{'/refund/' + *{id}}"
+					class="btn-type" onclick="ButtonUtil.enable()">立即申请</a>
+			</div>
+			
+			<div th:remove="tag" th:if="${item.refund !=null and vhr}">
+				<div class="p-img">
+					<img th:if="*{sku.skuMedia['primary']}"
+						th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}"
+						th:alt="*{sku.name}" width="79"
+						height="54"/>
+				</div>
+				<div class="p-cont">
+					<span class="name">商品名称</span> <span class="name2" th:text="*{sku.name}"></span>
+				</div>
+				
+				<a  th:if="*{refund}"
+					href="javascript:void(0)"
+					class="st" th:text="*{refund.refundStatus.friendlyType}"></a>
+			</div>
+
+		</div>
+		<div id="tip" style="display: none;" class="p-section">
+			抱歉暂时无法申请哦，可能原因是:
+			<ul>
+				<li>商品还未送达</li>
+				<li>您已经申请过退货</li>
+			</ul>
+			还请耐心等待，如果有问题，请联系<a href="tel:4006065500" style="color: #0000cc">400-606-5500</a>
+		</div>
+	</div>
+	<footer th:substituteby="layout/partials/bottom" />
+</body>
+</html>

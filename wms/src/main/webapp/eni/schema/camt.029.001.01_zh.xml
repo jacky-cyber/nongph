@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.029.001.01" longName="camt.029.001.01" type="camt.029.001.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.029.001.01">
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="RslvdCase" longName="案例" type="Case"/>
+		<element shortName="Sts" longName="状态" type="InvestigationStatusChoice"/>
+		<element shortName="CrrctnTx" longName="修正交易" type="PaymentInstructionExtract"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="InvestigationStatusChoice">
+		<element shortName="Conf" longName="确认" type="InvestigationExecutionConfirmation1Code">
+			<enumeration shortName="CNCL" longName="每个请求都被取消" />
+			<enumeration shortName="MODI" longName="每个请求都被完成" />
+			<enumeration shortName="ACDA" longName="已接受借方授权" />
+			<enumeration shortName="IPAY" longName="支付已开始" />
+			<enumeration shortName="ICOV" longName="覆盖已开始" />
+			<enumeration shortName="MCOV" longName="覆盖已修改" />
+			<enumeration shortName="IPYI" longName="支付指令已开始" />
+			<enumeration shortName="INFO" longName="发送附加信息" />
+			<enumeration shortName="CONF" longName="支付确认" />
+			<enumeration shortName="CWFW" longName="即将取消" />
+		</element>
+		<element shortName="RjctdMod" longName="拒绝修改" type="PaymentModificationRejection1Code">
+			<enumeration shortName="UM01" longName="无法修改有关证明" />
+			<enumeration shortName="UM02" longName="无法修改银行操作代码" />
+			<enumeration shortName="UM03" longName="无法修改指令代码" />
+			<enumeration shortName="UM04" longName="无法修改请求完成日期" />
+			<enumeration shortName="UM05" longName="无法修改数据值" />
+			<enumeration shortName="UM06" longName="无法修改中间行结算账户" />
+			<enumeration shortName="UM07" longName="无法修改借方" />
+			<enumeration shortName="UM08" longName="无法修改借方账户" />
+			<enumeration shortName="UM09" longName="无法修改接受方对应物" />
+			<enumeration shortName="UM10" longName="无法修改第三赔偿指令" />
+			<enumeration shortName="UM11" longName="无法修改支付计划" />
+			<enumeration shortName="UM12" longName="无法修改受益人指令账户" />
+			<enumeration shortName="UM13" longName="无法修改贷方" />
+			<enumeration shortName="UM14" longName="无法修改贷方账户" />
+			<enumeration shortName="UM15" longName="无法修改赔偿信息" />
+			<enumeration shortName="UM16" longName="无法修改支付用途" />
+			<enumeration shortName="UM17" longName="无法修改具体金额" />
+			<enumeration shortName="UM18" longName="无法修改发送人收件人信息" />
+			<enumeration shortName="UM19" longName="无法修改最终行指令" />
+			<enumeration shortName="UM20" longName="已递交新指令 原有指令取消" />
+			<enumeration shortName="UM21" longName="无法修改已递交取消" />
+		</element>
+		<element shortName="RjctdCxl" longName="拒绝撤销" type="RejectedCancellationJustification"/>
+		<element shortName="DplctOf" longName="重复" type="Case"/>
+		<element shortName="AssgnmtCxlConf" longName="指派取消确认" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="InvestigationExecutionConfirmation1Code"/>
+	
+	<type shortName="PaymentModificationRejection1Code"/>
+	
+	<type shortName="RejectedCancellationJustification">
+		<element shortName="RsnCd" longName="原因代码" type="PaymentCancellationRejection1Code">
+			<enumeration shortName="LEGL" longName="法律决定" />
+			<enumeration shortName="AGNT" longName="代理决定" />
+			<enumeration shortName="CUST" longName="客户决定" />
+		</element>
+		<element shortName="Rsn" longName="原因" type="Max140Text"/>
+	</type>
+	
+	<type shortName="PaymentCancellationRejection1Code"/>
+	
+	<type shortName="Max140Text"/>
+	
+	<type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="指派人指令标识" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="受派人指令标识" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="币种与金额" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="起息日期" type="ISODateTime"/>
+		
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+</names>

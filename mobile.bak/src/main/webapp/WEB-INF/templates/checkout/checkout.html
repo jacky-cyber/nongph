@@ -1,0 +1,175 @@
+<div th:if="${errormsg}">
+    <p class="warn" th:text="errormsg"></p>
+</div>
+<nph:form id="orderForm" method="post">
+    <div class="common-wrapper">
+        <div class="w checkout" style="padding:0px;">
+            <div class="step1 border-1px" th:if="${order.needAddress}">
+                <div class="m step1-in ">
+                    <a th:unless="${address}" id ="selectAddress" th:href="@{/account/addresses(orderAddress=true)}"
+                       class="s-href">
+                        <div class="add-address">
+                            请选择地址
+                        </div>
+                    </a>
+                    <a th:if="${address}" th:href="@{/account/addresses(orderAddress=true)}"
+                       class="s-href" th:inline="text">
+                        <div class="mt_new">
+                            <div class="s1-name">
+                                <i></i>
+                                [[${address.receiver}]]
+                            </div>
+                            <div class="s1-phone">
+                                <i></i>
+                                [[${address.phone}]]
+                            </div>
+                        </div>
+                        <div class="mc step1-in-con">
+                            [[${address.province+address.city+address.district+address.community+address.address}]]
+                        </div>
+                    </a>
+                </div>
+                <b class="s1-borderT"></b>
+                <b class="s1-borderB"></b>
+                <span class="s-point"></span>
+            </div>
+
+            <div class="step3 border-1px" th:each="map:${providerMap}">
+                <th:block th:with="provider=${map.key}, items = ${map.value}">
+                    <div class="items" th:each="item,stat :${items}">
+                        <a th:href="@{${item.sku.product.url} + '/' + ${item.sku.id}}" class="s-href">
+                            <div class="s-item">
+                                <div class="sitem-l">
+                                    <div class="sl-img">
+                                        <img th:if="${item.sku.skuMedia['primary']}"
+                                             th:src="@{${item.sku.skuMedia['primary'].url} + '?thumbnail'}"
+                                             th:alt="${item.sku.name}"/>
+                                    </div>
+                                </div>
+                                <div class="sitem-m">
+                                    <p class="sitem-m-txt" th:text="${item.sku.name}"></p>
+
+                                    <p th:text="'X'+${item.quantity}"></p>
+                                </div>
+                                <div class="sitem-r" nph:price="${item.price}"></div>
+                                <span class="s-point"></span>
+                            </div>
+                        </a>
+
+                        <div class="sitem-address"
+                             th:if="${item.sku.product.provider.supportPickup and stat.last}">
+                            <div class="sitem-address-txt"
+                                 th:if="${item.deliveryType == 'PICKUP' and item.pickupAddress != null}">
+                                <span th:inline="text">自提地址: [[${item.pickupAddress.address}]] <span class="phone">[[${item.pickupAddress.phone}]]</span> [[${item.pickupAddress.sender}]] [[${item.pickupAddress.remark}]]</span>
+                            </div>
+                            <div class="sitem-address-txt" th:if="${item.deliveryType == 'LOGISTICS'}">同城配送</div>
+                            <a class="chosePickupAddress">
+                                <div class="sitem-address-chose" th:if="${item.deliveryType}">更改收货方式</div>
+                                <div class="sitem-address-chose" th:unless="${item.deliveryType}">请选择收货方式</div>
+                            </a>
+                            <th:block th:with="orderItemId=${item.id}">
+                                <div class="sitem-address-list" style="display:none">
+                                    <a th:each="pickupAddress : ${provider.pickupAddresses}"
+                                       th:object="${pickupAddress}"
+                                       th:href="@{/checkout/choosePickupAddress(orderItemId=${orderItemId},pickupAddressId=*{id})}">
+                                        <span>自提 - </span>
+                                    <span th:inline="text">
+                                       [[*{name}]]
+                                    </span>
+                                    </a>
+                                    <a class="logistics"
+                                       th:href="@{/checkout/chooseLogistics(orderItemId=${orderItemId})}">同城配送</a>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+
+            <div class="step4 border-1px" th:if="${order.couponAvailable}">
+                <a th:href="@{'/checkout/coupon/'}" class="s-href">
+                    <div class="s-item bdb-1px">
+                        <div class="sitem-l"> 优惠券
+                            <i class="sitem-tip"><span th:text="${#lists.size(customerCoupons)}"/>张可用</i>
+                        </div>
+                        <div th:unless="${order.applyCoupon}" class="sitem-r">未使用</div>
+                        <div th:if="${order.applyCoupon}" class="sitem-r">
+							已抵扣<span class="sitem-num" th:text="${order.couponDiscount}"></span>元
+						</div>
+                        <span class="s-point"></span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="step4 border-1px" th:if="${order.couponCodeAvailable}">
+
+		                  <div class="s-item bdb-1px">
+		                      <div class="sitem-l" id="help"> 品荟码<img style="position:relative;bottom:2px;left:2px;" width="16px" height="16px" src="/static/img/help.png"/>
+		                      	<i class="sitem-tip" th:if="${order.couponCode}"><span th:text="${order.couponCode.couponCode}"/></i>
+		                      </div>
+		                      <a th:href="@{'/checkout/applyCouponCode'}" class="s-href">
+		                       <div th:unless="${order.couponCode}" class="sitem-r">我有品荟码</div>
+		                       <div th:if="${order.couponCode}" class="sitem-r">
+								已抵扣<span class="sitem-num" th:text="${order.couponCodeDiscount}"></span>元
+							</div>
+		                       <span class="s-point"></span>
+		                       </a>
+		                  </div>
+	                  
+	                 
+		       	<div class="s-item" id="codeTip">
+		       		<div class="sitem-l">
+		       				       			品荟码使用规则<br />
+						1. 拥有品荟码的客户可以在购买商品的时候输入品荟码，抵扣10元现金。<br />
+						2. 拥有品荟码的客户也可以邀请没有品荟码的朋友购买，他在付款时使用该品荟码，可以抵扣9元现金。 同时客户本人将会获得10元品荟通用券。<br />
+						3. 拥有品荟码的客户之间不可以相互使用对方的品荟码。<br />
+						4. 每个品荟码只能使用一次。<br />
+		       		</div>
+	            </div>    
+            </div>
+
+            <div class="step4 border-1px">
+                <div class="s-item bdb-1px">
+                    <div class="sitem-l" id="point"> 积分<img style="position:relative;bottom:2px;left:2px;" width="16px"
+                                                            height="16px" src="/static/img/help.png"/>
+                        <a th:href="@{'/checkout/applyBonusPoint'}" class="s-href" style="display: inline"><i
+                                class="sitem-tip"><span th:text="${customer.bonusPoint}"/>分可用</i></a>
+                    </div>
+                    <a th:href="@{'/checkout/applyBonusPoint'}" class="s-href">
+                        <div th:unless="${order.deductionBonusPoint > 0}" class="sitem-r">使用积分</div>
+                        <div th:if="${order.deductionBonusPoint > 0}" class="sitem-r">
+                            已抵扣<span class="sitem-num" th:text="${order.deductionBonusPoint * 0.01}"></span>元
+                        </div>
+                        <span class="s-point"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="step5 border-1px">
+                <div class="s-item">
+                    <div class="sitem-l">商品金额</div>
+                    <div class="sitem-r" nph:price="${order.subTotal}"></div>
+                </div>
+                <div class="s-item" th:unless="${order.orderAdjustmentsValue.zero}">
+                    <div class="sitem-l">优惠金额</div>
+                    <div class="sitem-r" nph:price="${order.orderAdjustmentsValue}"></div>
+                </div>
+
+            </div>
+            <div class="step5 s-item" style="margin-bottom:80px;">
+                <div class="s-item">
+                    <div class="sitem-l">备注</div>
+                    <textarea class="sitem-r" style="width:88%;background-color: #fff;font-size: 0.9em;color:grey;"
+                              id="remark" th:name="remark" type="text" rows="2" maxlength="150"
+                              placeholder="请在此填写备注！(不超过150字)"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="pay-bar" id="pay-bar">
+            <div class="payb-con">
+                实付金额:&nbsp;
+                <span id="payMoney" nph:price="${order.total}"></span>
+            </div>
+            <a id="commit" class="payb-btn" href="javascript:">提交订单</a>
+        </div>
+    </div>
+</nph:form>

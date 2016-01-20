@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>商品评价 - 品荟</title>
+<meta name="description" content="品荟" />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/css/header.css" />
+<link rel="stylesheet" href="/static/css/review-items.css" />
+	<style>
+		.mod_slide_prompt{
+			z-index: 9;
+			color:red;
+			position:absolute;
+			top:200px;
+			left:25%;
+			width: 45%;
+			line-height:25px;
+			background-color: black;
+			color: white;
+			padding: 10px;
+			opacity:0.6;
+		}
+		.cricle{display:inline-block;font-size: 1.3em;font-weight: bold;width:20px;height:20px;line-height:20px;border-radius:10px;text-align:center;background-color: white;color:black;margin-right:5px;}
+	</style>
+</head>
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='商品评价',type='normal')" />
+	<div class="common-wrapper">
+		<div class="step3 s-list">
+			<nph:form th:action="@{'/review/'+${order.orderNumber} +'/items'}" method="post">
+				<div class="s-item" th:each="item : ${order.orderItems}"
+					th:object="${item}">
+					<div class="s-item">
+						<div class="sitem-l">
+							<a th:href="@{*{sku.product.url} + '/' + *{sku.id}}" class="s-href">
+								<div class="sl-img">
+									<img th:if="*{sku.skuMedia['primary']}"
+										 th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}"
+										 th:alt="*{sku.name}"/>
+								</div>
+							</a>
+						</div>
+						<div class="sitem-m">
+							<a th:href="@{*{sku.product.url} + '/' + *{sku.id}}" class="s-href">
+								<p class="sitem-m-txt" th:text="*{sku.name}"></p>
+							</a>
+							<p>
+								<span class="b-price">¥</span> <span class="price" th:text="*{price}"></span>
+							</p>
+						</div>
+					</div>
+					<div>
+						<div th:unless="*{reviewDetail==null}" th:remove="tag">
+							<div class="rate-product">
+								<div style="margin-bottom: 15px;">
+									<div  class="rate-product">
+										<span>商品评价:&nbsp;&nbsp;</span>
+										<span class="mu-star" >
+											<span class="mu-starv" th:classappend="*{'star-width' + #strings.substring(reviewDetail.ratingDetail.rating,0,1)}"></span>
+										</span>
+									</div>
+									<div  class="rate-product">
+										<span>物流评价:&nbsp;&nbsp;</span>
+										<span class="mu-star">
+											<span class="mu-starv" th:classappend="*{'star-width' + #strings.substring(reviewDetail.ratingDetail.logisticsRating,0,1)}"></span>
+										</span>
+									</div>
+									<div  class="rate-product"><span>服务评价:&nbsp;&nbsp;</span>
+										<span class="mu-star">
+											<span class="mu-starv" th:classappend="*{'star-width' + #strings.substring(reviewDetail.ratingDetail.serveRating,0,1)}"></span>
+										</span>
+									</div>
+								</div>
+								<div>
+									<span>
+										您的评价:&nbsp;&nbsp;
+									</span>
+									<span class="review-txt" th:text="*{reviewDetail.reviewText}" style="padding-left:10px;"></span>
+								</div>
+							</div>
+						</div>
+						<div th:if="*{reviewDetail==null}" th:remove="tag">
+							<div class="rate-product">
+								<span>商品评分:&nbsp;&nbsp;</span>
+								<span class="cm-star">
+									<span th:id="*{'star1'+id}" class="cm-starv star-width1 starv-active"></span>
+									<span th:id="*{'star2'+id}" class="cm-starv star-width2 starv-active"></span>
+									<span th:id="*{'star3'+id}" class="cm-starv star-width3 starv-active"></span>
+									<span th:id="*{'star4'+id}" class="cm-starv star-width4 starv-active"></span>
+									<span th:id="*{'star5'+id}" class="cm-starv star-width5 starv-active"></span>
+								</span>
+								<input type="hidden" th:id="*{'rating' + id}" th:name="*{'rating' + id}" class="star" name="rating" value="5.0"/>
+							</div>
+							<!--jenny add s-->
+							<div class="rate-product">
+								<span>物流评分:&nbsp;&nbsp;</span>
+								<span class="cm-star">
+									<span th:id="*{'logistic1'+id}" class="cm-starv star-width1 starv-active"></span>
+									<span th:id="*{'logistic2'+id}" class="cm-starv star-width2 starv-active"></span>
+									<span th:id="*{'logistic3'+id}" class="cm-starv star-width3 starv-active"></span>
+									<span th:id="*{'logistic4'+id}" class="cm-starv star-width4 starv-active"></span>
+									<span th:id="*{'logistic5'+id}" class="cm-starv star-width5 starv-active"></span>
+								</span>
+								<input type="hidden" th:id="*{'rating2' + id}" th:name="*{'rating2' + id}" class="star" name="rating2" value="5.0"/>
+							</div>
+							<div class="rate-product">
+								<span>服务评分:&nbsp;&nbsp;</span>
+								<span class="cm-star">
+									<span th:id="*{'serve1'+id}" class="cm-starv star-width1 starv-active"></span>
+									<span th:id="*{'serve2'+id}" class="cm-starv star-width2 starv-active"></span>
+									<span th:id="*{'serve3'+id}" class="cm-starv star-width3 starv-active"></span>
+									<span th:id="*{'serve4'+id}" class="cm-starv star-width4 starv-active"></span>
+									<span th:id="*{'serve5'+id}" class="cm-starv star-width5 starv-active"></span>
+								</span>
+								<input type="hidden" th:id="*{'rating3' + id}" th:name="*{'rating3' + id}" class="star" name="rating3" value="5.0"/>
+							</div>
+							<!--jenny add e-->
+							<div>
+								<textarea class="review-txt" type="text" rows="4" maxlength="200"
+									th:name="*{'reviewText' + id}" id="comment"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div th:if="${errorMsg!=null}" th:remove="tag">
+					<div class="mod_slide_prompt" id="prompt"><span class="cricle">i</span>请填写完整的评价信息！</div>
+				</div>
+				<input th:if="${!order.review}" class="review_button big red" type="submit" value="发表评价"/>
+			</nph:form>
+		</div>
+	</div>
+	<script th:src="@{/static/js/lib/jquery-1.9.1.js}" />
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	    $(function(){
+			function star(id, n){
+				for(var i=1;i<=5;i++){
+					$("#star"+i+''+id).removeClass("starv-active");
+				}
+				$("star"+n+''+id).removeClass("starv-active");
+				for(var i = 1; i <= n; i++){
+					$("#star" + i +id).addClass("starv-active");
+				}
+ 				$("#rating"+id).val(n + ".0");
+			};
+			/*jenny add s*/
+			function logsitic(id, n){
+				for(var i=1;i<=5;i++){
+					$("#logistic"+i+''+id).removeClass("starv-active");
+				}
+				$("#logistic"+n+''+id).removeClass("starv-active");
+				for(var i = 1; i <= n; i++){
+					$("#logistic" + i +id).addClass("starv-active");
+				}
+				$("#rating2"+id).val(n + ".0");
+			};
+			function serve(id, n){
+				for(var i=1;i<=5;i++){
+					$("#serve"+i+''+id).removeClass("starv-active");
+				}
+				$("#serve"+n+''+id).removeClass("starv-active");
+				for(var i = 1; i <= n; i++){
+					$("#serve" + i +id).addClass("starv-active");
+				}
+				$("#rating3"+id).val(n + ".0");
+			};
+			/*jenny add e*/
+			$(".cm-starv").on("mouseover",function(){
+				var starType= $(this).attr("id").substr(0,4);
+				if(starType=="star"){
+					var id = $(this).attr("id").substr(5);
+					var n = $(this).attr("id").substr(4,1);
+					star(id, n);
+				}else if(starType=="logi"){
+					var id = $(this).attr("id").substr(9);
+					var n = $(this).attr("id").substr(8,1);
+					logsitic(id, n);
+				}else if(starType=="serv"){
+					var id = $(this).attr("id").substr(6);
+					var n = $(this).attr("id").substr(5,1);
+					serve(id, n);
+				}
+			});
+	    });
+		function hide(){
+			document.getElementById("prompt").style.display = "none";
+		}
+		if([[${errorMsg}]]!=null){
+			setTimeout(hide,1500);
+		}
+		/*]]>*/
+	</script>
+</body>
+</html>

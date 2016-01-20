@@ -1,0 +1,53 @@
+<%@ page language="java" pageEncoding="utf-8"%>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!-- ext css includes -->
+		<link rel="stylesheet" type="text/css"
+			href="../../../lib/ncs/include/css/include-all.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css"
+			href="../../../lib/extjs/ux/treegrid/treegrid.css" rel="stylesheet" />
+		<!-- ext javascript includes -->
+		<script type="text/javascript">
+			var closeTime=<%=request.getParameter("closeTime")%>;
+        </script>
+		<script type="text/javascript"
+			src="../../../lib/ncs/include/js/include-all.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/admin/js/currencyWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/eni/js/caseWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/eni/js/messageWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/eni/js/paymentWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/admin/js/messageTemplateWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/eni/js/temporaryOldMsgUtil.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/eni/js/messageTemplateUtilWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/eni/js/messageViewWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/eni/js/taskWidget.js"></script>
+		<script type="text/javascript" src="js/paymentAction.js"></script>
+		<script type="text/javascript" src="js/messageAction.js"></script>
+		<script type="text/javascript" src="js/messageTemplateUtilAction.js"></script>
+		<script type="text/javascript" src="js/caseAction.js"></script>
+		<script type="text/javascript" src="js/needHandleCase.js"></script>
+		<script type="text/javascript"
+			src="../../../lib/ncs/include/js/treeGrid-include-all.js"></script>
+		<script type="text/javascript"
+			src="../../../lib/ncs/extjs/EcpTreeGrid.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/admin/js/institutionWidget.js"></script>
+		<script type="text/javascript"
+			src="../../baseWidget/admin/js/messageTypeWidget.js"></script>
+		<script type="text/javascript" src="../admin/js/institutionAction.js"></script>
+		<script type="text/javascript">
+			var messageBody="";
+		</script>
+	</head>
+	<body></body>
+</html>

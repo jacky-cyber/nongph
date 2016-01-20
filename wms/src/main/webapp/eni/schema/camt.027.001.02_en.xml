@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.027.001.02" longName="camt.027.001.02" type="camt.027.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.027.001.02">
+		<element shortName="Assgnmt" longName="Assgnmt" type="CaseAssignment"/>
+		<element shortName="Case" longName="Case" type="Case"/>
+		<element shortName="Undrlyg" longName="Undrlyg" type="PaymentInstructionExtract2"/>
+		<element shortName="MssngCover" longName="MssngCover" type="MissingCover"/>
+	</type>
+	
+		<type shortName="MissingCover">
+		<element shortName="MssngCoverIndctn" longName="MssngCoverIndctn" type="YesNoIndicator"/>
+	</type>
+	
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Assgnr" longName="Assigner" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="Assignee" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="CreateDateTime" type="ISODateTime"/>
+	</type>
+	
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="YesNoIndicator"/>
+		
+	<type shortName="Case">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Cretr" longName="Creator" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="ReopCaseIndctn" type="YesNoIndicator"/>
+	</type>
+	
+	<!--type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="AssgnrInstrId" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="AssgneInstrId" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="CurrencyAndAmount" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="ValueDate" type="ISODateTime"/>
+		
+	</type-->
+	<type shortName="PaymentInstructionExtract2">
+		<element shortName="OrgnlMsgNmId" longName="OriginalMessageNameIdentification" type="Max35Text"/>
+		<element shortName="OrgnlInstrId" longName="OriginalInstructionIdentification" type="Max35Text"/>
+		<element shortName="InstdAmt" longName="InstructedAmount" type="CurrencyAndAmount"/>
+		<element shortName="IntrBkSttlmAmt" longName="InterbankSettlementAmount" type="CurrencyAndAmount"/>	
+		<element shortName="ReqdExctnDt" longName="RequestedExecutionDate" type="ISODateTime"/>	
+		<element shortName="IntrBkSttlmDt" longName="InterbankSettlementDate" type="ISODateTime"/>		
+	</type>
+	<type shortName="CurrencyAndAmount"/>
+</names>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en">
+<head th:include="/layout/partials/head (pageTitle='个人中心 - 品荟 ')"></head>
+<link rel="stylesheet" href="/static/css/orderLog.css" />
+<body>
+<div id="notification_bar"></div>
+<header th:substituteby="layout/partials/header(pageTitle='退换货政策',type='normal')" />
+<div class="new-order">
+    <div class="new-order-flow new-p-re">
+        <ul class="new-of-storey">
+                <li>
+                    <span class="icon on"></span>
+                    <h2>如何申请退换货？</h2>
+                </li>
+        </ul>
+        <span style="display:inline-block;margin-bottom: 20px;font-size: 1.2em;">
+            客户在收到商品<span style="color:orange;">24小时内</span>发现有任何质量问题,或者与商品描述有很大的出入,都可以拨打客服电话,或者通过系统提出退换货申请.客服通过申请后,会立即安排补发新的商品或者安排退款.
+        </span>
+        <ul  class="new-of-storey">
+            <li>
+                <span class="icon on"></span>
+                <h2>何时退款会到账？</h2>
+            </li>
+        </ul>
+        <span style="display:inline-block;font-size: 1.2em;">
+            退款申请通过后,客服将于当天安排退款,具体到账时间依赖于微信支付或者支付宝支付处理时间.
+        </span>
+    </div>
+</div>
+</body>
+</html>

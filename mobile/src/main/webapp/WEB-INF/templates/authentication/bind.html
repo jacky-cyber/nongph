@@ -1,0 +1,107 @@
+<div id="account">
+    <div id="bind">
+        <nph:form id="bindPhoneForm" action="#" th:object="${bindPhoneForm}" th:action="@{/wechat/bind}"
+                  method="post" class="clearfix">
+            <input type="hidden" th:field="*{redirectUrl}"/>
+            <span id="errorTips" class="error"></span>
+            <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+
+            <div class="item">
+                <div class="item-phone">
+                    <input id="phone" type="text" maxlength="11" required="true" th:field="*{phone}" class="txt-input"
+                           placeholder="请输入手机号码" th:classappend="${#fields.hasErrors('phone')}? 'fieldError'"/>
+                </div>
+                <div id="btnResend" class="vc-btn">
+                    获取短信验证码
+                </div>
+            </div>
+            <div class="item">
+                <span class="error" th:if="${#fields.hasErrors('bindCode')}"
+                      th:errors="*{bindCode}"></span>
+                <input type="text" maxlength="6" required="true" th:field="*{bindCode}"
+                       placeholder="请输入短信验证码" class="txt-input"
+                       th:classappend="${#fields.hasErrors('bindCode')}? 'fieldError'"/>
+            </div>
+
+            <div class="login_register">
+                <input class="register_button big red" type="submit" value="绑定"/>
+            </div>
+        </nph:form>
+    </div>
+    <script th:src="@{/static/js/lib/jquery-1.9.1.js}"/>
+
+    <script>
+        var $resendBtn = $("#btnResend");
+        var $phone = $("#phone");
+
+        var $errorTips =$("#errorTips");
+
+        if ($.trim($phone.val()) == "") {
+            $resendBtn.addClass("btnResend-disabled");
+        } else {
+            $resendBtn.addClass("btnResend-enabled");
+        }
+        var bind_name="input";//定义所要绑定的事件名称
+        if(navigator.userAgent.indexOf("MSIE")!=-1) bind_name="propertychange";
+        $phone.on(bind_name, function () {
+            if ($(this).val() == "") {
+                $resendBtn.removeClass("btnResend-enabled");
+                $resendBtn.addClass("btnResend-disabled");
+            } else {
+                $resendBtn.addClass("btnResend-enabled");
+                $resendBtn.removeClass("btnResend-disabled");
+            }
+        });
+
+        $resendBtn.on("click", function () {
+            $errorTips.text("");
+            if ($(this).hasClass("btnResend-enabled")) {
+                var mob = $.trim($phone.val());
+
+                // 前端js验证手机号码不能为空
+                if (mob == "") {
+                    $errorTips.text("手机号码不能为空");
+                    return;
+                }
+                // 前端js验证手机号码格式
+                var reg = /^1[3|4|5|7|8]\d{9}$/;
+                if (!reg.test(mob)) {
+                    $errorTips.text("手机号码格式错误，请重新输入");
+                    return;
+                }
+                $resendBtn.removeClass("btnResend-enabled").addClass("btnResend-disabled");
+
+                // 获取短信验证码
+
+                $.ajax({
+                    type: "GET",
+                    url: "/wechat/sms/" + mob,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            $resendBtn.removeClass("btnResend-enabled");
+                            $resendBtn.addClass("btnResend-disabled");
+                            var start = 120;
+                            $resendBtn.text("重新发送(" + start + ")");
+                            function timer() {
+                                start--;
+                                if (start == -1) {
+                                    clearInterval(interval);
+                                    $resendBtn.text("获取短信验证码");
+                                    $resendBtn.addClass("btnResend-enabled");
+                                    $resendBtn.removeClass("btnResend-disabled");
+                                } else {
+                                    $resendBtn.text("重新发送(" + start + ")");
+                                }
+                            }
+
+                            var interval = setInterval(timer, 1000);
+                        } else {
+                            $errorTips.text("验证码发送失败，请再试");
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+</div>

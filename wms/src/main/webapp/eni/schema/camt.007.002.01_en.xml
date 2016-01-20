@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.007.002.01" longName="camt.007.002.01" type="camt.007.002.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.007.002.01">
+		<element shortName="Assgnmt" longName="Assignment" type="CaseAssignment"/>
+		<element shortName="Case" longName="Case" type="Case"/>
+		<element shortName="Undrlyg" longName="Undrlyg" type="PaymentInstructionExtract"/>
+		<element shortName="Mod" longName="Modification" type="RequestedModification"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Assgnr" longName="Assigner" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="Assignee" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="CreateDateTime" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Cretr" longName="Creator" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="ReopCaseIndctn" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="AssgnrInstrId" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="AssgneInstrId" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="CurrencyAndAmount" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="ValueDate" type="ISODateTime"/>
+		
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<type shortName="RequestedModification">
+		<element shortName="RltdRef" longName="RelatedReference" type="Max35Text"/>
+		<element shortName="BkOprCd" longName="BkOprCd" type="SWIFTServiceLevel2Code">
+			<enumeration shortName="SPAY" longName="SWIFTPay" />
+			<enumeration shortName="SSTD" longName="Standard" />
+		</element>
+		<element shortName="InstrCd" longName="InstrCd" type="Instruction1Code">
+			<enumeration shortName="PBEN" longName="PayTheBeneficiary" />
+			<enumeration shortName="TTIL" longName="TimeTill" />
+			<enumeration shortName="TFRO" longName="TimeFrom" />
+		</element>
+		<element shortName="ReqdExctnDt" longName="ReqdExctnDt" type="ISODate"/>
+		<element shortName="ValDt" longName="ValDt" type="ISODate"/>
+		<element shortName="IntrBkSttldAmt" longName="IntrBkSttldAmt" type="CurrencyAndAmount"/>
+		<element shortName="Dbtr" longName="Dbtr" type="PartyIdentification1"/>
+		<element shortName="DbtrAcct" longName="DbtrAcct" type="CashAccount3"/>
+		<element shortName="IntrmySttlmAgt" longName="IntrmySttlmAgt" type="BranchAndFinancialInstitutionIdentification"/>
+		<element shortName="LastSttlmAgt" longName="LastSttlmAgt" type="BranchAndFinancialInstitutionIdentification"/>
+		<element shortName="PmtSchme" longName="PmtSchme" type="PaymentSchemeChoice"/>
+		<element shortName="BnfcryInstnAcct" longName="BnfcryInstnAcct" type="CashAccount3"/>
+		<element shortName="Cdtr" longName="Cdtr" type="PartyIdentification1"/>
+		<element shortName="CdtrAcct" longName="CdtrAcct" type="CashAccount3"/>
+		<element shortName="RmtInf" longName="RmtInf" type="RemittanceInformation3Choice"/>
+		<element shortName="Purp" longName="Purp" type="PurposeChoice"/>
+		<element shortName="InstrForFnlAgt" longName="InstrForFnlAgt" type="InstructionForFinalAgent"/>
+		<element shortName="DtlsOfChrgs" longName="DtlsOfChrgs" type="ChargeBearer1Code">
+			<enumeration shortName="OUR" longName="BorneByDebtor" />
+			<enumeration shortName="BEN" longName="BorneByCreditor" />
+			<enumeration shortName="SHA" longName="Shared" />
+		</element>
+		<element shortName="SndrToRcvrInf" longName="SndrToRcvrInf" type="Max35Text"/>
+	</type>
+	
+	<type shortName="SWIFTServiceLevel2Code"/>
+	
+	<type shortName="Instruction1Code"/>
+	
+	<type shortName="ISODate"/>
+	
+	<type shortName="PartyIdentification1">
+		<element shortName="Nm" longName="Nm" type="Max70Text"/>
+		<element shortName="PstlAdr" longName="PstlAdr" type="PostalAddress1"/>
+		<element shortName="Id" longName="Id" type="Party1Choice"/>
+	</type>
+	
+	<type shortName="Max70Text"/>
+	
+	<type shortName="PostalAddress1">
+		<element shortName="AdrTp" longName="AdrTp" type="AddressType2Code">
+			<enumeration shortName="ADDR" longName="Postal" />
+			<enumeration shortName="PBOX" longName="POBox" />
+			<enumeration shortName="HOME" longName="Residential" />
+			<enumeration shortName="BIZZ" longName="Business" />
+			<enumeration shortName="MLTO" longName="MailTo" />
+			<enumeration shortName="DLVY" longName="DeliveryTo" />
+		</element>
+		<element shortName="AdrLine" longName="AdrLine" type="Max70Text"/>
+		<element shortName="StrtNm" longName="StrtNm" type="Max70Text"/>
+		<element shortName="BldgNb" longName="BldgNb" type="Max16Text"/>
+		<element shortName="PstCd" longName="PstCd" type="Max16Text"/>
+		<element shortName="TwnNm" longName="TwnNm" type="Max35Text"/>
+		<element shortName="CtrySubDvsn" longName="CtrySubDvsn" type="Max35Text"/>
+		<element shortName="Ctry" longName="Ctry" type="CountryCode"/>
+	</type>
+	
+	<type shortName="AddressType2Code"/>
+	
+	<type shortName="Max16Text"/>
+	
+	<type shortName="CountryCode"/>
+	
+	<type shortName="Party1Choice">
+		<element shortName="OrgId" longName="OrgId" type="NonFinancialInstitutionIdentification1"/>
+		<element shortName="PrvtId" longName="PrvtId" type="PersonIdentification2"/>
+	</type>
+	
+	<type shortName="NonFinancialInstitutionIdentification1">
+		<element shortName="BEI" longName="BEI" type="BEIIdentifier"/>
+		<element shortName="EANGLN" longName="EANGLN" type="EANGLNIdentifier"/>
+		<element shortName="USCHU" longName="USCHU" type="CHIPSUniversalIdentifier"/>
+		<element shortName="DUNS" longName="DUNS" type="DunsIdentifier"/>
+		<element shortName="BkPtyId" longName="BkPtyId" type="Max35Text"/>
+		<element shortName="TaxIdNb" longName="TaxIdNb" type="Max35Text"/>
+		<element shortName="PrtryId" longName="PrtryId" type="GenericIdentification3"/>
+	</type>
+	
+	<type shortName="BEIIdentifier"/>
+	
+	<type shortName="EANGLNIdentifier"/>
+	
+	<type shortName="CHIPSUniversalIdentifier"/>
+	
+	<type shortName="DunsIdentifier"/>
+	
+	<type shortName="GenericIdentification3">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Issr" longName="Issr" type="Max35Text"/>
+	</type>
+	
+	<type shortName="PersonIdentification2">
+		<element shortName="DrvrsLicNb" longName="DrvrsLicNb" type="Max35Text"/>
+		<element shortName="SclSctyNb" longName="SclSctyNb" type="Max35Text"/>
+		<element shortName="AlnRegnNb" longName="AlnRegnNb" type="Max35Text"/>
+		<element shortName="PsptNb" longName="PsptNb" type="Max35Text"/>
+		<element shortName="TaxIdNb" longName="TaxIdNb" type="Max35Text"/>
+		<element shortName="IdntyCardNb" longName="IdntyCardNb" type="Max35Text"/>
+		<element shortName="MplyrIdNb" longName="MplyrIdNb" type="Max35Text"/>
+		<element shortName="OthrId" longName="OthrId" type="GenericIdentification4"/>
+	</type>
+	
+	<type shortName="GenericIdentification4">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="IdTp" longName="IdTp" type="Max35Text"/>
+	</type>
+	
+	<type shortName="CashAccount3">
+		<element shortName="Id" longName="Id" type="AccountIdentification1Choice"/>
+		<element shortName="Tp" longName="Tp" type="CashAccountType3Code">
+			<enumeration shortName="CASH" longName="CashPayment" />
+			<enumeration shortName="CHAR" longName="Charges" />
+			<enumeration shortName="SACC" longName="Settlement" />
+			<enumeration shortName="CACC" longName="Current" />
+			<enumeration shortName="SVGS" longName="Savings" />
+		</element>
+		<element shortName="Ccy" longName="Ccy" type="CurrencyCode"/>
+		<element shortName="Nm" longName="Nm" type="Max70Text"/>
+	</type>
+	
+	<type shortName="AccountIdentification1Choice">
+		<element shortName="IBAN" longName="IBAN" type="IBANIdentifier"/>
+		<element shortName="BBAN" longName="BBAN" type="IBANIdentifier"/>
+		<element shortName="UPIC" longName="UPIC" type="UPICIdentifier"/>
+		<element shortName="DmstAcct" longName="DmstAcct" type="SimpleIdentificationInformation"/>
+	</type>
+	
+	<type shortName="IBANIdentifier"/>
+	
+	<type shortName="UPICIdentifier"/>
+	
+	<type shortName="SimpleIdentificationInformation">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+	</type>
+	
+	<type shortName="CashAccountType3Code"/>
+	
+	<type shortName="CurrencyCode"/>
+	
+	<type shortName="BranchAndFinancialInstitutionIdentification">
+		<element shortName="FinInstnId" longName="FinInstnId" type="FinancialInstitutionIdentification1"/>
+		<element shortName="BrnchId" longName="BrnchId" type="BranchData"/>
+	</type>
+	
+	<type shortName="FinancialInstitutionIdentification1">
+		<element shortName="BIC" longName="BIC" type="BICIdentifier"/>
+		<element shortName="ClrSysMmbId" longName="ClrSysMmbId" type="ClearingSystemMemberIdentificationChoice"/>
+		<element shortName="Nm" longName="Nm" type="Max70Text"/>
+		<element shortName="PstlAdr" longName="PstlAdr" type="PostalAddress1"/>
+		<element shortName="PrtryId" longName="PrtryId" type="GenericIdentification3"/>
+	</type>
+	
+	<type shortName="BICIdentifier"/>
+	
+	<type shortName="ClearingSystemMemberIdentificationChoice">
+		<element shortName="USCHU" longName="USCHU" type="CHIPSUniversalIdentifier"/>
+		<element shortName="NZNCC" longName="NZNCC" type="NewZealandNCCIdentifier"/>
+		<element shortName="IENSC" longName="IENSC" type="IrishNSCIdentifier"/>
+		<element shortName="GBSC" longName="GBSC" type="UKDomesticSortCodeIdentifier"/>
+		<element shortName="USCH" longName="USCH" type="CHIPSParticipantIdentifier"/>
+		<element shortName="CHBC" longName="CHBC" type="SwissBCIdentifier"/>
+		<element shortName="USFW" longName="USFW" type="FedwireRoutingNumberIdentifier"/>
+		<element shortName="PTNCC" longName="PTNCC" type="PortugueseNCCIdentifier"/>
+		<element shortName="RUCB" longName="RUCB" type="RussianCentralBankIdentificationCodeIdentifier"/>
+		<element shortName="ITNCC" longName="ITNCC" type="ItalianDomesticIdentifier"/>
+		<element shortName="ATBLZ" longName="ATBLZ" type="AustrianBankleitzahlIdentifier"/>
+		<element shortName="CACPA" longName="CACPA" type="CanadianPaymentsARNIdentifier"/>
+		<element shortName="CHSIC" longName="CHSIC" type="SwissSICIdentifier"/>
+		<element shortName="DEBLZ" longName="DEBLZ" type="GermanBankleitzahlIdentifier"/>
+		<element shortName="ESNCC" longName="ESNCC" type="SpanishDomesticInterbankingIdentifier"/>
+		<element shortName="ZANCC" longName="ZANCC" type="SouthAfricanNCCIdentifier"/>
+		<element shortName="HKNCC" longName="HKNCC" type="HongKongBankIdentifier"/>
+		<element shortName="AUBSBx" longName="AUBSBx" type="ExtensiveBranchNetworkIdentifier"/>
+		<element shortName="AUBSBs" longName="AUBSBs" type="SmallNetworkIdentifier"/>
+	</type>
+	
+	<type shortName="CHIPSUniversalIdentifier"/>
+	
+	<type shortName="NewZealandNCCIdentifier"/>
+	
+	<type shortName="IrishNSCIdentifier"/>
+	
+	<type shortName="UKDomesticSortCodeIdentifier"/>
+	
+	<type shortName="CHIPSParticipantIdentifier"/>
+	
+	<type shortName="SwissBCIdentifier"/>
+	
+	<type shortName="FedwireRoutingNumberIdentifier"/>
+	
+	<type shortName="PortugueseNCCIdentifier"/>
+	
+	<type shortName="RussianCentralBankIdentificationCodeIdentifier"/>
+	
+	<type shortName="ItalianDomesticIdentifier"/>
+	
+	<type shortName="AustrianBankleitzahlIdentifier"/>
+	
+	<type shortName="CanadianPaymentsARNIdentifier"/>
+	
+	<type shortName="SwissSICIdentifier"/>
+	
+	<type shortName="GermanBankleitzahlIdentifier"/>
+	
+	<type shortName="SpanishDomesticInterbankingIdentifier"/>
+	
+	<type shortName="SouthAfricanNCCIdentifier"/>
+	
+	<type shortName="HongKongBankIdentifier"/>
+	
+	<type shortName="ExtensiveBranchNetworkIdentifier"/>
+	
+	<type shortName="SmallNetworkIdentifier"/>
+	
+	<type shortName="BICIdentifier"/>
+	
+	<type shortName="BranchData">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Nm" longName="Nm" type="Max35Text"/>
+		<element shortName="PstlAdr" longName="PstlAdr" type="PostalAddress1"/>
+	</type>
+	
+	<type shortName="PaymentSchemeChoice">
+		<element shortName="Cd" longName="Cd" type="CashClearingSystem2Code">
+			<enumeration shortName="RTG" longName="RTGS" />
+			<enumeration shortName="ACH" longName="ACH" />
+			<enumeration shortName="CHI" longName="CHIPS" />
+			<enumeration shortName="FDN" longName="FedNet" />
+		</element>
+		<element shortName="PrtryInf" longName="PrtryInf" type="Max35Text"/>
+	</type>
+	
+	<type shortName="CashClearingSystem2Code"/>
+	
+	<type shortName="RemittanceInformation3Choice">
+		<element shortName="Ustrd" longName="Ustrd" type="Max140Text"/>
+		<element shortName="Strd" longName="Strd" type="StructuredRemittanceInformation2"/>
+	</type>
+	
+	<type shortName="Max140Text"/>
+	
+	<type shortName="StructuredRemittanceInformation2">
+		<element shortName="RfrdDocTp" longName="RfrdDocTp" type="DocumentType1Code">
+			<enumeration shortName="MSIN" longName="MeteredServiceInvoice" />
+			<enumeration shortName="CNFA" longName="CreditNoteRelatedToFinancialAdjustment" />
+			<enumeration shortName="DNFA" longName="DebitNoteRelatedToFinancialAdjustment" />
+			<enumeration shortName="CINV" longName="CommercialInvoice" />
+			<enumeration shortName="DEBN" longName="DebitNote" />
+			<enumeration shortName="HIRI" longName="HireInvoice" />
+			<enumeration shortName="SBIN" longName="SelfBilledInvoice" />
+			<enumeration shortName="RADM" longName="RemittanceAdviceMessage" />
+			<enumeration shortName="RPIN" longName="RelatedPaymentInstruction" />
+			<enumeration shortName="CMCN" longName="CommercialContract" />
+			<enumeration shortName="FXDR" longName="ForeignExchangeDealReference" />
+			<enumeration shortName="SOAC" longName="StatementOfAccount" />
+			<enumeration shortName="CREN" longName="CreditNote" />
+		</element>
+		<element shortName="RfrdDocRltdDt" longName="RfrdDocRltdDt" type="ISODate"/>
+		<element shortName="RfrdDocAmt" longName="RfrdDocAmt" type="ReferredDocumentAmount1Choice"/>
+		<element shortName="DocRefNb" longName="DocRefNb" type="Max35Text"/>
+		<element shortName="CdtrRef" longName="CdtrRef" type="Max35Text"/>
+		<element shortName="Invcr" longName="Invcr" type="PartyIdentification1"/>
+		<element shortName="Invcee" longName="Invcee" type="PartyIdentification1"/>
+	</type>
+	
+	<type shortName="DocumentType1Code"/>
+	
+	<type shortName="ReferredDocumentAmount1Choice">
+		<element shortName="DuePyblAmt" longName="DuePyblAmt" type="CurrencyAndAmount"/>
+		<element shortName="DscntApldAmt" longName="DscntApldAmt" type="CurrencyAndAmount"/>
+		<element shortName="RmtdAmt" longName="RmtdAmt" type="CurrencyAndAmount"/>
+		<element shortName="CdtNoteAmt" longName="CdtNoteAmt" type="CurrencyAndAmount"/>
+		<element shortName="TaxAmt" longName="TaxAmt" type="CurrencyAndAmount"/>
+	</type>
+	
+	<type shortName="PurposeChoice">
+		<element shortName="Prtry" longName="Prtry" type="Max35Text"/>
+		<element shortName="Cd" longName="Cd" type="PaymentPurpose1Code">
+			<enumeration shortName="SALA" longName="SalaryPayment" />
+			<enumeration shortName="TREA" longName="TreasuryPayment" />
+			<enumeration shortName="ADVA" longName="AdvancePayment" />
+			<enumeration shortName="AGRT" longName="AgriculturalTransfer" />
+			<enumeration shortName="ALMY" longName="AlimonyPayment" />
+			<enumeration shortName="BECH" longName="ChildBenefit" />
+			<enumeration shortName="BENE" longName="UnemploymentDisabilityBenefit" />
+			<enumeration shortName="BONU" longName="BonusPayment." />
+			<enumeration shortName="CASH" longName="CashManagementTransfer" />
+			<enumeration shortName="CBFF" longName="CapitalBuilding" />
+			<enumeration shortName="CHAR" longName="CharityPayment" />
+			<enumeration shortName="COLL" longName="CollectionPayment" />
+			<enumeration shortName="CMDT" longName="CommodityTransfer" />
+			<enumeration shortName="COMC" longName="CommercialCredit" />
+			<enumeration shortName="COMM" longName="Commission" />
+			<enumeration shortName="COST" longName="Costs" />
+			<enumeration shortName="CPYR" longName="Copyright" />
+			<enumeration shortName="DIVI" longName="Dividend" />
+			<enumeration shortName="FREX" longName="ForeignExchange" />
+			<enumeration shortName="GDDS" longName="PurchaseSaleOfGoods" />
+			<enumeration shortName="GOVT" longName="GovernmentPayment" />
+			<enumeration shortName="IHRP" longName="InstalmentHirePurchaseAgreement" />
+			<enumeration shortName="INTC" longName="IntraCompanyPayment" />
+			<enumeration shortName="INSU" longName="InsurancePremium" />
+			<enumeration shortName="INTE" longName="Interest" />
+			<enumeration shortName="LICF" longName="LicenseFee" />
+			<enumeration shortName="LOAN" longName="Loan" />
+			<enumeration shortName="LOAR" longName="LoanRepayment" />
+			<enumeration shortName="NETT" longName="Netting" />
+			<enumeration shortName="PAYR" longName="Payroll" />
+			<enumeration shortName="PENS" longName="PensionPayment" />
+			<enumeration shortName="REFU" longName="Refund" />
+			<enumeration shortName="RENT" longName="Rent" />
+			<enumeration shortName="ROYA" longName="Royalties" />
+			<enumeration shortName="SCVE" longName="PurchaseSaleOfServices" />
+			<enumeration shortName="SECU" longName="Securities" />
+			<enumeration shortName="SSBE" longName="SocialSecurityBenefit" />
+			<enumeration shortName="SUBS" longName="Subscription" />
+			<enumeration shortName="TAXS" longName="TaxPayment" />
+			<enumeration shortName="VATX" longName="ValueAddedTaxPayment" />
+			<enumeration shortName="COMT" longName="ConsumerThirdPartyConsolidatedPayment" />
+			<enumeration shortName="DBTC" longName="DebitCollectionPayment" />
+			<enumeration shortName="SUPP" longName="SupplierPayment" />
+			<enumeration shortName="HEDG" longName="Hedging" />
+		</element>
+	</type>
+	
+	<type shortName="PaymentPurpose1Code"/>
+	
+	<type shortName="InstructionForFinalAgent">
+		<element shortName="Cd" longName="Cd" type="Instruction3Code">
+			<enumeration shortName="CHQB" longName="PayCreditorByCheque" />
+			<enumeration shortName="HOLD" longName="HoldCashForCreditor" />
+			<enumeration shortName="PHOB" longName="PhoneBeneficiary" />
+			<enumeration shortName="TELB" longName="Telecom" />
+		</element>
+		<element shortName="Prtry" longName="Prtry" type="Max140Text"/>
+	</type>
+	
+	<type shortName="Instruction3Code"/>
+	
+	<type shortName="ChargeBearer1Code"/>
+</names>

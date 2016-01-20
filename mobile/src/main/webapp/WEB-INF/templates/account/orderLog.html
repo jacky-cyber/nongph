@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='订单追踪 - 品荟', noDefaultCss=true)"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/" files="orderLog.css"/>
+<nph:bundle name="style.css" mapping-prefix="/static/css/" files="header.css"/>
+<nph:bundle name="style.css" mapping-prefix="/static/css/" files="style.css"/>
+
+<body>
+<div id="notification_bar"></div>
+<header th:substituteby="layout/partials/header(pageTitle='订单追踪',type='normal')"/>
+<div class="new-ct" th:object="${order}" th:inline="text">
+    <div class="new-order">
+        <div class="new-order-track">
+            <span>订单编号：[[*{orderNumber}]]</span>
+            <th:block th:if="*{status.type=='SUBORDER'}">
+                <span class="new-txt-rd2" th:if="*{shipped}">状态：配送中</span>
+                <span class="new-txt-rd2" th:unless="*{shipped}">状态：处理中</span>
+            </th:block>
+            <th:block th:unless="*{status.type=='SUBORDER'}">
+                <th:block th:if="*{status.type=='CONFIRMED'}">
+                    <span class="new-txt-rd2" th:if="*{shipped}">状态：配送中</span>
+                    <span class="new-txt-rd2" th:unless="*{shipped}">状态：处理中</span>
+                </th:block>
+                <th:block th:unless="*{status.type=='CONFIRMED'}">
+                    <span class="new-txt-rd2">状态：[[*{status.friendlyType}]]</span>
+                </th:block>
+            </th:block>
+        </div>
+        <div class="new-order-flow new-p-re">
+            <span class="new-order-arr"></span>
+            <ul class="new-of-storey">
+                <div th:each="log : *{orderLogs}"
+                     th:object="${log}">
+                    <li>
+                    <span class="icon on"></span>
+                    <span th:utext="*{message}"></span>
+                    <span th:text="*{#dates.format(dateCreated, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:substituteby="layout/partials/divfootermenu"/>
+</body>
+</html>

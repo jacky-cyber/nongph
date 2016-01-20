@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+    <bean id="blMergedEntityContexts" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:applicationContext-b2c-api-entity.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="blMergedPersistenceXmlLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath*:/META-INF/persistence-framework.xml</value>
+            </list>
+        </property>
+    </bean>
+      
+    <bean id="blEntityManagerFactorySecureInfo" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="blCacheManager">
+        <property name="jpaVendorAdapter" ref="blJpaVendorAdapter"/>
+        <property name="persistenceUnitManager" ref="blPersistenceUnitManager" />
+        <property name="persistenceUnitName" value="blSecurePU"/>
+    </bean>
+
+    <bean id="blTransactionManagerSecureInfo" class="cn.globalph.common.extensibility.jpa.GlobalJpaTransactionManager">
+        <property name="entityManagerFactory" ref="blEntityManagerFactorySecureInfo" />
+    </bean>
+	
+    <tx:advice id="blTxAdviceSecureInfo" transaction-manager="blTransactionManagerSecureInfo">
+        <tx:attributes>
+          <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <aop:config>
+        <aop:pointcut id="blOrderDaoOperation5" expression="execution(* cn.globalph.b2c.order.dao.OrderDao.update*(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blOrderDaoOperation5"/>
+    </aop:config>
+
+    <aop:config>
+        <aop:pointcut id="blOrderPaymentServiceOperation" expression="execution(* cn.globalph.b2c.payment.service.OrderPaymentService.save(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blOrderPaymentServiceOperation"/>
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="blOrderPaymentServiceOperation2" expression="execution(* cn.globalph.b2c.payment.service.OrderPaymentService.delete(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blOrderPaymentServiceOperation2"/>
+    </aop:config>
+
+    <aop:config>
+        <aop:pointcut id="blOrderItemDaoOperation" expression="execution(* cn.globalph.b2c.order.dao.OrderItemDao.save*(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blOrderItemDaoOperation"/>
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="blOrderItemDaoOperation2" expression="execution(* cn.globalph.b2c.order.dao.OrderItemDao.save(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blOrderItemDaoOperation2"/>
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="blOrderItemDaoOperation3" expression="execution(* cn.globalph.b2c.order.dao.OrderItemDao.delete(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="blOrderItemDaoOperation3"/>
+    </aop:config>
+
+    <aop:config>
+        <aop:pointcut id="nphOrderAddressServiceOperation" expression="execution(* cn.globalph.b2c.order.service.OrderAddressService.*(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="nphOrderAddressServiceOperation"/>
+    </aop:config>
+
+    <aop:config>
+        <aop:pointcut id="nphOrderLogServiceOperation"
+                      expression="execution(* cn.globalph.b2c.order.service.OrderLogService.*(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="nphOrderLogServiceOperation"/>
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="phRefundServiceOperation"
+                      expression="execution(* cn.globalph.b2c.order.service.RefundService.*(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="phRefundServiceOperation"/>
+    </aop:config>
+    
+   	<aop:config>
+        <aop:pointcut id="phRefundMediaServiceOperation"
+                      expression="execution(* cn.globalph.b2c.order.service.RefundMediaService.*(..))"/>
+        <aop:advisor advice-ref="blTxAdvice" pointcut-ref="phRefundMediaServiceOperation"/>
+    </aop:config>
+    
+</beans>

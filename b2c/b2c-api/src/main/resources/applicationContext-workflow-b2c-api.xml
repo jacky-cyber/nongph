@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+core process
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+    
+    <bean id="blFulfillmentLocationResolver" class="cn.globalph.b2c.pricing.service.fulfillment.SimpleFulfillmentLocationResolver" />
+
+    <bean id="blFixedPriceFulfillmentPricingProvider"
+            class="cn.globalph.b2c.pricing.service.fulfillment.provider.FixedPriceFulfillmentPricingProvider" />
+    <bean id="blBandedFulfillmentPricingProvider"
+            class="cn.globalph.b2c.pricing.service.fulfillment.provider.BandedFulfillmentPricingProvider" />
+    <bean id="blFulfillmentPricingProviders" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+               <ref bean="blFixedPriceFulfillmentPricingProvider" />
+               <ref bean="blBandedFulfillmentPricingProvider" />
+            </list>
+        </property>
+    </bean>
+
+    <bean p:order="1" id="phDoNothingActivity" class="cn.globalph.b2c.workflow.DoNothingActivity"/>
+    <!-- Pricing Workflow configuration -->
+    <bean p:order="1000" id="blOfferActivity" class="cn.globalph.b2c.pricing.service.workflow.OfferActivity" />
+    <bean p:order="2000" id="blConsolidateFulfillmentFeesActivity" class="cn.globalph.b2c.pricing.service.workflow.ConsolidateFulfillmentFeesActivity" />
+    <bean p:order="3000" id="blFulfillmentItemPricingActivity" class="cn.globalph.b2c.pricing.service.workflow.FulfillmentItemPricingActivity" />
+    <bean p:order="4000" id="blFulfillmentGroupMerchandiseTotalActivity" class="cn.globalph.b2c.pricing.service.workflow.FulfillmentGroupMerchandiseTotalActivity" />
+    <bean p:order="5000" id="blFulfillmentGroupPricingActivity" class="cn.globalph.b2c.pricing.service.workflow.FulfillmentGroupPricingActivity" />
+    <bean p:order="6000" id="blShippingOfferActivity" class="cn.globalph.b2c.pricing.service.workflow.ShippingOfferActivity" />
+    <bean p:order="8000" id="blTotalActivity" class="cn.globalph.b2c.pricing.service.workflow.TotalActivity" />
+    <bean p:order="9000" id="blAdjustOrderPaymentsActivity" class="cn.globalph.b2c.pricing.service.workflow.AdjustOrderPaymentsActivity" />
+
+
+    <bean id="blPricingWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.pricing.service.workflow.PricingProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <ref bean="blOfferActivity" />
+                <!--<ref bean="blConsolidateFulfillmentFeesActivity" />-->
+                <!--<ref bean="blFulfillmentItemPricingActivity" />                                       -->
+                <!--<ref bean="blFulfillmentGroupMerchandiseTotalActivity" />-->
+                <!--<ref bean="blFulfillmentGroupPricingActivity" />-->
+                <!--<ref bean="blShippingOfferActivity" />-->
+                <ref bean="blTotalActivity"/>
+                <ref bean="blAdjustOrderPaymentsActivity"/>
+            </list>
+        </property>
+        <property name="defaultErrorHandler">
+            <bean class="cn.globalph.b2c.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>org.hibernate.exception.LockAcquisitionException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- Add Item Workflow Configuration -->
+    <bean p:order="1000" id="blValidateAddRequestActivity" class="cn.globalph.b2c.order.service.workflow.add.ValidateAddRequestActivity"/>
+    <bean p:order="2000" id="blAddOrderItemActivity" class="cn.globalph.b2c.order.service.workflow.add.AddOrderItemActivity"/>
+    <bean p:order="3000" id="blAddFulfillmentGroupItemActivity" class="cn.globalph.b2c.order.service.workflow.add.AddFulfillmentGroupItemActivity"/>
+    <bean p:order="4000" id="blAddWorkflowPriceOrderIfNecessaryActivity" class="cn.globalph.b2c.order.service.workflow.PriceOrderIfNecessaryActivity"/>
+    <bean p:order="5000" id="blAddWorkflowVerifyFulfillmentGroupItemsActivity" class="cn.globalph.b2c.order.service.workflow.VerifyFulfillmentGroupItemsActivity"/>
+    
+    <bean id="blAddItemWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <ref bean="blValidateAddRequestActivity" />
+                <ref bean="blAddOrderItemActivity" />
+                <!--<ref bean="blAddFulfillmentGroupItemActivity" />-->
+                <ref bean="blAddWorkflowPriceOrderIfNecessaryActivity" />
+                <!--<ref bean="blAddWorkflowVerifyFulfillmentGroupItemsActivity" />-->
+            </list>
+        </property>
+        <property name="defaultErrorHandler">
+            <bean class="cn.globalph.b2c.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>cn.globalph.b2c.inventory.service.InventoryUnavailableException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Update Item Workflow Configuration -->
+    <bean p:order="1000" id="blValidateUpdateRequestActivity" class="cn.globalph.b2c.order.service.workflow.update.ValidateUpdateRequestActivity"/>
+    <bean p:order="2000" id="blUpdateOrderItemActivity" class="cn.globalph.b2c.order.service.workflow.update.UpdateOrderItemActivity"/>
+    <bean p:order="3000" id="blUdateOrderMultishipOptionActivity" class="cn.globalph.b2c.order.service.workflow.update.UpdateOrderMultishipOptionActivity"/>
+    <bean p:order="4000" id="blUpdateFulfillmentGroupItemActivity" class="cn.globalph.b2c.order.service.workflow.update.UpdateFulfillmentGroupItemActivity"/>
+    <bean p:order="5000" id="blUpdateWorkflowPriceOrderIfNecessaryActivity" class="cn.globalph.b2c.order.service.workflow.PriceOrderIfNecessaryActivity"/>
+    <bean p:order="6000" id="blUpdateWorkflowVerifyFulfillmentGroupItemsActivity" class="cn.globalph.b2c.order.service.workflow.VerifyFulfillmentGroupItemsActivity"/>
+    <bean p:order="7000" id="blUpdateWorkflowCheckCouponAvailabilityActivity" class="cn.globalph.b2c.order.service.workflow.CheckCouponAvailabilityActivity"/>
+    
+    
+    <bean id="blUpdateItemWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <ref bean="blValidateUpdateRequestActivity" />
+                <ref bean="blUpdateOrderItemActivity" />
+                <!--<ref bean="blUdateOrderMultishipOptionActivity" />-->
+                <!--<ref bean="blUpdateFulfillmentGroupItemActivity" />-->
+                <ref bean="blUpdateWorkflowPriceOrderIfNecessaryActivity" />
+                <!--<ref bean="blUpdateWorkflowVerifyFulfillmentGroupItemsActivity" />-->
+                 <ref bean="blUpdateWorkflowCheckCouponAvailabilityActivity" />
+            </list>
+        </property>
+        <property name="defaultErrorHandler">
+            <bean class="cn.globalph.b2c.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>cn.globalph.b2c.inventory.service.InventoryUnavailableException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    
+    <!-- Update Item Workflow Configuration -->
+    <bean p:order="1000" id="blValidateUpdateProductOptionsRequestActivity" class="cn.globalph.b2c.order.service.workflow.update.options.ValidateUpdateProductOptionsRequestActivity"/>
+    <bean p:order="2000" id="blUpdateProductOptionsOrderItemActivity" class="cn.globalph.b2c.order.service.workflow.update.options.UpdateProductOptionsOrderItemActivity"/>
+ 
+    <bean id="blUpdateProductOptionsForItemWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <ref bean="blValidateUpdateProductOptionsRequestActivity" />
+                <ref bean="blUpdateProductOptionsOrderItemActivity" />
+            </list>
+        </property>
+        <property name="defaultErrorHandler" ref="blDefaultErrorHandler"/>
+    </bean>
+    
+    <!-- Remove Item Workflow Configuration -->
+    <bean p:order="1000" id="blValidateRemoveRequestActivity" class="cn.globalph.b2c.order.service.workflow.remove.ValidateRemoveRequestActivity"/>
+    <bean p:order="3000" id="blRemoveFulfillmentGroupItemActivity" class="cn.globalph.b2c.order.service.workflow.remove.RemoveFulfillmentGroupItemActivity"/>
+    <bean p:order="4000" id="blRemoveOrderItemActivity" class="cn.globalph.b2c.order.service.workflow.remove.RemoveOrderItemActivity"/>
+    <bean p:order="5000" id="blRemoveWorkflowPriceOrderIfNecessaryActivity" class="cn.globalph.b2c.order.service.workflow.PriceOrderIfNecessaryActivity"/>
+    <bean p:order="6000" id="blRemoveWorkflowVerifyFulfillmentGroupItemsActivity" class="cn.globalph.b2c.order.service.workflow.VerifyFulfillmentGroupItemsActivity"/>
+    <bean p:order="7000" id="blRemoveWorkflowCheckCouponAvailabilityActivity" class="cn.globalph.b2c.order.service.workflow.CheckCouponAvailabilityActivity"/>
+    
+    <bean id="blRemoveItemWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.order.service.workflow.CartOperationProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <ref bean="blValidateRemoveRequestActivity" />
+                <!--<ref bean="blRemoveFulfillmentGroupItemActivity" />-->
+                <ref bean="blRemoveOrderItemActivity" />
+                <ref bean="blRemoveWorkflowPriceOrderIfNecessaryActivity" />
+                <ref bean="blRemoveWorkflowCheckCouponAvailabilityActivity" />
+                <!--<ref bean="blRemoveWorkflowVerifyFulfillmentGroupItemsActivity" />-->
+            </list>
+        </property>
+        <property name="defaultErrorHandler" ref="blDefaultErrorHandler"/>
+    </bean>
+
+    <!-- Checkout Workflow Configuration -->
+    <bean p:order="1000" id="blVerifyCustomerMaxOfferUsesActivity" class="cn.globalph.b2c.offer.service.workflow.VerifyCustomerMaxOfferUsesActivity"/>
+    <bean p:order="3000" id="blValidateAndConfirmPaymentActivity" class="cn.globalph.b2c.checkout.service.workflow.ValidateAndConfirmPaymentActivity">
+        <property name="rollbackHandler" ref="blConfirmPaymentsRollbackHandler" />
+    </bean>
+    <bean p:order="4000" id="blRecordOfferUsageActivity" class="cn.globalph.b2c.offer.service.workflow.RecordOfferUsageActivity">
+        <property name="rollbackHandler" ref="blRecordOfferUsageRollbackHandler" />
+    </bean>
+    <bean p:order="6000" id="phConfirmOrderActivity"
+          class="cn.globalph.b2c.checkout.service.workflow.ConfirmOrderActivity">
+        <property name="rollbackHandler" ref="phConfirmOrderRollbackHandler"/>
+    </bean>
+
+    <bean id="phCheckoutOrderRollbackHandler"
+          class="cn.globalph.b2c.checkout.service.workflow.CheckoutOrderRollbackHandler"/>
+
+    <bean id="blCheckoutWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.checkout.service.workflow.CheckoutProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <ref bean="blVerifyCustomerMaxOfferUsesActivity" />
+                <ref bean="blRecordOfferUsageActivity" />
+                <bean p:order="5001" class="cn.globalph.b2c.checkout.service.workflow.CheckoutOrderActivity">
+                    <property name="rollbackHandler" ref="phCheckoutOrderRollbackHandler"/>
+                </bean>
+                <bean p:order="5010" class="cn.globalph.b2c.checkout.service.workflow.DecrementInventoryActivity">
+                    <property name="rollbackHandler" ref="blDecrementInventoryRollbackHandler"/>
+                </bean>
+                <bean p:order="6000" class="cn.globalph.b2c.checkout.service.workflow.SaleCountIncrementActivity"/>
+                <bean p:order="6001" class="cn.globalph.b2c.checkout.service.workflow.CouponActivity"/>
+                <bean p:order="6002" class="cn.globalph.b2c.checkout.service.workflow.CouponCodeActivity">
+                	<property name="isCheckout" value="true"/>
+                </bean>
+                <bean p:order="6005" class="cn.globalph.b2c.checkout.service.workflow.GroupOnParticipateInCountActivity">
+                    <property name="isRevert" value="false"/>
+                </bean>
+                <bean p:order="6008" class="cn.globalph.b2c.checkout.service.workflow.DecrementBonusPointActivity"/>
+               <!-- <bean p:order="6008" class="cn.globalph.b2c.checkout.service.workflow.BonusPointActivity">
+                    <property name="isRevert" value="true"/>
+                </bean>-->
+                <bean p:order="7000" class="cn.globalph.b2c.checkout.service.workflow.OrderLogActivity"/>
+            </list>
+        </property>
+        <property name="defaultErrorHandler">
+            <bean class="cn.globalph.b2c.workflow.DefaultErrorHandler">
+                <property name="unloggedExceptionClasses">
+                    <list>
+                        <value>cn.globalph.b2c.inventory.service.InventoryUnavailableException</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="phConfirmOrderWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.checkout.service.workflow.CheckoutProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <ref bean="blValidateAndConfirmPaymentActivity"/>
+                <ref bean="phConfirmOrderActivity"/>
+                <!--<bean p:order="7000" class="cn.globalph.b2c.checkout.service.workflow.BonusPointActivity"/>-->
+                <bean p:order="8000" class="cn.globalph.b2c.checkout.service.workflow.OrderLogActivity"/>
+                <bean p:order="9000"
+                      class="cn.globalph.b2c.checkout.service.workflow.SendOrderConfirmationMessageActivity"/>
+                <bean p:order="9999" class="cn.globalph.b2c.checkout.service.workflow.SplitOrderActivity"/>
+                <bean p:order="10000" class="cn.globalph.b2c.checkout.service.workflow.CouponCodeActivity">
+                	<property name="isConfirmOrder" value="true"/>
+                </bean>
+                <!--<bean p:order="99999" class="cn.globalph.b2c.checkout.service.workflow.DetermineDeliveryTypeActivity"/>-->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="phCompleteOrderWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.checkout.service.workflow.CheckoutProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <bean p:order="10" class="cn.globalph.b2c.checkout.service.workflow.OrderLogActivity"/>
+                <bean p:order="12" class="cn.globalph.b2c.checkout.service.workflow.BonusPointActivity"/>
+                <!--<bean p:order="9000" class="cn.globalph.b2c.checkout.service.workflow.SendOrderCompleteMessageActivity"/>-->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="phCancelOrderWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+        <property name="processContextFactory">
+            <bean class="cn.globalph.b2c.checkout.service.workflow.CheckoutProcessContextFactory"/>
+        </property>
+        <property name="activities">
+            <list>
+                <bean p:order="10" class="cn.globalph.b2c.checkout.service.workflow.IncrementInventoryActivity">
+                    <property name="rollbackHandler" ref="blDecrementInventoryRollbackHandler"/>
+                </bean>
+                <bean p:order="20" class="cn.globalph.b2c.checkout.service.workflow.SaleCountDecrementActivity"/>
+                <bean p:order="30" class="cn.globalph.b2c.checkout.service.workflow.CouponActivity">
+                    <property name="isRevert" value="true"/>
+                </bean>
+                <bean p:order="40" class="cn.globalph.b2c.checkout.service.workflow.CouponCodeActivity">
+                    <property name="isCancelOrder" value="true"/>
+                </bean>
+                <bean p:order="41" class="cn.globalph.b2c.checkout.service.workflow.DecrementBonusPointActivity">
+                    <property name="isRevert" value="true"/>
+                </bean>
+                <bean p:order="42" class="cn.globalph.b2c.checkout.service.workflow.GroupOnParticipateInCountActivity">
+                    <property name="isRevert" value="false"/>
+                </bean>
+                <bean p:order="45" class="cn.globalph.b2c.checkout.service.workflow.OrderLogActivity"/>
+            </list>
+        </property>
+    </bean>
+
+    <aop:config>
+        <aop:aspect id="qosAspect" ref="blServiceMonitor">
+            <aop:pointcut id="qosMethod" expression="execution(* cn.globalph.common.vendor.service.monitor.ServiceStatusDetectable.process(..))"/>
+            <aop:around method="checkServiceAOP" pointcut-ref="qosMethod"/>
+        </aop:aspect>
+    </aop:config>
+       
+</beans>

@@ -1,0 +1,44 @@
+<table id="cart_products">
+    <thead>
+        <tr>
+            <th colspan="2"><span>商品</span></th>
+            <th><span>数量</span></th>
+            <th> <span>单价</span></th>
+            <th> <span>折扣节省</span></th>
+            <th><span>总计</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="item : ${cart.orderItems}" th:object="${item}" th:id="${'productRow' + item.id}">
+            <td><img th:if="*{sku.skuMedia['primary']}" th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}" width="60" th:alt="*{sku.name}" /></td>
+            <td class="name">
+                <a th:href="@{*{sku.product.url} + '/' + *{sku.id}}" th:text="*{sku.name}"></a>
+                <br/>
+               <nph:product_option_display orderItem="${item}" >
+                     <ul th:unless="${#lists.isEmpty(productOptionDisplayValues)}" class="productOptions">
+                         <li th:each="entry: ${productOptionDisplayValues}">
+                           <span  th:text="${entry.key} + ': ' + ${entry.value}"></span>
+                         </li>
+                     </ul>
+                </nph:product_option_display> 
+            </td>
+            <td align="center">
+                <nph:form method="POST" th:action="@{/cart/updateQuantity}">
+                    <input type="hidden" name="skuId" th:value="*{sku.id}" />
+                    <input type="hidden" name="orderItemId" th:value="*{id}" />
+                    <input type="number" name="quantity" class="quantityInput" style="width:30px" th:value="*{quantity}" maxlength="3" autocomplete="off"/><br />
+                    <input type="submit" class="updateQuantity" th:value="修改"/>
+                </nph:form>
+                <a class="cartLinkBtn remove_from_cart" th:href="@{/cart/remove(orderItemId=*{id}, skuId=*{sku.id})}"><span>删除</span></a>
+            </td>
+            <td align="center" nph:price="*{getPriceBeforeAdjustments(true)}"></td>
+            
+            <td align="center" th:if="*{adjustmentValue.zero}">---</td>
+            <td align="center" class="discount" th:unless="*{adjustmentValue.zero}" >
+            <span  nph:price="*{totalAdjustmentValue}" ></span>
+                 <div class="productOptions" th:substituteby="catalog/partials/offers :: offers"/>
+             </td>
+            <td align="center" class="value" nph:price="*{totalPrice}"></td>
+        </tr>
+    </tbody>
+</table>

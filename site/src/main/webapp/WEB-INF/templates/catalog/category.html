@@ -1,0 +1,50 @@
+<!DOCTYPE HTML> 
+<html class="no-js" lang="zh"> 
+<head th:include="/layout/partials/head (pageTitle=${category.name + ' - 品荟'})"></head>
+<body>
+    <div id="notification_bar"></div>
+    <header th:substituteby="layout/partials/header" />
+	<nav th:substituteby="layout/partials/cateNav" />
+    <div id="content" class="width_setter group" role="main">    
+        <section id="left_column">
+            <header>
+                <h1 th:inline="text">
+                    <span>查看</span> [[${category.name}]] ([[${result.startResult}]] - [[${result.endResult}]] <span>共</span> [[${result.totalResults}]])
+                </h1>
+                <div th:substituteby="catalog/partials/productSortOptions"></div>
+            </header>
+            <ul id="products" class="group">
+               	<li th:each="sku : ${skus}" th:object="${sku}" th:include="catalog/partials/sku" class="product_container"></li>
+            </ul>
+            <div th:substituteby="catalog/partials/productPagingOptions" />
+        </section>
+    
+        <section id="right_column">
+            <header><span>过滤结果</span></header>
+            <div id="options">
+                
+                <div th:substituteby="catalog/partials/facetFilter" />
+                
+                <div th:substituteby="catalog/partials/rightHandBannerAds" />
+                
+                <section id="right_column">
+                    <header><span>推荐水果</span></header>
+                    <div id="options">
+                        <div class="section" th:object="${category}">
+                             <nph:related_products categoryId="*{id}" quantity="3"/>     
+                             <ul id="featured_products" class="group">
+                   				<li th:each="relatedSku : ${relatedSkus}" th:object="${relatedSku}" th:include="catalog/partials/sku" class="product_container"></li>
+                             </ul>
+                        </div>                                  
+                    </div>
+                </section>  
+                
+            </div>
+        </section>
+            
+    </div>
+    
+    <footer th:substituteby="layout/partials/footer" />
+    
+</body>
+</html>

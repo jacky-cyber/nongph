@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<TITLE>日历维护</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<STYLE type=text/css>
+.todyaColor {
+	BACKGROUND-COLOR: #99ff00
+}
+.workingDateColor {
+CURSOR: hand;
+	COLOR: black
+}
+.holidayColor {
+CURSOR: hand;
+	COLOR: red
+}
+</STYLE>
+</HEAD>
+<BODY oncontextmenu=self.event.returnValue=false bgColor=beige
+	leftMargin=0 topMargin=0>
+	<FORM id=CLD>
+		<DIV id=detail
+			style="LEFT: 330px; WIDTH: 140px; POSITION: absolute; TOP: 120px; HEIGHT: 10px"></DIV>
+		<TABLE cellSpacing=1 cellPadding=1 align=left bgColor=#000000 border=0 >
+			<TBODY>
+				<TR bgColor=#ffffff>
+					<TD vAlign=top width=460 height=245>
+						<TABLE height=28 cellSpacing=4 cellPadding=0 width="100%"
+							bgColor=#ffffff border=0>
+							<TBODY>
+								<TR>
+									<TD height=28>日期： <span id='year'></span> 年 <span
+										id='month'></span> 月 <BR></TD>
+								</TR>
+							</TBODY>
+						</TABLE>
+						<TABLE height=28 cellSpacing=4 cellPadding=0 width="100%"
+							bgColor=#333333 border=0>
+							<TBODY>
+								<TR>
+									<TD width=5><FONT title=上一年
+										style="CURSOR: hand; COLOR: #ffffff" onclick="pushBtm('YU')"
+										face=webdings>9</FONT>
+									</TD>
+									<TD width=5><FONT title=上一月
+										style="CURSOR: hand; COLOR: #ffffff" onclick="pushBtm('MU')"
+										face=webdings>3</FONT>
+									</TD>
+									<TD align=middle><FONT id=YMBG color=#ffffff></FONT>
+									</TD>
+									<TD align=right width=5><FONT title=下一月
+										style="CURSOR: hand; COLOR: #ffffff" onclick="pushBtm('MD')"
+										face=webdings>4</FONT>
+									</TD>
+									<TD align=right width=5><FONT title=下一年
+										style="CURSOR: hand; COLOR: #ffffff" onclick="pushBtm('YD')"
+										face=webdings>8</FONT>
+									</TD>
+								</TR>
+							</TBODY>
+						</TABLE>
+						<TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#ffffff
+							border=1>
+							<SCRIPT language=JavaScript>
+								init();
+							</SCRIPT>
+							<TBODY id="tbody1">
+								<TR align=middle bgColor=#dddddd>
+									<TD width=60 height=24>日</TD>
+									<TD width=60>一</TD>
+									<TD width=60>二</TD>
+									<TD width=60>三</TD>
+									<TD width=60>四</TD>
+									<TD width=60>五</TD>
+									<TD width=60>六</TD>
+								</TR>
+								<TR>
+									<TD></TD>
+								</TR>
+							</TBODY>
+						</TABLE>
+						<TABLE height=28 cellSpacing=4 cellPadding=0 width="100%"
+							bgColor=#ffffff border=0>
+							<TBODY>
+								<TR bgColor=#dddddd>
+									<TD align=middle width=400 height=28 style="font: normal 12px arial, helvetica,tahoma,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前时间：<span
+										id="nowTime"></span></TD>
+								</TR>
+								<tr bgColor=#ffffff>
+				<td style="font: normal 12px arial, helvetica,tahoma,sans-serif">
+				 注：黑色为工作日，<font color='red'>红色</font>为非工作日
+	<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击<font color='red'>红色</font>字体设置为工作日，点击黑色字体可设置为非工作日</td>
+				</tr>
+							</TBODY>
+						</TABLE></TD>
+				</TR>
+				
+			</TBODY>
+		</TABLE>
+
+	</FORM>
+	
+</BODY>
+</HTML>

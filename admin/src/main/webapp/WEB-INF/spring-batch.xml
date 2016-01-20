@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath:/spring/spring-batch.xml"/>
+    <bean id="batchDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${batch.jdbc.driver}"/>
+        <property name="url" value="${batch.jdbc.url}"/>
+        <property name="username" value="${batch.jdbc.username}"/>
+        <property name="password" value="${batch.jdbc.password}"/>
+        <property name="initialSize" value="0"/>
+        <property name="maxWait" value="2000"/>
+        <property name="maxIdle" value="20"/>
+        <property name="maxActive" value="20"/>
+        <property name="validationQuery" value="select 1"/>
+    </bean>
+</beans>

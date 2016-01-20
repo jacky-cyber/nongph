@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd" version="2.0">
+
+    <named-query name="BC_READ_ALL_COMMUNITY" >
+        <query>SELECT community FROM cn.globalph.passport.domain.Community community</query>
+    </named-query>
+    
+    <named-query name="NPH_FIND_FIRST_LEVEL_COMMUNITIES" >
+        <query>SELECT cy FROM cn.globalph.passport.domain.Community cy
+        WHERE cy.isHead=TRUE and cy.community is null</query>
+    </named-query>
+    
+     <named-query name="NPH_FIND_CHILD_COMMUNITIES" >
+    <query>SELECT cy FROM cn.globalph.passport.domain.Community cy
+        WHERE cy.community.id = :communityId</query>
+    </named-query>
+</entity-mappings>

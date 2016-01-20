@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en">
+
+<head th:include="/layout/partials/head (pageTitle='个人中心 - 品荟 ')">
+</head>
+<link rel="stylesheet" href="/static/css/service.css" />
+<body>
+<div id="notification_bar"></div>
+<header th:substituteby="layout/partials/header(pageTitle='品荟服务',type='normal')" />
+<div id="content" class="width_setter group" role="main">
+    <div>
+       <!-- <div class="logo margin_auto">品荟生活</div>-->
+        <div class="logo_word margin_auto">讲究生活，从品荟开始</div>
+    </div>
+    <div>
+        <div class="codePicture margin_auto">
+            <img src="/static/img/pinhui.jpg" width="100"/>
+        </div>
+        <div class="margin_auto" style="width:70px;margin-top: 2px;">微信服务号</div>
+    </div>
+
+    <ul class="all_list">
+      <!--  <li>服务群号：&nbsp;&nbsp;&nbsp;&nbsp;412568478</li>-->
+        <li>服务时间：&nbsp;&nbsp;&nbsp;&nbsp;08:30--20:00</li>
+        <li>客服中心：&nbsp;&nbsp;&nbsp;&nbsp;0512-67678981</li>
+        <li>联系邮箱：&nbsp;&nbsp;&nbsp;&nbsp;support@globalph.cn</li>
+        <li>联系地址：&nbsp;&nbsp;&nbsp;&nbsp;苏州工业园区仁爱路99号C#308</li>
+        <li><a class="all-go-btn" th:href="@{/account/returns}">退换货政策</a></li>
+    </ul>
+</div>
+
+</body>
+</html>

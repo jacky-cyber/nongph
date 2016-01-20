@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="cn">
+<head th:include="/layout/partials/head (pageTitle='商品详情')"></head>
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='商品详情',type='normal')" />
+	<div class="gd-desc" th:utext="${sku.longDescription}"></div>
+	<div th:object="${sku}">
+		<th:block
+			th:with="checkInventory=*{inventoryType?.type == 'CHECK_QUANTITY'},
+                                   availableInventory=${checkInventory ? #object.quantityAvailable != null and #object.quantityAvailable != 0 : true},
+                                   inCart=${cart.containsSku(#object.id)}">
+			<div id="cart_bottom" class="good-add-to-cart">
+				<div class="add-to-cart-btn">
+					<div th:class="*{'productActions' + id}">
+						<div class="add_to_cart">
+							<nph:form method="POST" th:action="@{/cart/add}">
+								<input type="hidden" name="skuId" th:value="*{id}" />
+								<input type="hidden" name="quantity" value="1" />
+								<input th:if="${availableInventory}" type="submit" class="addToCart big red"
+									   value="加入购物车"/>
+								<input th:if="${!availableInventory}" type="submit" disabled="disabled"
+									   class="addToCart big gray" value="无货"/>
+							</nph:form>
+						</div>
+						<p class="error" th:if="${param.errorMessage}"
+							th:text="${param.errorMessage[0]}"></p>
+					</div>
+				</div>
+				<a id="toCart" th:href="@{/cart}"> <i
+					th:text="${cart.itemCount}"> </i>
+				</a>
+			</div>
+		</th:block>
+	</div>
+</body>
+</html>

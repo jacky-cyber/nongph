@@ -1,0 +1,60 @@
+.item{
+	position: relative;
+	width: 100%;
+	margin-bottom:10px;
+}
+
+.item .item-phone{
+	display:inline-block;
+	width: 100%;
+	padding-right:75px;
+	box-sizing:border-box;
+}
+.item .vc-btn{
+	text-align:center;
+	background-color:#c0c0c0;
+	height:44px;
+	width:70px;
+	line-height:44px;
+	position:absolute;
+	right:0px;
+	top:0;}
+.item .vc-btn.active{
+	background-color:#33cc99;
+}
+
+.item-username{
+	
+}
+
+.txt-input{
+	width: 100%;
+	height: 44px;
+	padding-left:10px;
+	background: #FFF none repeat scroll 0% 0%;
+	color: #252525;
+	border-radius: 3px;
+	border: 1px solid #D7D7D7;
+	line-height: normal;
+	font-family: "微软雅黑";
+	font-size: 16px;
+	box-sizing:border-box;
+}
+
+.txt-username{
+	
+}
+
+.bind_button{
+	width:100%;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.not_bind_button{
+	width:100%;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}

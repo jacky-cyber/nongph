@@ -1,0 +1,43 @@
+<div th:if="${#lists.isEmpty(cart.orderItems)}" class="checkout_warning">
+         <span>购物车为空</span>
+         <br/>
+         <a th:href="@{/}"><span>继续购物</span></a>
+</div>
+<div id="cart" class="cart_modal" th:unless="${#lists.isEmpty(cart.orderItems)}">
+    <div th:fragment="title" th:inline="text" style="display: none;">购物车 - 品荟</div>
+    <div th:substituteby="cart/partials/cartProductsTable"></div>
+    
+    <div id="paymentp"></div>
+    <div class="payment-total-bar" id="payment">
+        <div class="shp-chk">
+	    	<a th:href="@{/cart/unuseAll}" th:if="${#lists.size(cart.orderItems) == cart.usedItemsNum}">
+				<span class="cart-checkbox checked" id="checkIcon-1"></span>
+			</a>
+			<a th:href="@{/cart/useAll}" th:if="${#lists.size(cart.orderItems) > cart.usedItemsNum}">
+				<span class="cart-checkbox" id="checkIcon-1"></span>
+			</a>
+        </div>
+        <div class="shp-cart-info">
+            <strong class="shp-cart-total">总计:<span class="" id="cart_realPrice" nph:price="${cart.subTotal?.subtract(cart.orderAdjustmentsValue)}"></span></strong>
+            <span class="sale-off">商品总额:<span class="bottom-bar-price" id="cart_oriPrice" nph:price="${cart.subTotal}"></span> 返现:
+            <span class="bottom-bar-price" id="cart_rePrice" th:if="${cart.subTotal?.zero}">￥0.00</span>
+            <span class="bottom-bar-price" id="cart_rePrice" th:unless="${cart.subTotal?.zero}" nph:price="${cart.orderAdjustmentsValue}"></span>
+            </span>
+        </div>
+        <a id="submitBtn" style="background: #33CC99 none repeat scroll 0% 0%;color:#fff;"
+           th:if="${cart.usedItemsNum>0}" class="btn-right-block"
+           th:href="${customer.anonymous}?@{/login?successUrl=cart}:@{/checkout}">
+        	结算(<span id="checkedNum" th:text="${cart.usedItemsNum}"> </span>)
+        </a>
+        <a id="submitBtn" style="background: rgb(153, 153, 153) none repeat scroll 0% 0%;color:#fff;"
+           th:if="${cart.usedItemsNum==0}" class="btn-right-block">
+        	结算(<span id="checkedNum" th:text="${cart.usedItemsNum}"> </span>)
+        </a>
+    </div>
+   
+    <div id="blc-extra-data" class="hidden" th:utext="${blcextradata}" th:if="${!#strings.isEmpty(blcextradata)}"></div>
+</div>
+
+<div th:if="${#lists.isEmpty(cart.orderItems)}">
+    <div th:substituteby="layout/partials/divfootermenu"/>
+</div>

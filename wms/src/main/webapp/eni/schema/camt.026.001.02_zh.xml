@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.026.001.02" longName="camt.026.001.02" type="camt.026.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.026.001.02">
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="Undrlyg" longName="原因" type="PaymentInstructionExtract2"/>
+		<element shortName="Justfn" longName="理由" type="UnableToApplyJustification1Choice"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+		<type shortName="UnableToApplyJustification1Choice">
+		<element shortName="AnyInf" longName="任何信息" type="YesNoIndicator"/>
+		<element shortName="MssngOrIncrrctInf" longName="缺失/不正确信息" type="MissingOrIncorrectInformation1"/>
+	</type>
+	
+	<type shortName="MissingOrIncorrectInformation1">
+		<element shortName="MssngInf" longName="丢失信息" type="UnableToApplyMissingInfo1Code"/>
+		<element shortName="IncrrctInf" longName="错误信息" type="UnableToApplyIncorrectInfo2Code">
+			<enumeration shortName="IN01" longName="相关查询错误" />
+			<enumeration shortName="IN02" longName="银行操作代码错误" />
+			<enumeration shortName="IN03" longName="指令代码错误" />
+			<enumeration shortName="IN04" longName="请求执行数据错误" />
+			<enumeration shortName="IN05" longName="数据值错误" />
+			<enumeration shortName="IN06" longName="中间行结算金额错误" />
+			<enumeration shortName="IN07" longName="借款人错误" />
+			<enumeration shortName="IN08" longName="借方帐户错误" />
+			<enumeration shortName="IN09" longName="收件人一致性错误" />
+			<enumeration shortName="IN10" longName="第三赔偿机构错误" />
+			<enumeration shortName="IN11" longName="支付方案错误" />
+			<enumeration shortName="IN12" longName="收益人账户错误" />
+			<enumeration shortName="IN13" longName="贷方错误" />
+			<enumeration shortName="IN14" longName="贷方账户错误" />
+			<enumeration shortName="IN15" longName="汇款信息错误" />
+			<enumeration shortName="IN16" longName="支付用途错误" />
+			<enumeration shortName="IN17" longName="具体费用错误" />
+			<enumeration shortName="IN18" longName="发件人或收件人信息错误" />
+			<enumeration shortName="IN19" longName="最终代理行指令错误" />
+			<enumeration shortName="MM20" longName="贷方账户名称不一致" />
+			<enumeration shortName="MM21" longName="借方账户名称不一致" />
+			<enumeration shortName="MM22" longName="最终代理行账户名称不一致" />
+			<enumeration shortName="MM23" longName="不足借记详细信息" />
+			<enumeration shortName="MM24" longName="不足贷记方详细信息" />
+		</element>
+	</type>
+	<type shortName="UnableToApplyMissingInfo1Code">
+		<enumeration shortName="MS01" longName="缺少汇款信息" />
+		<enumeration shortName="MS02" longName="缺少发件人或收件人信息" />
+		<enumeration shortName="MS03" longName="缺少借款人" />
+		<enumeration shortName="MS04" longName="缺少借方账户" />
+		<enumeration shortName="MS05" longName="缺少第一代理" />
+		<enumeration shortName="MS06" longName="缺少金额" />
+		<enumeration shortName="MS07" longName="缺少来往科目账户" />
+		<enumeration shortName="MS08" longName="缺少中间行" />
+		<enumeration shortName="MS09" longName="缺少赔偿代理1" />
+		<enumeration shortName="MS10" longName="缺少赔偿代理2" />
+		<enumeration shortName="MS11" longName="缺少赔偿代理" />
+		<enumeration shortName="MS12" longName="缺少贷方" />
+		<enumeration shortName="MS13" longName="缺少贷方账户" />
+		<enumeration shortName="MS14" longName="缺少指令" />
+	</type>
+	<type shortName="UnableToApplyIncorrectInfo1Code"/>
+	<type shortName="UnableToApplyIncorrectInfo2Code"/>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+		<type shortName="YesNoIndicator"/>
+		
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="PaymentInstructionExtract2">
+		<element shortName="OrgnlMsgNmId" longName="原始消息名标示" type="Max35Text"/>
+		<element shortName="OrgnlInstrId" longName="原始指令标示" type="Max35Text"/>
+		<element shortName="InstdAmt" longName="指示金额" type="CurrencyAndAmount"/>
+		<element shortName="IntrBkSttlmAmt" longName="行间结算金额" type="CurrencyAndAmount"/>	
+		<element shortName="ReqdExctnDt" longName="请求执行日期" type="ISODateTime"/>	
+		<element shortName="IntrBkSttlmDt" longName="行间结算日期" type="ISODateTime"/>		
+	</type>
+	<type shortName="CurrencyAndAmount"/>
+</names>

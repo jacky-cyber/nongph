@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--<context:component-scan base-package="cn.globalph.wechat"/>-->
+
+    <bean id="phWechatUtil" class="cn.globalph.wechat.WechatUtil">
+        <property name="wechatServer" value="${wechat.server}"/>
+        <property name="createIp" value="${wechat.create.ip}"/>
+        <property name="appId" value="${wechat.appid}"/>
+        <property name="appSecret" value="${wechat.app.secret}"/>
+        <property name="mchId" value="${wechat.mchid}"/>
+        <property name="key" value="${wechat.key}"/>
+    </bean>
+</beans>

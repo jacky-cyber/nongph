@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh">
+<head th:include="/layout/partials/head (pageTitle='精品团购')"></head>
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='精品团购',type='main')" />
+	<div th:substituteby="layout/partials/childcat"></div>
+	
+	<div id="content" class="width_setter group" role="main">
+		<nph:content contentName="groupon home" />
+		<div class="slide-floor" th:if="${contentList != null and #lists.size(contentList) > 0 and contentList[0]['imageUrl'] != null}">
+			<div id="banners_outer">
+				<div th:if="${contentList !=null}" style="height:100%;position:relative;">
+					<ul style="width:400%;height:100%;display:inline-block;position:absolute;">
+						<li style="width:25%;height:100%;float:left;" th:each="item : ${contentList}" th:object="${item}" th:id="'banner_image'+${itemStat.index}"
+							th:class="banner_image">
+							<a style="display:inline-block;width:100%;height:100%;" th:href="@{${item['targetUrl']}}">
+								<img style="width:100%;height:100%;" th:src="@{${item['imageUrl']}}" />
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div id="banners_triggers" th:if="${contentList !=null}"
+					style="position: relative; z-index: 3; margin: 0 auto; text-align: center; top: -20px;">
+					<a th:each="item : ${contentList}"
+						href="javascript:void()"
+						th:attr="data-item=${itemStat.index}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="floor">
+			<nph:category_skus categoryId="${category.id}" quantity="20"
+				relatedSkusResultVar="firstSkus" />
+			<ul id="products" class="group">
+				<li th:each="sku : ${firstSkus}" th:object="${sku}"
+					th:include="catalog/partials/sku" class="product_container"></li>
+			</ul>
+		</div>
+	</div>
+	<footer th:substituteby="layout/partials/footer" />
+	<div th:substituteby="layout/partials/divfootermenu" />
+</body>
+</html>

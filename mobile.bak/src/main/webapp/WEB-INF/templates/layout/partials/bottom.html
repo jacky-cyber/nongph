@@ -1,0 +1,27 @@
+<div id="footer">
+	<div class="footer-links">
+		<div  th:if="${customer.anonymous}" th:remove="tag">
+			<a th:href="@{/login}">
+				<span>登录</span>
+			</a>
+			&nbsp;|&nbsp; 
+			<a th:href="@{/register/byPhone}">
+				<span>注册</span>
+			</a>
+		</div>
+		<div  th:unless="${customer.anonymous}" th:remove="tag">
+              <span><span>您好，</span><a class="my-account" th:href="@{/account/menu}" th:text="${customer.name}"></a></span>
+              &nbsp;|&nbsp; 
+              <a th:href="@{/logout}">
+                  <span>退出</span>
+              </a>
+        </div>
+	</div>
+	<div style="font-size:12px;">
+
+        <p style="text-align:center;margin-top:5px;">
+           <span>Copyright © 2015-2016</span>
+        </p>
+
+	</div>
+</div>

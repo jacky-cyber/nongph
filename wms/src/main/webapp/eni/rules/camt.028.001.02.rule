@@ -1,0 +1,82 @@
+/**
+ * @author Leegorous
+ */
+{
+	name : "camt.028.001.02",
+	rules : {
+		"main" : function(doc) {
+			var UndrlygDtChoice = doc.select("/camt.028.001.02/Undrlyg/UndrlygDtChoice")[0];
+			UndrlygDtChoice.setReadOnly(true);
+
+			var hijackDtChoice = function(readOnly) {
+				if (!!readOnly) proceed();
+				//$win.alert("Hello");proceed();
+				return false;
+			};
+
+			var hijack = function() {
+				if (arguments[1] == true) proceed();
+				//return false;
+			};
+
+			Aspects.addAround(hijackDtChoice, UndrlygDtChoice, "setReadOnly");
+
+			doc.lazyAddingListener("/camt.028.001.02/Undrlyg/UndrlygAmtChoice", "change", {
+				onChange : function(container) {
+					if (!container.curChild) {
+						UndrlygDtChoice.setChild(-1);
+						return;
+					}
+
+					switch(container.curChild.name) {
+						case "InstdAmt": UndrlygDtChoice.setChild("ReqdExctnDt");break;
+						case "IntrBkSttlmAmt": UndrlygDtChoice.setChild("IntrBkSttlmDt");break;
+					}
+				}
+			});
+
+			var StrtNm, POB;
+			
+			doc.lazyAddingListener(
+				"/camt.028.001.02/Inf/Intrmy/Id/IdChoice/NmAndAdr/Adr/AdrChoice", 
+				"change", {
+				onChange : function(container) {
+					if (container.curChild && container.curChild.name == "Strd") {
+						if (!POB) {
+							StrtNm = container.curChild.select("StrtNm")[0];
+							POB = container.curChild.select("POB")[0];
+							POB.setReadOnly(true);
+
+							Aspects.addAround(hijack, POB, "setReadOnly");
+						}
+
+						if (!StrtNm.enabled) {
+							POB.setReadOnly(true, true);
+							POB.setEnabled(true);
+						} else {
+							POB.setReadOnly(false, true);
+							if (POB.getValue().length == 0) 
+								POB.setEnabled(false);
+						}
+					}
+				}
+			});
+
+			doc.lazyAddingListener(
+				"/camt.028.001.02/Inf/Intrmy/Id/IdChoice/NmAndAdr/Adr/AdrChoice/Strd/StrtNm",
+				"enabled", {
+				onEnabled : function(container) {
+					//$win.alert(container.enabled);
+					if (!container.enabled) {
+						POB.setReadOnly(true, true);
+						POB.setEnabled(true);
+					} else {
+						POB.setReadOnly(false, true);
+						if (POB.getValue().length == 0) 
+							POB.setEnabled(false);
+					}
+				}
+			});
+		}
+	}
+}

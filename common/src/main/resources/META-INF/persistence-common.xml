@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="blPU" transaction-type="RESOURCE_LOCAL">
+        <mapping-file>config/bc/jpa/domain/SystemProperty.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/ModuleConfiguration.orm.xml</mapping-file>
+        <class>cn.globalph.common.email.domain.EmailTrackingClicksImpl</class>
+        <class>cn.globalph.common.email.domain.EmailTrackingImpl</class>
+        <class>cn.globalph.common.email.domain.EmailTrackingOpensImpl</class>
+        <class>cn.globalph.common.i18n.domain.TranslationImpl</class>
+        <class>cn.globalph.common.media.domain.MediaImpl</class>
+        <class>cn.globalph.common.sandbox.domain.SandBoxImpl</class>
+        <class>cn.globalph.common.sandbox.domain.SandBoxManagementImpl</class>
+        <class>cn.globalph.common.site.domain.SiteImpl</class>
+        <class>cn.globalph.common.site.domain.CatalogImpl</class>
+        <class>cn.globalph.common.enumeration.domain.DataDrivenEnumerationImpl</class>
+        <class>cn.globalph.common.enumeration.domain.DataDrivenEnumerationValueImpl</class>
+        <class>cn.globalph.common.config.domain.SystemPropertyImpl</class>
+        <class>cn.globalph.common.config.domain.AbstractModuleConfiguration</class>
+        <class>cn.globalph.common.media.domain.MediaImpl</class>
+        <class>cn.globalph.common.sitemap.domain.SiteMapConfigurationImpl</class>
+        <class>cn.globalph.common.sitemap.domain.SiteMapGeneratorConfigurationImpl</class>
+        <class>cn.globalph.common.sitemap.domain.SiteMapUrlEntryImpl</class>
+        <class>cn.globalph.common.sitemap.domain.CustomUrlSiteMapGeneratorConfigurationImpl</class>
+    </persistence-unit>
+</persistence>

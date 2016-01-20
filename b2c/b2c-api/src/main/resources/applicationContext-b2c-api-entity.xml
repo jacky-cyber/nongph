@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+           
+    <!-- Entity mappings - override for extensibility -->
+    <bean id="cn.globalph.b2c.catalog.domain.Category" class="cn.globalph.b2c.catalog.domain.CategoryImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.catalog.domain.CategoryAttribute" class="cn.globalph.b2c.catalog.domain.CategoryAttributeImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.catalog.domain.CategoryProductXref" class="cn.globalph.b2c.catalog.domain.CategoryProductXrefImpl" scope="prototype"/>
+    
+    <bean id="cn.globalph.b2c.order.domain.FulfillmentGroup" class="cn.globalph.b2c.order.domain.FulfillmentGroupImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.FulfillmentGroupItem" class="cn.globalph.b2c.order.domain.FulfillmentGroupItemImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.FulfillmentGroupFee" class="cn.globalph.b2c.order.domain.FulfillmentGroupFeeImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.FulfillmentOption" class="cn.globalph.b2c.order.domain.FulfillmentOptionImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.fulfillment.domain.FixedPriceFulfillmentOption" class="cn.globalph.b2c.order.fulfillment.domain.FixedPriceFulfillmentOptionImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.fulfillment.domain.BandedPriceFulfillmentOption" class="cn.globalph.b2c.order.fulfillment.domain.BandedPriceFulfillmentOptionImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.fulfillment.domain.BandedWeightFulfillmentOption" class="cn.globalph.b2c.order.fulfillment.domain.BandedWeightFulfillmentOptionImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.fulfillment.domain.FulfillmentBand" class="cn.globalph.b2c.order.fulfillment.domain.FulfillmentBandImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.fulfillment.domain.FulfillmentPriceBand" class="cn.globalph.b2c.order.fulfillment.domain.FulfillmentPriceBandImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.fulfillment.domain.FulfillmentWeightBand" class="cn.globalph.b2c.order.fulfillment.domain.FulfillmentWeightBandImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.Order" class="cn.globalph.b2c.order.domain.OrderImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.OrderItem" class="cn.globalph.b2c.order.domain.OrderItemImpl" scope="prototype"/>
+    
+    <bean id="cn.globalph.b2c.product.domain.Product" class="cn.globalph.b2c.product.domain.ProductImpl" scope="prototype" />
+    <bean id="cn.globalph.b2c.product.domain.SkuBundle" class="cn.globalph.b2c.product.domain.SkuBundleImpl" scope="prototype" />
+    <bean id="cn.globalph.b2c.product.domain.ProductOption" class="cn.globalph.b2c.product.domain.ProductOptionImpl" scope="prototype" />
+    <bean id="cn.globalph.b2c.product.domain.ProductOptionValue" class="cn.globalph.b2c.product.domain.ProductOptionValueImpl" scope="prototype" />
+    <bean id="cn.globalph.b2c.product.domain.SkuBundleItem" class="cn.globalph.b2c.product.domain.SkuBundleItemImpl" scope="prototype" />
+    <bean id="cn.globalph.b2c.product.domain.Sku" class="cn.globalph.b2c.product.domain.SkuImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.product.domain.SkuFee" class="cn.globalph.b2c.product.domain.SkuFeeImpl" scope="prototype"/>
+    
+    <bean id="cn.globalph.b2c.payment.domain.OrderPayment" class="cn.globalph.b2c.payment.domain.OrderPaymentImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.payment.domain.PaymentTransaction" class="cn.globalph.b2c.payment.domain.PaymentTransactionImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.payment.domain.secure.BankAccountPayment" class="cn.globalph.b2c.payment.domain.secure.BankAccountPaymentImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.payment.domain.secure.CreditCardPayment" class="cn.globalph.b2c.payment.domain.secure.CreditCardPaymentInfoImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.payment.domain.secure.GiftCardPayment" class="cn.globalph.b2c.payment.domain.secure.GiftCardPaymentImpl" scope="prototype"/>    
+    
+    <bean id="cn.globalph.b2c.offer.domain.Offer" class="cn.globalph.b2c.offer.domain.OfferImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.offer.domain.OfferRule" class="cn.globalph.b2c.offer.domain.OfferRuleImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.offer.domain.CandidateOrderOffer" class="cn.globalph.b2c.offer.domain.CandidateOrderOfferImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.offer.domain.CandidateItemOffer" class="cn.globalph.b2c.offer.domain.CandidateItemOfferImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.offer.domain.CandidateFulfillmentGroupOffer" class="cn.globalph.b2c.offer.domain.CandidateFulfillmentGroupOfferImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.offer.domain.OrderAdjustment" class="cn.globalph.b2c.offer.domain.OrderAdjustmentImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.OrderItemPriceDetail" class="cn.globalph.b2c.order.domain.OrderItemPriceDetailImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.OrderItemQualifier" class="cn.globalph.b2c.order.domain.OrderItemQualifierImpl" scope="prototype"/>    
+    <bean id="cn.globalph.b2c.offer.domain.OrderItemPriceDetailAdjustment" class="cn.globalph.b2c.offer.domain.OrderItemPriceDetailAdjustmentImpl" scope="prototype"/>    
+    <bean id="cn.globalph.b2c.offer.domain.FulfillmentGroupAdjustment" class="cn.globalph.b2c.offer.domain.FulfillmentGroupAdjustmentImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.offer.domain.OfferInfo" class="cn.globalph.b2c.offer.domain.OfferInfoImpl" scope="prototype"/>
+    
+    <bean id="cn.globalph.common.media.domain.Media" class="cn.globalph.common.media.domain.MediaImpl" scope="prototype" />
+    <bean id="cn.globalph.b2c.rating.domain.RatingSummary" class="cn.globalph.b2c.rating.domain.RatingSummaryImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.rating.domain.RatingDetail" class="cn.globalph.b2c.rating.domain.RatingDetailImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.rating.domain.ReviewDetail" class="cn.globalph.b2c.rating.domain.ReviewDetailImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.rating.domain.ReviewFeedback" class="cn.globalph.b2c.rating.domain.ReviewFeedbackImpl" scope="prototype"/>
+    
+    <bean id="cn.globalph.b2c.search.domain.Field" class="cn.globalph.b2c.search.domain.FieldImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.search.domain.SearchFacet" class="cn.globalph.b2c.search.domain.SearchFacetImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.search.domain.CategorySearchFacet" class="cn.globalph.b2c.search.domain.CategorySearchFacetImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.search.domain.CategorySearchFacetValue" class="cn.globalph.b2c.search.domain.CategorySearchFacetValueImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.search.domain.SearchFacetRange" class="cn.globalph.b2c.search.domain.SearchFacetRangeImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.search.domain.SearchSynonym" class="cn.globalph.b2c.search.domain.SearchSynonymImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.search.redirect.domain.SearchRedirect" class="cn.globalph.b2c.search.redirect.domain.SearchRedirectImpl" scope="prototype"/>
+    
+    <bean id="cn.globalph.b2c.offer.domain.OfferItemCriteria" class="cn.globalph.b2c.offer.domain.OfferItemCriteriaImpl" scope="prototype" />
+    <bean id="cn.globalph.b2c.offer.domain.OfferAudit" class="cn.globalph.b2c.offer.domain.OfferAuditImpl" scope="prototype"/>
+    <bean id="cn.globalph.b2c.catalog.domain.CategorySiteMapGeneratorConfiguration" class="cn.globalph.b2c.catalog.domain.CategorySiteMapGeneratorConfigurationImpl" scope="prototype" />
+
+    <bean id="cn.globalph.b2c.order.domain.OrderAddress" class="cn.globalph.b2c.order.domain.OrderAddressImpl"
+          scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.OrderLog" class="cn.globalph.b2c.order.domain.OrderLogImpl"
+          scope="prototype"/>
+    <bean id="cn.globalph.b2c.product.domain.PickupAddress" class="cn.globalph.b2c.product.domain.PickupAddressImpl"
+          scope="prototype"/>
+     <bean id="cn.globalph.b2c.order.domain.Refund" class="cn.globalph.b2c.order.domain.RefundImpl"
+          scope="prototype"/>
+    <bean id="cn.globalph.b2c.order.domain.RefundMedia" class="cn.globalph.b2c.order.domain.RefundMediaImpl"
+          scope="prototype"/>
+    <bean id="cn.globalph.b2c.product.domain.ComparePrice" class="cn.globalph.b2c.product.domain.ComparePriceImpl"
+          scope="prototype"/>
+    <bean id="cn.globalph.b2c.product.domain.GroupOn" class="cn.globalph.b2c.product.domain.GroupOnImpl"
+      scope="prototype"/>
+    <bean id="cn.globalph.b2c.product.domain.GroupOnAttr" class="cn.globalph.b2c.product.domain.GroupOnAttrImpl"
+      scope="prototype"/>
+      
+   	<bean id="cn.globalph.b2c.coupon.domain.CouponCode" class="cn.globalph.b2c.coupon.domain.CouponCodeImpl"
+      scope="prototype"/>
+    
+</beans>

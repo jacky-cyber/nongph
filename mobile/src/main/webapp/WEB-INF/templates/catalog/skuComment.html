@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="cn">
+<head th:include="/layout/partials/head (pageTitle='商品评价-品荟')"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/" files="comments.css"/>
+<nph:budndle name="detail.s.min.css" mapping-prefix="/static/css/" files="comments.css"/>
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='商品评价',type='normal')" />
+	<nph:ratings itemId="${sku.product.id}" />
+	<div th:if="${ratingSummary}" class="good-detail sift-mg" th:object="${ratingSummary}">
+		<div class="new-goods-details" id="_assessContent">
+			<div class="new-gd-introduce">
+				<div class="new-fl w56 new-mg-r12">
+					<span class="new-span-block"><span class="new-txt36"
+						id="_assessScale" th:text="*{averageRating}"></span><span
+						class="new-txt-sign"></span></span> <span
+						class="new-span-block new-mg-t5">评分</span>
+				</div>
+				<div class="new-gd-txt3" style="text-align:right;">
+					<span th:text="*{numberOfReviews}"></span>人评价
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div th:each="review : *{reviews}" th:object="${review}">
+				<div class="detail">
+					<p class="user_id">
+						<span class="name" th:text="${review.customer.maskName}"></span>
+						<span class="time" th:text="*{#dates.format(reviewSubmittedDate, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
+						<span class="mu-star"><span class="mu-starv" th:classappend="*{'star-width'+#strings.substring(ratingDetail.rating,0,1)}"></span></span>
+					</p>
+					<p>
+						<span th:text="*{reviewText}"></span>
+					</p>
+					<div class="parting-line"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:unless="${ratingSummary}">
+		暂无评论
+	</div>
+	
+</body>
+</html>

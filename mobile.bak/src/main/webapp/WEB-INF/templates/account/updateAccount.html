@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='个人中心 - 品荟 ')"></head>
+
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='修改账号信息',type='normal')" />
+
+	<div id="content" class="width_setter group" role="main">
+		<div class="manage-account-form-wrapper">
+
+			<p class="success" th:if="${successMessage}"
+				th:text="${successMessage}"></p>
+			<p class="warn" th:if="${erroMessage}" th:text="${errorMessage}"></p>
+			<nph:form class="manage-account" action="#" th:action="@{/account}"
+				th:object="${updateAccountForm}" method="POST">
+				<label for="name">昵称：</label>
+				<div class="item">
+					<span class="error" th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}"></span> <input type="text" th:field="*{name}"
+						maxlength="20" placeholder="请输入昵称" class="txt-input"
+						th:classappend="${#fields.hasErrors('name')}? 'fieldError'" />
+				</div>
+				<div>手机号码：</div>
+				<div class="item">
+					<div style="padding:14px 0 14px 10px;font-size:16px;">
+						<span th:text="*{phone}" />
+						<span th:remove="tag" th:if="*{phone}">
+							<span style="margin-left: 5px; color: #8C8C8C;"
+								th:if="*{validationStatus==0 or validationStatus==1}">
+								<span>手机号码尚未认证，</span>
+							</span>
+							<span style="margin-left: 5px; color: #8C8C8C;"
+								th:if="*{validationStatus==2 or validationStatus==3}">
+								<a style="color:#e83b10;" th:href="@{/account/changePhone/step1}">修改</a>
+							</span>
+						</span>
+					</div>
+				</div>
+
+
+				<div>邮箱地址：</div>
+				<div class="item">
+					<div style="padding:14px 0 14px 10px;font-size:16px;">
+						<span th:remove="tag" th:if="*{emailAddress}">
+							<span th:text="*{emailAddress}" />
+							<span style="margin-left: 5px; color: #8C8C8C;">
+								<a style="color:#e83b10;" th:href="@{/account/changeEmail/step1}">修改</a>
+							</span>
+						</span>
+						<span th:remove="tag" th:unless="*{emailAddress}">
+							<a style="color:#e83b10;" th:href="@{/account/changeEmail/step1}">绑定邮箱</a>
+						</span>
+					</div>
+				</div>
+
+
+				<input type="submit" class="register_button big red" value="确认提交" />
+			</nph:form>
+		</div>
+	</div>
+
+	<footer th:substituteby="layout/partials/footer" />
+	<div th:substituteby="layout/partials/divfootermenu" />
+</body>
+</html>

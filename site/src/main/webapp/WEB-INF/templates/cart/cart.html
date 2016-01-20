@@ -1,0 +1,25 @@
+<div id="cart" class="cart_modal">
+    <div th:fragment="title" th:inline="text" style="display: none;">Cart - Broadleaf Demo - Heat Clinic</div>
+
+    <table th:substituteby="cart/partials/cartProductsTable"></table>
+
+    <div id="cart_total" class="group">
+        <h3><span>当前总计</span></h3>
+        <div id="subtotal" th:unless="${cart.subTotal?.zero}" nph:price="${cart.subTotal?.subtract(cart.orderAdjustmentsValue)}"></div>
+        <div id="orderDiscounts" th:unless="${cart.orderAdjustmentsValue.zero}">
+            <span>订单折扣</span>: <span nph:price="${cart.orderAdjustmentsValue}" />
+        </div>
+        <div id="checkout">
+            <a th:href="${customer.anonymous}?@{/login}:@{/checkout}" target="_top" class="big-button red-button">
+                <span>去结算</span>
+            </a>
+        </div>
+        <p>
+            <div class="clearfix"></div>
+            <a th:href="@{/}" target="_top">&laquo; <span>继续购物</span></a>
+        </p>
+    </div>
+    <p class="error" th:if="${param.errorMessage}" th:text="${param.errorMessage[0]}"></p>
+    <p class="error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+    <div id="blc-extra-data" class="hidden" th:utext="${blcextradata}" th:if="${!#strings.isEmpty(blcextradata)}"></div>
+</div>

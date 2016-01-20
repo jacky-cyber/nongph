@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='付款 - 品荟')"></head>
+<style>
+    .item {
+        font-size: 18px;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        text-align: center;
+        height: 30px;
+    }
+
+    .pay_button {
+        width: 80%;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+</style>
+
+<body>
+<div id="notification_bar"></div>
+<header th:substituteby="layout/partials/header(pageTitle='付款',type='normal')"/>
+<div id="checkout_content" class="width_setter group" role="main">
+    <div th:substituteby="${templateName}"/>
+</div>
+
+
+</body>
+<script th:src="@{/static/js/json2.js}"></script>
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var performWechatPay = function () {
+        var $payBtn = $('#payBtn');
+        if($payBtn.css("background") == "#999999") {
+            return;
+        }
+        $payBtn.css("background", "#999999");
+        var csrfToken = $('input[name="csrfToken"]').val();
+        var orderNumber = $('#orderNumber').val();
+        var openId = $('#openId').val();
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: {
+                csrfToken: csrfToken,
+                orderNumber: orderNumber,
+                openId: openId
+            },
+            url: "/wechatpay/prepare",
+            success: function (data) {
+                if (data != null && data.err_code == null) {
+                    WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                        appId: data.appId,
+                        timeStamp: data.timeStamp,
+                        nonceStr: data.nonceStr,
+                        package: data.package,
+                        signType: data.signType,
+                        paySign: data.paySign
+                    }, function (res) {
+                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+                            location.href = "/wechatpay/return?orderNumber=" + orderNumber;
+                        } else {
+                            //if (res.err_msg == "get_brand_wcpay_request:cancel")
+                            $payBtn.css("background", "#33cc99");
+                        }
+                    });
+                } else {
+                    if (data.err_code == "ORDERPAID") {
+                        location.href = "/wechatpay/return?orderNumber=" + orderNumber;
+                    } else {
+                        $payBtn.css("background", "#33cc99");
+                        alert("支付失败，请联系客服！")
+                    }
+                }
+            }
+
+        });
+
+
+    };
+    /*]]>*/
+</script>
+</html>

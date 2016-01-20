@@ -1,0 +1,57 @@
+<div class="floor" th:fragment="order-summary">
+	<div class="cart_title">
+		<span th:text="#{cart.orderSummary}">Order Summary</span> <a
+			id="cartLink" class="modalcart refreshonclose" th:href="@{/cart}">
+			<span th:text="#{cart.edit}">Edit</span>
+		</a>
+	</div>
+	<div class="cart_item" th:each="item : ${cart.orderItems}"
+		th:object="${item}" th:id="${'productRow' + item.id}">
+		<div class="cart_item_left">
+			<a th:href="@{*{sku.product.url} + '/' + *{sku.id}}"> <img
+				th:if="*{sku.skuMedia['primary']}"
+				th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}" width="60"
+				th:alt="*{sku.name}" />
+			</a>
+		</div>
+
+		<div class="cart_item_right_top">
+			<a th:href="@{*{sku.product.url} + '/' + *{sku.id}}"
+				th:text="*{sku.name}"></a>
+		</div>
+
+		<div>
+			<span style="color: #C00000;" th:text="*{price}"></span>
+		</div>
+		<div class="discount" th:unless="*{adjustmentValue.zero}">
+			<div class="productOptions"
+				th:substituteby="catalog/partials/offers :: offers" />
+			<span>优惠金额：</span><span nph:price="*{totalAdjustmentValue}"></span>
+		</div>
+		<div th:if="*{adjustmentValue.zero}" style="margin: 20px;"></div>
+		<div>
+			<span>X</span> <span th:text="*{quantity}"></span>
+		</div>
+
+		<div class="clearfix" />
+	</div>
+	<div id="cart_total" class="group border-dashed">
+		<div>
+			<p id="total" th:unless="${cart.subTotal?.zero}">
+				<span>商品总金额: </span><span nph:price="${cart.subTotal}" />
+			</p>
+			<p id="orderDiscounts" th:unless="${cart.orderAdjustmentsValue.zero}">
+				<span>优惠金额: </span><span nph:price="${cart.orderAdjustmentsValue}" />
+			</p>
+		</div>
+
+		<div id="checkout">
+			<p id="subtotal" th:unless="${cart.subTotal?.zero}">
+				<span>总计: </span><span
+					nph:price="${cart.subTotal?.subtract(cart.orderAdjustmentsValue)}" />
+			</p>
+		</div>
+
+
+	</div>
+</div>

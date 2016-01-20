@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.038.001.01" longName="camt.038.001.01" type="camt.038.001.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.038.001.01">
+		<element shortName="ReqHdr" longName="头信息" type="ReportHeader"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+	</type>
+	
+	<type shortName="ReportHeader">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Fr" longName="自" type="AnyBICIdentifier"/>
+		<element shortName="To" longName="至" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+	
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+</names>

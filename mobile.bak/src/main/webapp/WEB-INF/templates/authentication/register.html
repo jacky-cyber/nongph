@@ -1,0 +1,27 @@
+<div id="account">
+    <div id="register">
+        <nph:form id="registrationForm" action="#" th:object="${registrationForm}" th:action="@{/register}" method="post" class="clearfix">
+            <input type="hidden" th:field="*{redirectUrl}" />    
+            <div class="item">
+                <span class="error" th:if="${#fields.hasErrors('customer.emailAddress')}" th:errors="*{customer.emailAddress}"></span>
+                <input type="email"  maxlength="40" required="true" th:field="*{customer.emailAddress}" class="txt-input" placeholder="请输入邮箱地址" th:classappend="${#fields.hasErrors('customer.emailAddress')}? 'fieldError'" />
+            </div>
+            <div class="item">
+                <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                <input type="password" maxlength="20" required="true" th:field="*{password}" placeholder="请输入密码" class="txt-input" th:classappend="${#fields.hasErrors('password')}? 'fieldError'" />
+            </div>
+            <div class="item">
+                <span class="error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
+                <input type="password" maxlength="20" required="true" th:field="*{passwordConfirm}" placeholder="请输入确认密码" class="txt-input" th:classappend="${#fields.hasErrors('passwordConfirm')}? 'fieldError'" />
+            </div>          
+            
+            <div class="login_register">
+                <input class="register_button big red" type="submit" value="立即注册"/>
+            </div>
+            <div class="login_register_alt_links">
+                <a class="login_alt_link" th:href="@{/login}"><span>登录</span></a>
+                <a class="forgotpwd_alt_link" th:href="@{/login/forgotPassword}"><span>忘记密码</span></a>
+            </div>
+        </nph:form>
+    </div>  
+</div>

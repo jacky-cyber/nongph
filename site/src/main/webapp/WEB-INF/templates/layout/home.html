@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh"> 
+<head th:include="/layout/partials/head (pageTitle='品荟')"></head>
+<body>
+    <div id="notification_bar"></div>
+    <header th:substituteby="layout/partials/header" />
+	<nav th:substituteby="layout/partials/nav" />
+	<nph:content contentType="Homepage Banner Ad" />       
+	<div id="banner_outer_outer">
+		<div id="banners_outer">
+			<div id="banners" th:if="${contentList !=null}">
+				<ul th:each="item : ${contentList}" th:object="${item}">
+					<li th:id="'banner_image'+${itemStat.index}" th:class="banner_image">
+						<img th:src="@{${item['imageUrl']}}"/>
+					</li>
+					<li th:id="'banner_link'+${itemStat.index}">
+						<a th:href="@{${item['targetUrl']}}"/>
+					</li>
+				</ul>    
+			</div>
+			<div id="banners_triggers" th:if="${contentList !=null}" style="position:relative;z-index:3;width:1240px;margin:0 auto;text-align:center;top:320px;">
+				<a th:each="item : ${contentList}" th:object="${item}" th:href="'javascript:bannersTrigger('+${item['targetUrl']}+')'" th:id="'banner_trigger'+${itemStat.index}"/>
+			</div>
+		</div>
+	</div>
+    <div id="content" class="width_setter group" role="main">   
+        <nph:content contentType="Homepage Featured Products Title"/>    
+        <div class="title_bar" th:text="${contentList[0]['messageText']}"></div>
+        <nph:category_skus categoryId="10100" quantity="20" relatedSkusResultVar="firstSkus" />
+        <ul id="products" class="group">
+           	<li th:each="sku : ${firstSkus}" th:object="${sku}" th:include="catalog/partials/sku" class="product_container"></li>
+        </ul>
+        <div class="title_bar" th:text="${contentList[1]['messageText']}"></div>
+        <nph:category_skus categoryId="10101" quantity="20" relatedSkusResultVar="secondSkus"/>
+        <ul id="products" class="group">
+           	<li th:each="sku : ${secondSkus}" th:object="${sku}" th:include="catalog/partials/sku" class="product_container"></li>
+        </ul>
+        <div class="title_bar" th:text="${contentList[2]['messageText']}"></div>
+        <nph:category_skus categoryId="10102" quantity="20" relatedSkusResultVar="thirdSkus"/>
+        <ul id="products" class="group">
+           	<li th:each="sku : ${thirdSkus}" th:object="${sku}" th:include="catalog/partials/sku" class="product_container"></li>
+        </ul>
+    </div>
+    <footer th:substituteby="layout/partials/footer" />
+</body>
+</html>

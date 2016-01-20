@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- This workflow modification is only necessary if you are managing inventory. 
+		This activity has been enabled in the core Broadleaf framework in version 
+		3.2.0+ and should be removed if on that version -->
+	<bean id="blAddItemWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+		<property name="activities">
+			<list>
+				<bean p:order="2010" id="blCheckAddAvailabilityActivity"
+					class="cn.globalph.b2c.order.service.workflow.CheckAvailabilityActivity" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- This workflow modification is only necessary if you are managing inventory. 
+		This activity has been enabled in the core Broadleaf framework in version 
+		3.2.0+ and should be removed if on that version -->
+	<bean id="blUpdateItemWorkflow" class="cn.globalph.b2c.workflow.SequenceProcessor">
+		<property name="activities">
+			<list>
+				<bean p:order="2010" id="blCheckUpdateAvailabilityActivity"
+					class="cn.globalph.b2c.order.service.workflow.CheckAvailabilityActivity" />
+			</list>
+		</property>
+	</bean>
+
+
+</beans>

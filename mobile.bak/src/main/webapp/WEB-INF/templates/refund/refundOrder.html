@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>申请退款 - 品荟</title>
+<meta name="description" content="品荟" />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/css/header.css" />
+<link rel="stylesheet" href="/static/css/refund/refund-item.css" />
+</head>
+
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='申请退款',type='normal')" />
+	<div class="jd-wrap">
+		<nph:form id="mainForm"
+			th:action="@{'/refund/' + ${order.orderNumber} + '/order'}"
+			method="post">
+			<section class="miblewrap01 goods-apply-report">
+				<h3 class="mible-tit">退款原因</h3>
+
+				<div class="jd-form">
+					<textarea id="questionDesc" name="refundDesc" cols="" rows=""
+						placeholder="请在此填写您的退款原因" class="fm-area"
+						style="margin: 0px; width: 767px; height: 64px;"></textarea>
+				</div>
+			</section>
+		</nph:form>
+		<div class="jd-btns">
+			<a href="javascript:;" class="btn-h3 btn-c3">下一步</a>
+		</div>
+	</div>
+	<script src="/static/js/lib/jquery-1.9.1.js" />
+	<script src="/static/js/lib/jquery-form.js" />
+	<script type="text/javascript">			
+		/*<![CDATA[*/
+		$(".jd-btns a").click(function(){
+			$("#mainForm").submit();
+		})
+		
+		/*]]>*/
+	</script>
+	
+	<script th:if="${errorTips}" th:inline="javascript">
+	/*<![CDATA[*/
+		alert([[${errorTips}]]);
+	/*]]>*/
+	</script>
+	
+	<footer th:substituteby="layout/partials/bottom" />
+</body>
+</html>

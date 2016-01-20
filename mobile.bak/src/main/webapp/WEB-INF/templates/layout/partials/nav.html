@@ -1,0 +1,18 @@
+<nav>   
+    <nph:categories resultVar="navCategories" parentCategory="nav"/>    
+    <ul>
+        <li th:each="category : ${navCategories}" th:unless="${#strings.isEmpty(category.url)}">
+			<a th:href="@{${category.url}}">
+				<p>
+					<img style="width:36px;height:36px;" 
+					th:src="${(!#maps.isEmpty(category.categoryMedia) 
+													and #maps.containsKey(category.categoryMedia,'primary'))
+													? category.categoryMedia['primary'].url:''}" />
+				</p>
+				<p>
+					<span th:text="${category.name}"></span>
+				</p>
+			</a>
+        </li>
+    </ul>
+</nav>

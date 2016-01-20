@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.027.001.02" longName="camt.027.001.02" type="camt.027.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.027.001.02">
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="Undrlyg" longName="原因" type="PaymentInstructionExtract2"/>
+		<element shortName="MssngCover" longName="缺失头寸" type="MissingCover"/>
+	</type>
+	
+		<type shortName="MissingCover">
+		<element shortName="MssngCoverIndctn" longName="缺失头寸标识" type="YesNoIndicator"/>
+	</type>
+	
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="YesNoIndicator"/>
+		
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<!--type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="指派人指令标识" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="受派人指令标识" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="币种与金额" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="起息日期" type="ISODateTime"/>
+		
+	</type-->
+	<type shortName="PaymentInstructionExtract2">
+		<element shortName="OrgnlMsgNmId" longName="原始消息名标示" type="Max35Text"/>
+		<element shortName="OrgnlInstrId" longName="原始指令标示" type="Max35Text"/>
+		<element shortName="InstdAmt" longName="指示金额" type="CurrencyAndAmount"/>
+		<element shortName="IntrBkSttlmAmt" longName="行间结算金额" type="CurrencyAndAmount"/>	
+		<element shortName="ReqdExctnDt" longName="请求执行日期" type="ISODateTime"/>	
+		<element shortName="IntrBkSttlmDt" longName="行间结算日期" type="ISODateTime"/>		
+	</type>
+	<type shortName="CurrencyAndAmount"/>
+</names>

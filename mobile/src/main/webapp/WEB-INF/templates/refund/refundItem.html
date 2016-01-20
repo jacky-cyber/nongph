@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>申请退货 - 品荟</title>
+<meta name="description" content="品荟" />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/css/header.css" />
+<link rel="stylesheet" href="/static/css/refund/refund-item.css" />
+</head>
+
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='申请退货',type='normal')" />
+	<div class="jd-wrap">
+		<nph:form id="mainForm"
+			th:action="@{'/refund/' + ${orderItem.id}}"
+			method="post">
+			<section class="miblewrap01 goods-apply-info-wrap">
+				<ul class="list-order-box">
+					<li class="list-item">
+						<div class="item-m">
+							<div class="p-img">
+								<img th:if="${orderItem.sku.skuMedia['primary']}"
+									th:src="@{${orderItem.sku.skuMedia['primary'].url} + '?thumbnail'}"
+									th:alt="${orderItem.sku.name}" width="50"
+									height="50"/>
+							</div>
+						</div>
+						<div class="item-s">
+							<div class="p-name">
+								<a href="#" th:text="${orderItem.sku.name}"></a>
+							</div>
+							<div class="p-info">
+								<span class="p-price" th:text="${'￥' + orderItem.price}"></span> <span class="p-amount" th:inline="text">数量：[[${orderItem.quantity}]]</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</section>
+			<section class="miblewrap01 goods-apply-cout">
+	            <h3 class="mible-tit">申请数量</h3>
+	
+	            <div class="add-del">
+	                <a th:href="${'javascript:operateWareNum(-1,'+orderItem.quantity +')'}" class="btn-add">-</a>
+	                <input type="text" id="wareNum" name="wareNum"
+							class="new-input" value="1" readonly="true" />
+	                <a th:href="${'javascript:operateWareNum(1,'+orderItem.quantity +')'}" class="btn-del on">+</a>
+	            </div>
+	            <div class="msg-text" th:inline="text">您最多可提交数量为[[${orderItem.quantity}]]个</div>
+	        </section>
+			<section class="miblewrap01 goods-apply-report">
+				<h3 class="mible-tit">问题描述</h3>
+
+				<div class="jd-form">
+					<textarea id="questionDesc" name="refundDesc" cols="" rows=""
+						placeholder="请您在此描述详细问题" class="fm-area"
+						style="margin: 0px; width: 767px; height: 64px;"></textarea>
+				</div>
+			</section>
+		</nph:form>
+		<!--图片上传-->
+		<section class="miblewrap01 goods-apply-upload">
+			<h3 class="mible-tit">上传图片</h3>
+
+			<div id="img-wrapper" class="img-wrapper">
+				<nph:form id="uploadForm"
+					th:action="@{/refund/uploadImg}"
+					method="post" enctype="multipart/form-data">
+					<div class="upload-btn-box" style="display: inline-block">
+						<input id="pageUpload" type="file" name="uploadImg"
+							class="upload-btn" />
+					</div>
+				</nph:form>
+			</div>
+			<div style="clear: both"></div>
+			<div class="msg-text">最多上传3张，每张不超过5M，支持JPG、BMP、PNG</div>
+		</section>
+		<div class="jd-btns">
+			<a href="javascript:;" class="btn-h3 btn-c3">下一步</a>
+		</div>
+	</div>
+	<script src="/static/js/lib/jquery-1.9.1.js" />
+	<script src="/static/js/lib/jquery-form.js" />
+	<script type="text/javascript">			
+		/*<![CDATA[*/
+		$(document).on('click', '.img-item', function(){
+			if(confirm("您确认要删除这张图片吗？")){	
+				var src = $(this).children("span").children("img").attr("src");
+				$("input[value='" + src +"']").remove();
+				$(this).remove();
+			   if($(".img-item").length == 2){
+           		   $(".upload-btn-box").show();
+           	   }
+				}else{
+					return;
+				}
+		});
+
+		function operateWareNum(c, t){
+			var cur = $("#wareNum").val();
+			if(cur <= t){
+				var s = parseInt(cur) + parseInt(c)
+				if(s > t) s = t;
+				if(s <= 0) s = 1;
+				$("#wareNum").val(s);
+			}
+		}
+		
+		$('#pageUpload').change(function () {
+	        var options  = {    
+		            url:$("#uploadForm").attr("action"),    
+		            type:'post',    
+		            success:function(data)    
+		            {    
+		               if(data.success){
+		            	   var ct = "<div class='img-item'>"
+		            	   + "<span><img src='" + data.success + "' /></span>"
+		            	   + "</div>";
+		            	   $("#uploadForm").append(ct);
+		            	   
+		            	   var sct = "<input type='hidden' name='uploadImg' value='" + data.success + "' />";
+		            	   $("#mainForm").append(sct);
+		            	   
+		            	   if($(".img-item").length == 3){
+		            		   $(".upload-btn-box").hide();
+		            	   }
+		               }
+		            }    
+		        }; 
+	        $("#uploadForm").ajaxSubmit(options);
+		});
+		
+		$(".jd-btns a").click(function(){
+			$("#mainForm").submit();
+		})
+		
+		/*]]>*/
+	</script>
+	
+	<script th:if="${errorTips}" th:inline="javascript">
+	/*<![CDATA[*/
+		alert([[${errorTips}]]);
+	/*]]>*/
+	</script>
+	
+	<footer th:substituteby="layout/partials/bottom" />
+</body>
+</html>

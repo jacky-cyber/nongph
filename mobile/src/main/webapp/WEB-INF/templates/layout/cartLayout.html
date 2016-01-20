@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='TEMPLATE')"></head>
+
+<body>
+    <div id="notification_bar"></div>
+
+    <header th:substituteby="layout/partials/header(pageTitle='购物车',type='normal')" />
+    
+    <div>      
+        <div th:substituteby="${templateName}" />     
+    </div>
+    <!--<footer th:substituteby="layout/partials/footer"/>-->
+    <script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+    <nph:bundle name="cartUtils.js"
+                mapping-prefix="/static/js/"
+                files="cartUtils.js,
+                       cartOperations.js"/>
+    <script th:if="${param.errorMessage}" th:inline="javascript">
+    /*<![CDATA[*/
+    	HC.showNotification(/*[[${param.errorMessage[0]}]]*/, 2000);
+    /*]]>*/
+    </script>
+    <script th:if="${errorMessage}" th:inline="javascript">
+    /*<![CDATA[*/
+    	HC.showNotification(/*[[${errorMessage}]]*/, 2000);
+    	/*]]>*/
+    </script>
+    
+</body>
+</html>

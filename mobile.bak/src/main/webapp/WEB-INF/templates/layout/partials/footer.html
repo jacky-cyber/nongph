@@ -1,0 +1,53 @@
+<div id="footer">
+	<div class="footer-links">
+		<div  th:if="${customer.anonymous}" th:remove="tag">
+			<a th:href="@{/login}">
+				<span>登录</span>
+			</a>
+			&nbsp;|&nbsp; 
+			<a th:href="@{/register/byPhone}">
+				<span>注册</span>
+			</a>
+		</div>
+		<div  th:unless="${customer.anonymous}" th:remove="tag">
+              <span><span>您好，</span><a class="my-account" th:href="@{/account/menu}" th:text="${customer.name}"></a></span>
+              &nbsp;|&nbsp; 
+              <a th:href="@{/logout}">
+                  <span>退出</span>
+              </a>
+        </div>
+	</div>
+	<div style="font-size:12px;">
+        <p style="text-align:center;margin-top:5px;">
+            <span>Copyright © 2015-2016 </span>
+        </p>
+
+	</div>
+    <script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+    <nph:bundle name="lib.js" 
+                mapping-prefix="/static/js/"
+                files="plugins.js,
+                       libs/jquery.MetaData.js,
+                       libs/jquery.rating.pack.js,
+                       libs/jquery.dotdotdot-1.5.1.js,
+					   libs/jquery.slides.js" />
+    
+    <nph:bundle name="heatclinic.js" 
+                mapping-prefix="/static/js/"
+                files="PH.js,
+                       cartUtils.js,
+                       cartOperations.js,
+                       checkoutOperations.js,
+                       bannersRoll.js,
+                       common.js,
+                       reviewOperations.js,
+                       category.js,
+                       registerByPhone.js,
+                       pagination.js" />
+    <script th:src="@{/static/js/libs/jquery.lazyload.min.js}"></script>
+	<script>
+		$("img.lazy").lazyload({
+		    threshold : 200
+		}); 
+	</script>
+</div>

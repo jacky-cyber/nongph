@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.034.001.02" longName="camt.034.001.02" type="camt.034.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.034.001.02">
+		<element shortName="Assgnmt" longName="Assignment" type="CaseAssignment"/>
+		<element shortName="Case" longName="Case" type="Case"/>
+		<element shortName="DplctData" longName="DuplicateData" type="ProprietaryData"/>
+	</type>
+
+	<type shortName="AnyBICIdentifier"/>
+
+	<type shortName="Case">
+		<element shortName="Id" longName="Identification" type="Max35Text"/>
+		<element shortName="Cretr" longName="Creator" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="ReopenCaseIndication" type="YesNoIndicator" minOccurs="0" maxOccurs="1"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="Identification" type="Max35Text"/>
+		<element shortName="Assgnr" longName="Assigner" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="Assignee" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="CreationDateTime" type="ISODateTime"/>
+	</type>
+
+	<type shortName="ISODateTime"/>
+	<type shortName="Max35Text"/>
+	
+	<type shortName="ProprietaryData">
+		<element shortName="Tp" longName="Type" type="Max35Text"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="DebitAuthorisationConfirmation">
+		<element shortName="DbtAuthstn" longName="DebitAuthorisation" type="YesNoIndicator"/>
+		<element shortName="AmtToDbt" longName="AmountToDebit" type="CurrencyAndAmount"/>
+		<element shortName="ValDtToDbt" longName="ValueDateToDebit" type="ISODate"/>
+		<element shortName="Rsn" longName="Reason" type="Max140Text"/>
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<type shortName="ISODate"/>
+	
+	<type shortName="Max140Text"/>
+</names>

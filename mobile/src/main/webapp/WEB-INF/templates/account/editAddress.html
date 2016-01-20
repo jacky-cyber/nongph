@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='个人中心 - 品荟 ')"></head>
+
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='更改收货地址',type='normal')" />
+
+	<div id="content" class="width_setter group" role="main">
+		<div class="manage-account-form-wrapper">
+			<p class="success" th:if="${successMessage}"
+				th:text="${successMessage}"></p>
+			<nph:form class="manage-account" method="post"
+				th:action="@{'/account/addresses/' + ${customerAddressForm.addressId != null ? customerAddressForm.addressId : ''}}"
+				th:object="${customerAddressForm}">
+				<input th:if="*{orderNumber}" th:field="*{orderNumber}" hidden="hidden"/>
+				<div>
+					<div>
+						<div for="receiver">收货人姓名</div>
+						<div class="error" th:if="${#fields.hasErrors('receiver')}"
+							th:errors="*{receiver}"></div>
+						<div class="error_spacer"
+							th:if="${#fields.hasErrors('phone') and !#fields.hasErrors('receiver')}">&nbsp;</div>
+						<div>
+							<input maxlength="20" type="text" class="required addr"
+								th:field="*{receiver}"
+								th:classappend="${#fields.hasErrors('receiver')}? 'fieldError'" />
+						</div>
+					</div>
+					<div class="clearfix" />
+					<div>
+						<div for="phone">手机号码</div>
+						<div class="error" th:if="${#fields.hasErrors('phone')}"
+							th:errors="*{phone}"></div>
+						<div class="error_spacer"
+							th:if="${#fields.hasErrors('receiver') and !#fields.hasErrors('phone')}">&nbsp;</div>
+						<div>
+							<input maxlength="11" type="tel" id="phone" name="phone"
+								th:value="*{phone}" class="addr"
+								th:classappend="${#fields.hasErrors('phone')}? 'fieldError'" />
+						</div>
+					</div>
+					<div class="clearfix" />
+					<div style="visibility: hidden;position:fixed;">
+						<div for="province">省份</div>
+						<div class="error_spacer"
+							 th:if="${#fields.hasErrors('city') and !#fields.hasErrors('province')}">&nbsp;</div>
+						<div class="error"
+							 th:if="${#fields.hasErrors('province')}"
+							 th:errors="*{province}"></div>
+						<div>
+							<select id="province"
+									th:field="*{province}" class="addr"
+									th:classappend="${#fields.hasErrors('province')}? 'fieldError'">
+								<option value="">请选择省份</option>
+							</select>
+						</div>
+					</div>
+					<div style="visibility: hidden;position:fixed;">
+						<div for="city">市</div>
+						<div class="error_spacer"
+							 th:if="${#fields.hasErrors('province') and !#fields.hasErrors('city')}">&nbsp;</div>
+						<div class="error"
+							 th:if="${#fields.hasErrors('city')}"
+							 th:errors="*{city}"></div>
+						<div>
+							<select id="city" class="addr"
+									th:field="*{city}"
+									th:classappend="${#fields.hasErrors('city')}? 'fieldError'">
+								<!--<option value="">&#45;&#45;选择市&#45;&#45;</option>-->
+							</select>
+						</div>
+					</div>
+					<div class="clearfix" />
+					<div>
+						<div for="district">区/县</div>
+						<div class="error_spacer"
+							 th:if="${#fields.hasErrors('province') and !#fields.hasErrors('city')}">&nbsp;</div>
+						<div class="error"
+							 th:if="${#fields.hasErrors('district')}"
+							 th:errors="*{district}"></div>
+						<div>
+							<select id="district" class="addr"
+									th:field="*{district}"
+									th:classappend="${#fields.hasErrors('district')}? 'fieldError'">
+								<!--<option></option>-->
+							</select>
+						</div>
+					</div>
+					<div class="clearfix"/>
+					<div>
+						<div for="district">社区(可不选)</div>
+						<div class="error_spacer"
+							 th:if="${#fields.hasErrors('province') and !#fields.hasErrors('city') and !#fields.hasErrors('district')}">
+							&nbsp;</div>
+						<div class="error"
+							 th:if="${#fields.hasErrors('community')}"
+							 th:errors="*{community}"></div>
+						<div>
+							<select id="community" class="addr"
+									th:field="*{community}"
+									th:classappend="${#fields.hasErrors('community')}? 'fieldError'">
+								<!--<option></option>-->
+							</select>
+						</div>
+					</div>
+					<div class="clearfix"/>
+					<div>
+						<div for="address">详细地址</div>
+						<div class="error" th:if="${#fields.hasErrors('address')}"
+							th:errors="*{address}"></div>
+						<div class="error_spacer"
+							th:if="${#fields.hasErrors('postalCode') and !#fields.hasErrors('address')}">&nbsp;</div>
+						<div>
+							<input maxlength="100" type="text" th:field="*{address}"
+								class="addr"
+								th:classappend="${#fields.hasErrors('address')}? 'fieldError'" />
+						</div>
+					</div>
+					<div class="clearfix" />
+					<!--<div>
+						<div for="postalCode">邮政编码</div>
+						<div class="error" th:if="${#fields.hasErrors('postalCode')}"
+							th:errors="*{postalCode}"></div>
+						<div class="error_spacer"
+							th:if="${#fields.hasErrors('address') and !#fields.hasErrors('postalCode')}">&nbsp;</div>
+						<div>
+							<input maxlength="10" type="text" th:field="*{postalCode}"
+								class="addr"
+								th:classappend="${#fields.hasErrors('postalCode')}? 'fieldError'" />
+						</div>
+					</div>
+					<div class="clearfix" />-->
+					<div>
+						<div>&nbsp;</div>
+						<div style="font-size: 18px; height:30px; vertical-align: middle">
+							<input style="float:left;height:20px; width: 20px;" id="isDefault" type="checkbox"
+								   th:field="*{default}"/>
+							<label style="" for="isDefault" th:text="#{makeDefault}">设为默认地址</label>
+						</div>
+					</div>
+					<!--<div class="clearfix" />-->
+
+				</div>
+				<div>
+					<input type="submit" th:if="*{addressId}"
+						value="保存地址" class="addr medium red" /> <input
+						type="submit" th:unless="*{addressId}"
+						value="保存地址" class="addr medium red" />
+				</div>
+			</nph:form>
+		</div>
+	</div>
+
+	<footer th:substituteby="layout/partials/footer" />
+	<div th:substituteby="layout/partials/divfootermenu" />
+	<input id="orgProvince" th:value="${customerAddressForm.province}" hidden="hidden"/>
+	<input id="orgCity" th:value="${customerAddressForm.city}" hidden="hidden"/>
+	<input id="orgDistrict" th:value="${customerAddressForm.district}" hidden="hidden"/>
+	<input id="orgCommunity" th:value="${customerAddressForm.community}" hidden="hidden"/>
+</body>
+<script th:src="@{/static/js/geo.js}"></script>
+<script>
+	setup();
+	//preselect($('#orgProvince').val(), $('#orgCity').val(), $('#orgDistrict').val());
+	preselect("江苏省", "苏州市", $('#orgDistrict').val(), $('#orgCommunity').val());
+</script>
+</html>

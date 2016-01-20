@@ -1,0 +1,21 @@
+<ehcache>
+    <!-- 1 hour cache -->
+    <cache name="blTranslationElements" 
+           maxElementsInMemory="200" eternal="false" overflowToDisk="false" timeToLiveSeconds="3600"/>
+        
+    <!-- 10 minute cache -->
+    <cache name="blConfigurationModuleElements" 
+           maxElementsInMemory="200" eternal="false" overflowToDisk="false" timeToLiveSeconds="3600"/>      
+    
+    <!-- 10 minute cache -->    
+    <cache name="blSystemPropertyElements"
+           maxElementsInMemory="200" eternal="false" overflowToDisk="false" timeToLiveSeconds="86400"/>
+
+    <cache name="blSystemPropertyNullCheckCache"
+           maxElementsInMemory="200" eternal="false" overflowToDisk="false" timeToLiveSeconds="86400"/>
+        
+    <!-- 24 hour cache -->
+    <cache name="blBundleElements" 
+           maxElementsInMemory="200" eternal="false" overflowToDisk="false" timeToLiveSeconds="86400"/>
+
+</ehcache>

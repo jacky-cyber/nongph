@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="cn"> 
+<head th:include="/layout/partials/head (pageTitle=${sku.name + '-品荟'})"></head>
+<body>
+    <div id="notification_bar"></div>
+    <header th:substituteby="layout/partials/header" />
+    <div id="content" class="width_setter group" role="main">
+        <nav th:substituteby="layout/partials/cateNav" />
+        <section id="left_column" th:object="${sku}">
+            <div id="product_content" class="product_container">
+                <h2 th:text="*{name}"></h2>
+                <div style="border: 1px solid #ccc; padding: 10px; background-color: #fff">
+	                <div id="price">
+						<div nph:price="*{retailPrice}" th:classappend="*{onSale}? 'has-sale'"></div>
+						<div class="separate" th:if="*{onSale}">/</div>
+	                    <div nph:price="*{salePrice}" th:if="*{onSale}" th:classappend="sale"></div>	                  
+	                </div>
+					<div class="product-options" th:substituteby="catalog/partials/productOptions"/>  
+					<div id="maker">
+						<ul>
+							<li><span>水品种：</span><span th:text="*{product.breed}"></span></li>
+							<li><span>产&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地：</span><span th:text="*{product.manufacturer}"></span></li>
+							<li><span>生长套袋：</span><span th:text="*{product.model}"></span>（套袋用于隔离农药）</li>
+							<li><span>等&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</span><span th:text="*{product.grade}"></span></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<th:block th:with="checkInventory=*{inventoryType?.type == 'CHECK_QUANTITY'},
+									   availableInventory=${checkInventory ? #object.quantityAvailable != null and #object.quantityAvailable != 0 : true},
+									   inCart=${cart.containsSku(#object.id)}">
+						<nph:form name="cart" method="POST" th:action="@{/cart/add}">
+							<div id="inventory" th:if="${checkInventory}">
+								<b>Available inventory:</b> <span th:text="*{quantityAvailable == null ? '0' : quantityAvailable}" />
+								<div th:if="${!availableInventory}" class="out_of_stock">
+									<a disabled="disabled" class="big-button gray-button">Out of Stock</a>
+								</div>
+							</div>
+							<div th:class="*{'productActions' + id}">
+								<div class="in_cart" th:classappend="${!inCart}? ' hidden'">
+									<a class="modalcart big-button gray-button" th:href="@{/cart}">已加入购物车</a>
+								</div>
+								<div class="add_to_cart" th:classappend="${inCart or !availableInventory}? ' hidden'">
+									<input type="hidden" name="skuId" th:value="*{id}" />
+									<input type="hidden" name="quantity" value="1" />
+									<input type="submit" class="addToCart big red" value="加入购物车"/>
+								</div>
+								<p class="error" th:if="${param.errorMessage}" th:text="${param.errorMessage[0]}"></p>
+							</div>
+						</nph:form>
+					</th:block>
+					<div th:if="${customer.loggedIn}" th:remove="tag">
+						<nph:form method="POST" th:action="@{/account/wishlist/add}">
+							<div th:class="${'productActions' + sku.product.id}">
+								<nph:named_order orderVar="wishlist" orderName="wishlist" />
+								<div class="in_wishlist" th:classappend="${!wishlist.containsSku(sku.id)}? ' hidden'">
+									<a class="inWishlist small-button gray-button" th:href="@{/account/wishlist}">已收藏</a>
+								</div>
+								<div class="add_to_wishlist" th:classappend="${wishlist.containsSku(sku.id)}? ' hidden'">
+									<input type="hidden" name="skuId" th:value="*{id}" />
+									<input type="hidden" name="quantity" value="1" />
+									<input type="submit" class="addToWishlist small dark" value="加入收藏" />
+								</div>
+							</div>
+						</nph:form>
+					</div>
+				</div>
+            </div>
+            <!--
+            <div id="product_main_image" th:if="*{skuMedia['primary']}">
+                <a th:href="@{*{#strings.replace(skuMedia['primary'].url + '?browse', 'jpg?browse', 'jpg')}}" class='jqzoom' id='zoom1' rel="gal1">
+                    <img th:src="@{*{skuMedia['primary'].url}+ '?browse'}" alt='' align="left" id="main_image" />
+                </a>
+            </div>
+			<div class="clearfix"></div>
+			<div id="product_thumbs_container">
+				<span class="goprev"></span>
+				<div style="height:105px;width:386px;float:left;overflow:hidden;">
+					<ul id="product_thumbs">
+						<li>
+							<a th:if="*{skuMedia['primary']}" href="javascript:;" class="zoomThumbActive">
+								<img th:src="@{*{skuMedia['primary'].url}}" alt="Bottle Closeup" />
+							</a>
+							<p th:if="*{#maps.size(skuMedia) > 1}" class="thumbs_nav">Swipe to see more... (<span th:text="'1 of ' + *{#maps.size(skuMedia) > 3 ? 3 : #maps.size(skuMedia)}"></span>)</p>
+						</li>
+						
+						<li th:each="media, iterStat : *{skuMedia}" th:unless="${media.key == 'primary'}">
+							<a href="javascript:;">
+								<img th:src="@{${media.value.url}}" alt="Bottle Closeup" />
+							</a>
+							<p class="thumbs_nav" th:text="${iterStat.count + 1} + ' of ' + *{#maps.size(skuMedia) > 3 ? 3 : #maps.size(skuMedia)}"></p>
+						</li>
+					</ul>
+				</div>
+				<span class="gonext"></span>
+			</div>
+			-->
+			<div id="preview">
+			<div class="jqzoom" id="spec-n1" onClick="window.open('http://www.globalph.cn/')">
+				<img style="height:350px;width:350px;" th:if="*{skuMedia['primary']}" 
+				th:src="@{*{skuMedia['primary'].url}}" th:attr="jqimg=@{*{skuMedia['primary'].url}}"/>
+			</div>
+			<div id="spec-n5">
+				<div class="control" id="spec-left">
+					<img src="/static/img/zoom/left.gif" />
+				</div>
+				<div id="spec-list">
+					<ul class="list-h">
+						<li>
+							<a th:if="*{skuMedia['primary']}" href="javascript:;" class="zoomThumbActive">
+								<img th:src="@{*{skuMedia['primary'].url}}" alt="Bottle Closeup" />
+							</a>
+						</li>
+						<li th:each="media, iterStat : *{skuMedia}" th:unless="${media.key == 'primary'}">
+							<a href="javascript:;">
+								<img th:src="@{${media.value.url}}" alt="Bottle Closeup" />
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="control" id="spec-right">
+					<img src="/static/img/zoom/right.gif" />
+				</div>
+		    </div>
+		</div>
+		<div class="clearfix"></div>
+			<div id="product_description">
+				<div id="select_tab">
+					<div>
+						<ul class="tabs">
+							<li id="product_description_tab" class="tab currentTab">
+								<span>水果详情</span>
+							</li>
+							<li id="product_origin_tab" class="tab">
+								<span>产地介绍</span>
+							</li>
+							<li id="product_comment_tab" class="tab">
+								<span>水果评价</span>
+							</li>
+							<li class="buy">
+								<div class="detailTabBuy">
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div id="tab_separate" class="clearfix"></div>
+				<div class="product_description_tab tab_content" th:utext="*{longDescription}"></div>
+				<div class="product_comment_tab tab_content hide">
+					<div id="customer-reviews-container">
+						<nph:ratings itemId="${sku.product.id}" />
+						<div th:if="${ratingSummary}" th:object="${ratingSummary}">
+							<span class="title">水果评价</span>
+							<div id="community-rating-container">
+								<nph:form id="community-rating" class="star-rating" th:attr="data-community-rating=*{averageRating}">
+									<input type="radio" class="star {split:4}" /> 
+									<input type="radio" class="star {split:4}" /> 
+									<input type="radio" class="star {split:4}" /> 
+									<input type="radio" class="star {split:4}" /> 
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+									<input type="radio" class="star {split:4}" />
+								</nph:form>
+								<br/>
+								<div class="total-reviews">
+									(<span th:text="*{numberOfReviews}"></span><span th:if="*{numberOfReviews} == 1"> review</span><span th:if="*{numberOfReviews} > 1"> reviews</span>)
+								</div>
+							</div>
+							<div class="clearfix"></div>
+								<nph:ratings itemId="${sku.product.id}" />
+								<div th:if="${currentCustomerReview}" th:object="${currentCustomerReview}" class="customer-reviews current-customer-review">
+									<h4>您的评级</h4>
+									<p class="voting-summary" th:if="*{notHelpfulCount()} + *{helpfulCount()} > 0">
+										<span th:text="*{helpfulCount()}">9</span> of 
+										<span th:text="*{notHelpfulCount()} + *{helpfulCount()}">10</span> found the following review helpful
+									</p>
+									<nph:form class="customer-rating" th:attr="data-customer-rating=*{ratingDetail.rating}">
+										<input type="radio" class="star" />
+										<input type="radio" class="star" />
+										<input type="radio" class="star"/>
+										<input type="radio" class="star" />
+										<input type="radio" class="star" />
+									</nph:form>
+									<span class="reviewer-info">
+										on <span th:text="*{#dates.format(reviewSubmittedDate, 'MMMM d, yyyy')}">1-2-2010</span>
+									</span>
+									<div class="clearfix"></div>
+									<blockquote th:if="!*{#strings.isEmpty(reviewText)}" th:text="'&quot;' + *{reviewText} + '&quot;'">Review Text</blockquote>                         
+								</div>
+							<div class="helpful-reviews">
+								<h4>用户评价</h4>
+								<ul class="customer-reviews">
+									<li th:each="review, iterStat : *{reviews}" th:object="${review}" th:if="${iterStat.count} lt 4">
+										<p class="voting-summary" th:if="*{notHelpfulCount()} + *{helpfulCount()} > 0">
+											<span th:text="*{helpfulCount()}">9</span> of 
+											<span th:text="*{notHelpfulCount()} + *{helpfulCount()}">10</span> found the following review helpful
+										</p>
+										<nph:form class="customer-rating" th:attr="data-customer-rating=*{ratingDetail.rating}">
+											<input type="radio" class="star" />
+											<input type="radio" class="star" />
+											<input type="radio" class="star"/>
+											<input type="radio" class="star" />
+											<input type="radio" class="star" />
+										</nph:form>
+										<span class="reviewer-info">
+											by <span class="penname" th:text="${review.customer.name}">John</span> on  
+											<span th:text="*{#dates.format(reviewSubmittedDate, 'MMMM d, yyyy')}">1-2-2010</span>
+										</span>
+										<div class="clearfix"></div>
+										<blockquote th:if="!*{#strings.isEmpty(reviewText)}" th:text="'&quot;' + *{reviewText} + '&quot;'">评价内容</blockquote>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div th:if="${customer.loggedIn}">
+							<div th:if="${ratingSummary}">
+								<a th:unless="${currentCustomerReview}" class="create-review" th:href="@{'/reviews/product/' + ${sku.product.id}}">创建一个评价</a> 
+							</div>
+							<div th:unless="${ratingSummary}">
+								<a th:href="@{'/reviews/product/' + ${sku.product.id}}" class="create-review">赶紧成为第一个进行评价的人！</a>
+							</div>
+						</div>
+						<div th:unless="${customer.loggedIn}">
+							<a th:if="${ratingSummary}" href="#" th:href="@{/login}" class="small dark account">登录账号去进行评价</a>
+							<a th:unless="${ratingSummary}" th:href="@{/login}" class="account">登录账号成为第一个评价的用户！</a>
+						</div>
+					</div> 
+				 </div>
+				<div class="product_origin_tab tab_content hide" th:utext="*{originDescription}"></div>
+			</div>
+        </section>
+      	<section id="right_column">
+            <header>推荐水果</header>
+            <div id="options">
+                <div class="section">  
+                    <ul id="featured_products" class="group">
+						<div th:each="category:${sku.product.allParentCategoryXrefs}" th:object="${category}">
+							<nph:related_products categoryId="*{category.id}" productId="${sku.product.id}"/> 
+							<li th:each="relatedSku : ${relatedSkus}" th:object="${relatedSku}" th:include="catalog/partials/sku" class="product_container"></li>
+						</div>
+                    </ul>
+                </div>                                  
+            </div>
+        </section>                       
+    </div>
+    <footer th:substituteby="layout/partials/footer" />
+</body>
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.026.001.02" longName="camt.026.001.02" type="camt.026.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.026.001.02">
+		<element shortName="Assgnmt" longName="Assgnmt" type="CaseAssignment"/>
+		<element shortName="Case" longName="Case" type="Case"/>
+		<element shortName="Undrlyg" longName="Undrlyg" type="PaymentInstructionExtract2"/>
+		<element shortName="Justfn" longName="Justfn" type="UnableToApplyJustification1Choice"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Assgnr" longName="Assigner" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="Assignee" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="CreateDateTime" type="ISODateTime"/>
+	</type>
+	
+		<type shortName="UnableToApplyJustification1Choice">
+		<element shortName="AnyInf" longName="AnyInf" type="YesNoIndicator"/>
+		<element shortName="MssngOrIncrrctInf" longName="MssngOrIncrrctInf" type="MissingOrIncorrectInformation1"/>
+	</type>
+	
+	<type shortName="MissingOrIncorrectInformation1">
+		<element shortName="MssngInf" longName="MssngInf" type="UnableToApplyMissingInfo1Code">
+			<enumeration shortName="MS01" longName="MissingRemittanceInformation" />
+			<enumeration shortName="MS02" longName="MissingSenderToReceiverInformation" />
+			<enumeration shortName="MS03" longName="MissingDebtor" />
+			<enumeration shortName="MS04" longName="MissingDebtorAccount" />
+			<enumeration shortName="MS05" longName="MissingFirstAgent" />
+			<enumeration shortName="MS06" longName="MissingAmount" />
+			<enumeration shortName="MS07" longName="MissingNostroVostroAccount" />
+			<enumeration shortName="MS08" longName="MissingIntermediary" />
+			<enumeration shortName="MS09" longName="MissingReimbursementAgent1" />
+			<enumeration shortName="MS10" longName="MissingReimbursementAgent2" />
+			<enumeration shortName="MS11" longName="MissingReimbursementAgent" />
+			<enumeration shortName="MS12" longName="MissingCreditor" />
+			<enumeration shortName="MS13" longName="MissingCreditorAccount" />
+			<enumeration shortName="MS14" longName="MissingInstruction" />
+		</element>
+		<element shortName="IncrrctInf" longName="IncrrctInf" type="UnableToApplyIncorrectInfo2Code">
+			<enumeration shortName="IN01" longName="IncorrectRelatedReference" />
+			<enumeration shortName="IN02" longName="IncorrectBankOperationCode" />
+			<enumeration shortName="IN03" longName="IncorrectInstructionCode" />
+			<enumeration shortName="IN04" longName="IncorrectRequestedExecutionDate" />
+			<enumeration shortName="IN05" longName="IncorrectValueDate" />
+			<enumeration shortName="IN06" longName="IncorrectInterbankSettledAmount" />
+			<enumeration shortName="IN07" longName="IncorrectDebtor" />
+			<enumeration shortName="IN08" longName="IncorrectDebtorAccount" />
+			<enumeration shortName="IN09" longName="IncorrectReceiverCorrespondent" />
+			<enumeration shortName="IN10" longName="IncorrectThirdReimbursementInstitution" />
+			<enumeration shortName="IN11" longName="IncorrectPaymentScheme" />
+			<enumeration shortName="IN12" longName="IncorrectAccountOfBeneficiaryInstitution" />
+			<enumeration shortName="IN13" longName="IncorrectCreditor" />
+			<enumeration shortName="IN14" longName="IncorrectCreditorAccount" />
+			<enumeration shortName="IN15" longName="IncorrectRemittanceInformation" />
+			<enumeration shortName="IN16" longName="IncorrectPaymentPurpose" />
+			<enumeration shortName="IN17" longName="IncorrectDetailsOfCharges" />
+			<enumeration shortName="IN18" longName="IncorrectSenderToReceiverInformation" />
+			<enumeration shortName="IN19" longName="IncorrectInstructionForFinalAgent" />
+			<enumeration shortName="MM20" longName="MismatchCreditorNameAccount" />
+			<enumeration shortName="MM21" longName="MismatchDebtorNameAccount" />
+			<enumeration shortName="MM22" longName="MismatchFinalAgentNameAccount" />
+			<enumeration shortName="MM23" longName="InsufficientDebtorDetails" />
+			<enumeration shortName="MM24" longName="InsufficientCreditorDetails" />
+		</element>
+	</type>
+	<type shortName="UnableToApplyMissingInfo1Code"/>
+	<type shortName="UnableToApplyIncorrectInfo1Code"/>
+	<type shortName="UnableToApplyIncorrectInfo2Code"/>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+		<type shortName="YesNoIndicator"/>
+		
+	<type shortName="Case">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Cretr" longName="Creator" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="ReopCaseIndctn" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="PaymentInstructionExtract2">
+		<element shortName="OrgnlMsgNmId" longName="OriginalMessageNameIdentification" type="Max35Text"/>
+		<element shortName="OrgnlInstrId" longName="OriginalInstructionIdentification" type="Max35Text"/>
+		<element shortName="InstdAmt" longName="InstructedAmount" type="CurrencyAndAmount"/>
+		<element shortName="IntrBkSttlmAmt" longName="InterbankSettlementAmount" type="CurrencyAndAmount"/>	
+		<element shortName="ReqdExctnDt" longName="RequestedExecutionDate" type="ISODateTime"/>	
+		<element shortName="IntrBkSttlmDt" longName="InterbankSettlementDate" type="ISODateTime"/>		
+	</type>
+	<type shortName="CurrencyAndAmount"/>
+</names>

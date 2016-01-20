@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="blPU" transaction-type="RESOURCE_LOCAL">
+        <mapping-file>config/bc/jpa/domain/Coupon.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CouponAttribute.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CustomerCoupon.orm.xml</mapping-file>
+
+        <class>cn.globalph.coupon.domain.CouponImpl</class>
+        <class>cn.globalph.coupon.domain.CouponAttributeImpl</class>
+        <class>cn.globalph.coupon.domain.CustomerCouponImpl</class>
+    </persistence-unit>
+</persistence>

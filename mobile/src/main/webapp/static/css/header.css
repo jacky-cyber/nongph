@@ -1,0 +1,159 @@
+#checkout_content .title_bar {
+	font: 20px/25px 'Open Sans', Helvetica, sans-serif;
+	font-weight: 600;
+	color: #342020;
+	text-align: center;
+	margin: 5px 0px;
+	border-top: double #C8C3C1;
+	border-bottom: double #C8C3C1;
+	text-transform: uppercase;
+	padding: 10px 0;
+}
+
+#content .home_title_bar {
+	background-image: url("../img/ph_logo.jpg");
+	position: relative;
+	height: 44px;
+}
+
+header {
+	margin:0 auto;
+    color: #342020;
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+}
+
+
+/*normal bar*/
+header .normal_bar {
+	background-color: #33cc99;
+	position: relative;
+	height: 44px;
+}
+
+header .normal_bar .bar_left {
+	position: absolute;
+	top: 6px;
+	left: 10px;
+	width: 30px;
+	height: 32px;
+}
+
+header .normal_bar .bar_left span {
+	display: inline-block;
+	width: 10px;
+	height: 18px;
+	margin-top: 6px;
+	background: url("../img/icon.png") no-repeat scroll -60px 0px/180px
+		180px transparent;
+	text-indent: -9999px;
+}
+
+header .normal_bar h2 {
+	height: 44px;
+	line-height: 44px;
+	font-weight: normal;
+	font-size: 16px;
+	color: #FFF;
+	text-align: center;
+	margin: 0 0;
+}
+
+header .normal_bar .bar_right {
+	position: absolute;
+	top: 8px;
+	right: 5px;
+	width: 30px;
+	height: 32px;
+}
+
+header .normal_bar .bar_right span {
+	display: inline-block;
+	width: 19px;
+	height: 19px;
+	margin-top: 5px;
+	background: url("../img/home2.png") no-repeat;
+	background-size: 20px;
+	text-indent: -9999px;
+}
+
+
+/*end*/
+
+/*main bar*/
+header .main_bar {
+	background-color: #33CC99;
+	position: relative;
+	height: 44px;
+}
+
+header .main_bar a {
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	width: 30px;
+	height: 32px;
+}
+
+header .main_bar a span {
+	display: inline-block;
+	width: 10px;
+	height: 18px;
+	margin-top: 6px;
+	background: url("../img/icon.png") no-repeat scroll -60px 0px/180px
+		180px transparent;
+	text-indent: -9999px;
+}
+
+header .main_bar h2 {
+	height: 44px;
+	line-height: 44px;
+	font-weight: normal;
+	font-size: 16px;
+	color: #FFF;
+	text-align: center;
+	margin: 0 0;
+}
+
+header .main_bar .bar_left{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+#child_cat{
+	padding-bottom: 10px;
+	font-size:10px;
+}
+
+#child_cat .cat_level2 .product_link{
+	width: 24%;
+	display: inline-block;
+	text-align:center;
+	color:#585858;
+	height:30px;
+	line-height:30px;
+	font-size:1.2em;
+}
+
+#child_cat .cat_level1{
+	font-weight:bold;
+	text-align:center;
+	height:30px;
+	line-height:30px;
+	font-size:1.2em;
+	background:#E5E5E5;
+}
+
+#loading {
+	display: none;
+	text-align: center;
+	z-index: 100000;
+	opacity: 0.5;
+	background-color: #fff;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+/*end*/

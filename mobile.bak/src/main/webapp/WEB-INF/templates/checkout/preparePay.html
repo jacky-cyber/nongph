@@ -1,0 +1,38 @@
+<div>
+	<div class="top-bar">
+		<div style="padding:0 10px;">
+			<span th:if="${order.total.zero}" class="top-bar-lf">请完成支付</span>
+			<span th:unless="${order.total.zero}" class="top-bar-lf">请选择支付方式</span>
+			<span class="top-bar-rg" th:text="${order.total + '元'}"></span>
+		</div>
+	</div>
+	<div th:if="${order.total.zero}">
+		<div class="pay-mod complete">
+			<a href="javascript:void(0)">
+				<!--<span class="pay-icon complete-pay"></span>-->
+				<span class="pay-mod-name">完成支付</span>
+				<span class="to-pay"></span>
+			</a>
+		</div>
+	</div>
+	<div th:unless="${order.total.zero}">
+		<div class="pay-mod wechat">
+			<a href="javascript:void(0)">
+				<span class="pay-icon wechat-pay"></span>
+				<span class="pay-mod-name">微信支付</span>
+				<span class="to-pay"></span>
+			</a>
+		</div>
+		<div class="pay-mod ali">
+			<a href="javascript:void(0)">
+				<span class="pay-icon ali-pay"></span>
+				<span class="pay-mod-name">支付宝支付</span>
+				<span class="to-pay"></span>
+			</a>
+		</div>
+	</div>
+    <nph:form method="post">
+		<input style="display:none" hidden="hidden" id="orderNumber" th:value="${order.orderNumber}"/>
+		<input style="display:none" hidden="hidden" id="appid" th:value="${appid}"/>
+    </nph:form>
+</div>

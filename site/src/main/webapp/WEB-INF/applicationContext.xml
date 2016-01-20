@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+    <task:annotation-driven />
+
+    <!-- Set up messaging -->
+    <bean id="messageSource" class="cn.globalph.common.util.MergeResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:messages</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Set up custom entity overrides. These are defined in core/src/main/resources -->
+    <bean id="blMergedEntityContexts" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:applicationContext-entity.xml</value>
+            </list>
+        </property>
+    </bean>
+        
+    <!-- Delete this section to disable the embedded solr search service. Although this will result in a smaller -->
+    <!-- application footprint, it will default the search service to use the database implementation, which  -->
+    <!-- is slower and less full-featured. Broadleaf suggests maintaining this solr implementation in the vast -->
+    <!-- majority of cases. -->
+     <!--
+    <bean id="solrEmbedded" class="java.lang.String">
+        <constructor-arg value="solrhome"/>
+    </bean>
+	  -->
+    <!--A simple quartz jobs for enabling cart and customer purge functionality. Uncomment the following quartz configurations-->
+    <!--to activate this functionality (Also, uncomment the 'purgeCartTrigger' and 'purgeCustomerTrigger' configured under SchedulerFactoryBean.-->
+    <!--Note, you can edit the configuration to customize the functionality. Take a look-->
+    <!--at PurgeCartVariableNames and PurgeCustomerVariableNames for a list of available params and ResourcePurgeService for additional information. Also,-->
+    <!--for custom resource retrieval beyond the scope of the existing implementation, ResourcePurgeServiceImpl can be subclassed-->
+    <!--to provide custom resource retrieval functionality. Please see Quartz documentation for more advanced configuration,-->
+    <!--such as clustering.-->
+
+    <!--<bean id="purgeCartConfig" class="org.springframework.beans.factory.config.MapFactoryBean">-->
+        <!--<property name="sourceMap">-->
+            <!--<map>-->
+                <!--<entry key="SECONDS_OLD" value="2592000"/>-->
+                <!--<entry key="STATUS" value="IN_PROCESS"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="purgeCartJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="blResourcePurgeService" />-->
+        <!--<property name="targetMethod" value="purgeCarts" />-->
+        <!--<property name="arguments">-->
+            <!--<list>-->
+                <!--<ref bean="purgeCartConfig"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="purgeCartTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="purgeCartJobDetail" />-->
+        <!--<property name="startDelay" value="30000" />-->
+        <!--<property name="repeatInterval" value="86400000" />-->
+    <!--</bean>-->
+
+    <!--<bean id="purgeCustomerConfig" class="org.springframework.beans.factory.config.MapFactoryBean">-->
+        <!--<property name="sourceMap">-->
+            <!--<map>-->
+                <!--<entry key="SECONDS_OLD" value="2592000"/>-->
+                <!--<entry key="IS_REGISTERED" value="false"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="purgeCustomerJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="blResourcePurgeService" />-->
+        <!--<property name="targetMethod" value="purgeCustomers" />-->
+        <!--<property name="arguments">-->
+            <!--<list>-->
+                <!--<ref bean="purgeCustomerConfig"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="purgeCustomerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="purgeCustomerJobDetail" />-->
+        <!--<property name="startDelay" value="30000" />-->
+        <!--<property name="repeatInterval" value="86400000" />-->
+    <!--</bean>-->
+
+    <!-- If you want to use a standalone solr server for at least one environment, uncomment the following -->
+    <!-- three beans and set solr.source.primary, solr.source.reindex, and solr.source.admin in the property file -->
+    <!-- to be solrServer, solrReindexServer, and solrAdminServer, respectively: -->
+    <!-- solr.souce.primary=solrServer-->
+    <!-- solr.souce.reindex=solrReindexServer-->
+    <!-- solr.souce.admin=solrAdminServer-->
+    <!-- Then, ensure that the three beans that you just uncommented, below, have their constructor arguments -->
+    <!-- pointing to the correct URLs of the stand alone server(s) -->
+    <!-- NOTE this assumes you are using Solr 4.4. -->
+    <!-- solr.url.admin should point to the ROOT of the server, for example: http://localhost:8983/solr. -->
+    <!-- solr.url.reindex should point to the reindex core, for example: http://localhost:8983/solr/reindex. -->
+    <!-- solr.url.primary should point to the primary core, for example, http://localhost:8983/solr/primary.  -->
+    <!-- In version 4.4 and higher of Solr, there is no need to configure the cores or defaultCoreName elements -->
+    <!-- in solr.xml, as Solr cores are auto discoverable as of 4.4 (see Solr documentation).-->
+    <!-- So, for Solr 4.4, in stand-alone mode, you should configure the following 3 HttpSolrServer configurations: -->
+    <!--     <bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer"> -->
+    <!--         <constructor-arg value="${solr.url.primary}"/> -->
+    <!--     </bean> -->
+    <!--     <bean id="solrReindexServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer"> -->
+    <!--         <constructor-arg value="${solr.url.reindex}"/> -->
+    <!--     </bean> -->
+    <!--     <bean id="solrAdminServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer"> -->
+    <!--         <constructor-arg value="${solr.url.admin}"/> -->
+    <!--     </bean> -->
+    <!--
+    <bean id="blSearchService" class="cn.globalph.b2c.search.service.solr.SolrSearchServiceImpl">
+        <constructor-arg name="solrServer" value="${solr.source.primary}" />
+        <constructor-arg name="reindexServer" value="${solr.source.reindex}" />
+        <constructor-arg name="adminServer" value="${solr.source.admin}" />
+    </bean>
+    
+    <bean id="rebuildIndexJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="blSearchService" />
+        <property name="targetMethod" value="rebuildIndex" />
+    </bean> 
+    <bean id="rebuildIndexTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="rebuildIndexJobDetail" />
+        <property name="startDelay" value="${solr.index.start.delay}" />
+        <property name="repeatInterval" value="${solr.index.repeat.interval}" />
+    </bean>
+    -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="rebuildIndexTrigger"/>-->
+                <!--<ref bean="purgeCartTrigger"/>-->
+                <!--<ref bean="purgeCustomerTrigger"/>-->
+            </list>
+        </property>
+    </bean>
+    
+    <!--  comes with an Image Server that allows you to manipulate images.   For example, includes a high resolution image for each product that is reduced in size for browsing operations -->
+    <bean id="blStaticMapNamedOperationComponent" class="cn.globalph.cms.file.service.operation.StaticMapNamedOperationComponent">
+        <property name="namedOperations">
+            <map>
+                <entry key="browse">
+                    <map>
+                        <entry key="resize-width-amount" value="400"/>
+                        <entry key="resize-height-amount" value="400"/>
+                        <entry key="resize-high-quality" value="false"/>
+                        <entry key="resize-maintain-aspect-ratio" value="true"/>
+                        <entry key="resize-reduce-only" value="true"/>
+                    </map>
+                </entry> 
+                <entry key="thumbnail">
+                    <map>
+                        <entry key="resize-width-amount" value="60"/>
+                        <entry key="resize-height-amount" value="60"/>
+                        <entry key="resize-high-quality" value="false"/>
+                        <entry key="resize-maintain-aspect-ratio" value="true"/>
+                        <entry key="resize-reduce-only" value="true"/>
+                    </map>
+                </entry>  
+            </map>
+        </property>
+    </bean>    
+    
+    <!-- 由于Spring上下文支持spring bean定义合并。所以采用如下样例可以覆写dialect definition that uses a custom processor -->
+    <!-- The second bean registers the dialct to the blWebTemplateEngine -->
+    <!-- Note that the same thing could be done for the blEmailTemplateEngine -->
+    <!-- 
+    <bean id="myDialect" class="cn.globalph.common.web.dialect.MyDialect">
+        <property name="processors">
+          <set>
+            <bean class="cn.globalph.common.web.processor.MyProcessor" />
+          </set>
+        </property>     
+    </bean> 
+    <bean id="webTemplateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+        <property name="dialects">
+            <set>
+                <ref bean="myDialect" />
+            </set>
+        </property>
+    </bean> 
+    --> 
+</beans>

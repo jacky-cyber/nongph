@@ -1,0 +1,24 @@
+<div class="common-wrapper">
+    <div class="step3 s-list">
+        <div class="s-item bdb-1px" th:each="item : ${order.usedOrderItems}"
+             th:object="${item}" th:id="${'productRow' + item.id}">
+            <a th:href="@{*{sku.product.url} + '/' + *{sku.id}}" class="s-href">
+                <div class="s-item">
+                    <div class="sitem-l">
+                        <div class="sl-img">
+                            <img th:if="*{sku.skuMedia['primary']}"
+                                 th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}"
+                                 th:alt="*{sku.name}"/>
+                        </div>
+                    </div>
+                    <div class="sitem-m">
+                        <p class="sitem-m-txt" th:text="*{sku.name}"></p>
+
+                        <p th:text="'X'+*{quantity}"></p>
+                    </div>
+                    <div class="sitem-r" nph:price="*{price}"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

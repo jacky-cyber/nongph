@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='选择优惠券- 品荟')"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+	files="checkout.css" />
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='选择优惠券',type='normal')" />
+	<div id="checkout_content" class="width_setter group" role="main">
+		<p class="warn" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+		<p class="warn" th:unless="${#lists.size(customerCoupons) > 0}"
+			th:text="无可用优惠券" />
+		<nph:form method="post" id="chooseCoupon"
+			th:action="@{'/checkout/coupon/'}"
+			th:if="${#lists.size(customerCoupons) > 0}">
+			<div class="coupon-list">
+				<div id="quan" name="cplist">
+					<div class="tbl-type" th:onclick="'dselected('+${customerCoupon.id}+')'" th:each="customerCoupon : ${customerCoupons}" th:object="${customerCoupon}">
+						<div class="tbl-cell">
+							<div class="cp-j">
+								<span class="icon"></span>
+
+								<p class="cp-text" style="margin:5px 0;" th:if="*{coupon.minPayAmount}" th:inline="text">
+									满[[*{coupon.minPayAmount}]]元立减[[*{coupon.value}]]元 
+								</p>
+								
+								<p class="cp-text" style="margin:5px 0;" th:unless="*{coupon.minPayAmount}" th:inline="text">
+									[[*{coupon.value}]]元现金抵用 
+								</p>
+								
+								<p class="cp-text3" style="margin:5px 0;" th:if="*{number > 1}" th:inline="text">
+									共<i style="color:red;" >[[*{number}]]</i>张，每单限用一张
+								</p>
+								
+								<p class="cp-text2"  style="margin:5px 0;" th:inline="text">[[*{coupon.desc}]] - [[*{coupon.scope}]]</p>
+
+								<p class="cp-text3" style="margin:5px 0;" th:inline="text">[[*{#dates.format(coupon.endDate, 'yyyy/MM/dd')}]]到期</p>
+							</div>
+						</div>
+						<div class="tbl-cell" style="width: 50px">
+							<a th:if="${cart.applyCoupon}" href="javascript:void(0)" th:id="'dicon' + ${customerCoupon.id}"
+								name="dicons" class="btn-radio2" th:classappend="${cart.applyCoupon.id == customerCoupon.id}?'on'"> <span></span>
+							</a>
+							<a th:unless="${cart.applyCoupon}" href="javascript:void(0)" th:id="'dicon' + ${customerCoupon.id}"
+								name="dicons" class="btn-radio2"> <span></span>
+							</a>
+						</div>
+					</div>
+					 <input th:if="${cart.applyCoupon}" id="couponId"
+						name="applyCouponId" th:value="${cart.applyCoupon.id}" type="hidden" />
+					 <input th:unless="${cart.applyCoupon}" id="couponId"
+						name="applyCouponId" value="0" type="hidden" />
+				</div>
+			</div>
+			<a href="javascript:submitForm()" class="new-abtn-type mgn">确认</a>
+		</nph:form>
+	</div>
+	<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+	<script>
+		/*<![CDATA[*/
+		    function dselected(id){
+				if($("#dicon"+id).hasClass("on")){
+					$("#dicon"+id).removeClass("on");
+					$("#couponId").val("0");
+				}else{
+					$("#quan .tbl-type .tbl-cell .btn-radio2").removeClass("on");
+					$("#dicon"+id).addClass("on");
+					$("#couponId").val(id);
+				}
+			}
+		
+			function submitForm(){
+				$("#chooseCoupon").submit();
+			}
+		/*]]>*/
+	</script>
+</body>
+</html>
+

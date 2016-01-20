@@ -1,0 +1,107 @@
+<div class="manage-account-form-wrapper">
+	<p class="success" th:if="${successMessage}"
+		th:text="${successMessage}"></p>
+	<h2>地址簿</h2>
+	<p th:if="${#lists.isEmpty(customerAddresses)}"
+		style="margin: 20px 10px;">您暂时还没有添加任何地址信息</p>
+	<div style="margin: 20px 10px;"
+		th:unless="${#lists.isEmpty(customerAddresses)}">
+		<span>选项：</span> <select
+			onchange="location.href=this.options[selectedIndex].value">
+			<option>选择一个需更改的地址</option>
+			<option th:each="customerAddress : ${customerAddresses}"
+				th:object="${customerAddress}"
+				th:value="@{'/account/addresses/' + *{id}}"><span
+					th:text="*{receiver}"></span>
+			</option>
+		</select> <span th:if="${customerAddressForm.addressId}">
+		<a th:href="@{/account/addresses}" class="medium red" th:text="#{create.a.new.address}">create
+				a new address</a>
+		</span> <span th:unless="${customerAddressForm.addressId}" th:text="#{create.a.new.address.below}">&nbsp;&nbsp;-
+			or -&nbsp;&nbsp;create a new address below</span>
+	</div>
+	<nph:form class="manage-account" method="post"
+		th:action="@{'/account/addresses/' + ${customerAddressForm.addressId != null ? customerAddressForm.addressId : ''}}"
+		th:object="${customerAddressForm}">
+		<div>
+			<div class="form66">
+				<div for="firstLevelCommunity">区/县</div>
+				<div class="error_spacer" th:if="${#fields.hasErrors('secondLevelCommunity') and !#fields.hasErrors('firstLevelCommunity')}">&nbsp;</div>
+				<div class="error" th:if="${#fields.hasErrors('firstLevelCommunity')}" th:errors="*{firstLevelCommunity}"></div> 
+				<div>
+					<select id="firstLevelCommunity" th:field="*{firstLevelCommunity}" th:classappend="${#fields.hasErrors('firstLevelCommunity')}? 'fieldError'">
+						<option value="">--</option>
+						<option th:each="firstLevelCommunity : ${firstLevelCommunities}"
+							th:value="${firstLevelCommunity.id}"
+							th:text="${firstLevelCommunity.communityName}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form66 margin20">
+				<div for="secondLevelCommunity">区域</div> 
+				<div class="error_spacer" th:if="${#fields.hasErrors('firstLevelCommunity') and !#fields.hasErrors('secondLevelCommunity')}">&nbsp;</div>
+				<div class="error" th:if="${#fields.hasErrors('secondLevelCommunity')}" th:errors="*{secondLevelCommunity}"></div>
+				<div>
+					<select id="secondLevelCommunity" th:field="*{secondLevelCommunity}" th:classappend="${#fields.hasErrors('secondLevelCommunity')}? 'fieldError'">
+						<option value="">--</option>
+						<option th:each="secondLevelCommunity : ${secondLevelCommunities}"
+							th:value="${secondLevelCommunity.id}"
+							th:text="${secondLevelCommunity.communityName}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form66">
+				<div for="receiver">收货人姓名</div> 
+				<div class="error" th:if="${#fields.hasErrors('receiver')}" th:errors="*{receiver}"></div> 
+				<div class="error_spacer" th:if="${#fields.hasErrors('phone') and !#fields.hasErrors('receiver')}">&nbsp;</div>
+				<div>
+					<input type="text" class="field30 required" th:field="*{receiver}" th:classappend="${#fields.hasErrors('receiver')}? 'fieldError'" />
+				</div>
+			</div>
+			<div class="form66 margin20">
+				<div for="phone">手机号码</div> 
+				<div class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div> 
+				<div class="error_spacer" th:if="${#fields.hasErrors('receiver') and !#fields.hasErrors('phone')}">&nbsp;</div>
+				<div>
+					<input type="tel" id="phone" name="phone" th:value="*{phone}" class="field30 cloneable" th:classappend="${#fields.hasErrors('phone')}? 'fieldError'"/>
+				</div>
+			</div>
+			<div class="form66">
+				<div for="address">详细地址</div> 
+				<div class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div> 
+				<div class="error_spacer" th:if="${#fields.hasErrors('postalCode') and !#fields.hasErrors('address')}">&nbsp;</div>
+				<div>
+					<input type="text" th:field="*{address}" class="field50 required cloneable" th:classappend="${#fields.hasErrors('address')}? 'fieldError'" />
+				</div>
+			</div>
+			<div class="form66 margin20">
+				<div for="postalCode">邮政编码</div> 
+				<div class="error" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></div> 
+				<div class="error_spacer" th:if="${#fields.hasErrors('address') and !#fields.hasErrors('postalCode')}">&nbsp;</div>
+				<div>
+					<input type="text" th:field="*{postalCode}" class="field30 required cloneable" th:classappend="${#fields.hasErrors('postalCode')}? 'fieldError'" />
+				</div>
+			</div>
+			<div class="form30">
+				<div>&nbsp;</div> 
+				<div>
+					<input type="checkbox" th:field="*{default}"
+						class="field25" style="width: 22px;" />  
+				</div>
+				<div th:text="#{makeDefault}">设为默认地址</div>
+			</div>
+
+		</div>
+		<div>
+			<input type="submit" th:if="*{addressId}"
+				th:value="#{update.address}"
+				class="medium red" />
+			<input type="submit" th:unless="*{addressId}"
+				th:value="#{create.new.address}"
+				class="medium red" />
+			<input th:if="*{addressId}"
+				type="submit" name="removeAddress" th:value="删除" class="small dark" />
+			<span class="error" th:if="${errorMessage}" th:text="${errorMessage}"></span>
+		</div>
+	</nph:form>
+</div>

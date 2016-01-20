@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.033.001.02" longName="camt.033.001.02" type="camt.033.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.033.001.02">
+		<element shortName="Assgnmt" longName="Assignment" type="CaseAssignment"/>
+		<element shortName="Case" longName="Case" type="Case"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Assgnr" longName="Assigner" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="Assignee" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="CreateDateTime" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Cretr" longName="Creator" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="ReopCaseIndctn" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+</names>

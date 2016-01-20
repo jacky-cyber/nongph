@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="cn.globalph.common.email.domain.EmailTracking" class="cn.globalph.common.email.domain.EmailTrackingImpl" scope="prototype"/>
+    <bean id="cn.globalph.common.email.domain.EmailTrackingClicks" class="cn.globalph.common.email.domain.EmailTrackingClicksImpl" scope="prototype"/>
+    <bean id="cn.globalph.common.email.domain.EmailTrackingOpens" class="cn.globalph.common.email.domain.EmailTrackingOpensImpl" scope="prototype"/>
+    <bean id="cn.globalph.common.email.domain.EmailTarget" class="cn.globalph.common.email.domain.EmailTargetImpl" scope="prototype"/>
+    <bean id="cn.globalph.common.enumeration.domain.DataDrivenEnumeration" class="cn.globalph.common.enumeration.domain.DataDrivenEnumerationImpl" scope="prototype"/>
+    <bean id="cn.globalph.common.enumeration.domain.DataDrivenEnumerationValue" class="cn.globalph.common.enumeration.domain.DataDrivenEnumerationValueImpl" scope="prototype"/>
+    <bean id="cn.globalph.common.config.domain.SystemProperty" class="cn.globalph.common.config.domain.SystemPropertyImpl" scope="prototype" />
+    <bean id="cn.globalph.common.i18n.domain.Translation" class="cn.globalph.common.i18n.domain.TranslationImpl" scope="prototype" />
+    <bean id="cn.globalph.common.structure.dto.StructuredContentDTO" class="cn.globalph.common.structure.dto.StructuredContentDTO" scope="prototype" />
+    <bean id="cn.globalph.common.structure.dto.ItemCriteriaDTO" class="cn.globalph.common.structure.dto.ItemCriteriaDTO" scope="prototype" />
+    <bean id="cn.globalph.common.media.domain.MediaDto" class="cn.globalph.common.media.domain.MediaDto" />
+    <bean id="cn.globalph.common.sitemap.domain.SiteMapConfiguration" class="cn.globalph.common.sitemap.domain.SiteMapConfigurationImpl" scope="prototype" />
+    <bean id="cn.globalph.common.sitemap.domain.SiteMapGeneratorConfiguration" class="cn.globalph.common.sitemap.domain.SiteMapGeneratorConfigurationImpl" scope="prototype" />
+    <bean id="cn.globalph.common.sitemap.domain.SiteMapUrlEntry" class="cn.globalph.common.sitemap.domain.SiteMapUrlEntryImpl" scope="prototype" />
+    <bean id="cn.globalph.common.sitemap.domain.CustomUrlSiteMapGeneratorConfiguration" class="cn.globalph.common.sitemap.domain.CustomUrlSiteMapGeneratorConfigurationImpl" scope="prototype" />
+    <bean id="cn.globalph.common.sandbox.domain.SandBoxManagement" class="cn.globalph.common.sandbox.domain.SandBoxManagementImpl" scope="prototype" />
+    <bean id="cn.globalph.common.site.domain.Site" class="cn.globalph.common.site.domain.SiteImpl" scope="prototype" />
+
+</beans>

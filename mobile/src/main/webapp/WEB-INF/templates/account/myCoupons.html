@@ -1,0 +1,32 @@
+<div class="pepper-con">
+	<div class="pepper-w" th:each="customerCoupon : ${customerCoupons}" th:object="${customerCoupon}" th:if="${#lists.size(customerCoupons)>0}">
+		<div class="pepper pepper-blue" th:inline="text">
+			<div class="pepper-l">
+				<p class="pepper-l-num">
+					<i>¥</i><span>[[*{coupon.value}]]</span><span th:if="*{coupon.minPayAmount}" th:remove="tag">（满[[*{coupon.minPayAmount}]]可用）</span>
+					<br />
+					<i th:if="*{number > 1}">（共[[*{number}]]张）</i>
+				</p>
+				<p class="pepper-l-con">使用范围：[[*{coupon.scope}]]</p>
+			</div>
+			<div class="pepper-r">
+				<span th:text="*{coupon.desc}"></span>
+				<div>
+					[[*{#dates.format(coupon.startDate, 'yyyy-MM-dd')}]]
+					<p class="pepper-line">—</p>
+					[[*{#dates.format(coupon.endDate, 'yyyy-MM-dd')}]]
+				</div>
+			</div>
+		</div>
+		<div class="pepper-b pepper-blue">
+			<div class="pb-con"></div>
+			<div class="pb-border"></div>
+		</div>
+		<div class="p-address">
+			<ul>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<div th:if="${#lists.size(customerCoupons)==0}" style="text-align:center;padding:50px 0;">您暂时没有任何优惠券</div>
+</div>

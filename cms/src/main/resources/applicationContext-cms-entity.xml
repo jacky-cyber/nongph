@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+    
+    <!-- Entity mappings - override for extensibility -->
+    <bean id="cn.globalph.cms.page.domain.Page" class="cn.globalph.cms.page.domain.PageImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.page.domain.PageRule" class="cn.globalph.cms.page.domain.PageRuleImpl" scope="prototype"/>
+
+    <bean id="cn.globalph.cms.page.domain.PageTemplate" class="cn.globalph.cms.page.domain.PageTemplateImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.file.domain.StaticAssetStorage" class="cn.globalph.cms.file.domain.StaticAssetStorageImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.file.domain.StaticAsset" class="cn.globalph.cms.file.domain.StaticAssetImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.structure.domain.StructuredContent" class="cn.globalph.cms.structure.domain.StructuredContentImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.structure.domain.StructuredContentType" class="cn.globalph.cms.structure.domain.StructuredContentTypeImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.structure.domain.StructuredContentFieldTemplate" class="cn.globalph.cms.structure.domain.StructuredContentFieldTemplateImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.structure.domain.StructuredContentRule" class="cn.globalph.cms.structure.domain.StructuredContentRuleImpl" scope="prototype"/>
+    <bean id="cn.globalph.cms.url.domain.URLHandler" class="cn.globalph.cms.url.domain.URLHandlerImpl" scope="prototype"/>
+
+</beans>

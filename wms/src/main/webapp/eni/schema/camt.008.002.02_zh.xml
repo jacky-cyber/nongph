@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.008.002.02" longName="camt.008.002.02" type="camt.008.002.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.008.002.02">
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="Undrlyg" longName="因为" type="PaymentInstructionExtract2"/>
+		<element shortName="Justfn" longName="理由" type="DebitAuthorisationDetails2"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<!--type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="指派人指令标识" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="受派人指令标识" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="币种与金额" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="起息日期" type="ISODateTime"/>
+		
+	</type-->
+	
+	<type shortName="PaymentInstructionExtract2">
+		<element shortName="OrgnlMsgNmId" longName="原始消息名标示" type="Max35Text"/>
+		<element shortName="OrgnlInstrId" longName="原始指令标示" type="Max35Text"/>
+		<element shortName="InstdAmt" longName="指示金额" type="CurrencyAndAmount"/>
+		<element shortName="IntrBkSttlmAmt" longName="行间结算金额" type="CurrencyAndAmount"/>	
+		<element shortName="ReqdExctnDt" longName="请求执行日期" type="ISODateTime"/>	
+		<element shortName="IntrBkSttlmDt" longName="行间结算日期" type="ISODateTime"/>		
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<!--type shortName="DebitAuthorisationDetails">
+		<element shortName="CxlRsn" longName="取消原因" type="CancellationReason1Code">
+			<enumeration shortName="CUST" longName="客户请求" />
+			<enumeration shortName="DUPL" longName="重复支付" />
+			<enumeration shortName="AGNT" longName="错误代理" />
+			<enumeration shortName="CURR" longName="错误币种" />
+			<enumeration shortName="UPAY" longName="不当支付" />
+		</element>
+		<element shortName="AmtToDbt" longName="借记金额" type="CurrencyAndAmount"/>
+		<element shortName="ValDtToDbt" longName="借记起息日" type="ISODate"/>
+	</type-->
+	<type shortName="DebitAuthorisationDetails2">
+		<element shortName="CxlRsn" longName="取消原因" type="CancellationReason3Code">
+			<enumeration shortName="CUST" longName="客户请求" />
+			<enumeration shortName="DUPL" longName="重复支付" />
+			<enumeration shortName="AGNT" longName="错误代理" />
+			<enumeration shortName="CURR" longName="错误币种" />
+			<enumeration shortName="UPAY" longName="错误支付" />
+			<enumeration shortName="MM23" longName="缺少汇款人信息" /> 
+			<enumeration shortName="MM24" longName="缺少受益人信息" />
+		</element>
+		<element shortName="AmtToDbt" longName="借记金额" type="CurrencyAndAmount"/>
+		<element shortName="ValDtToDbt" longName="借记起息日" type="ISODate"/>
+	</type>	
+	<type shortName="CancellationReason3Code"/>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<type shortName="ISODate"/>
+	
+</names>

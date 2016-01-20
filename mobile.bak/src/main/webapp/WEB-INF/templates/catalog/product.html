@@ -1,0 +1,826 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="detail_standard">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title th:text="${sku.name + '-品荟'}"></title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="x-dns-prefetch-control" content="on" />
+<link rel="stylesheet" href="/static/css/detail.s.min.css" />
+<link rel="stylesheet" href="/static/css/header.css" />
+<link rel="stylesheet" href="/static/css/slides.css" />
+	<link rel="stylesheet" href="/static/css/shopping-cart.css" />
+<style>
+	.float_left{float:left;}
+	.clear_float{clear:both;}
+	#leftUpBar{width:98%;border:1px solid #ccc;padding-left:5px;line-height:30px;text-align: left;margin-bottom: 25px;}
+	.mod_time_span{width: 4%;display: inline-block;border:0px;font-size: 1.5em;color:white;height: 20px;line-height: 20px;padding: 5px;text-align: center;}
+	.mod_time_span_valid{background-color:red;}
+	.mod_time_span_invalid{background-color:#ccc;}
+	.mod_activeBtn_valid{background-color: #ccc !important;}
+	.mod_time_word{font-size: 1em;height:25px;line-height: 25px;}
+	.mod_personBtn{width:100%;border:1px solid #ccc;height:40px;line-height: 40px;border:0px; }
+	.mod_buy_group{padding:10px;}
+	.mod_rule_border{border:1px solid #ccc;margin-top: 15px;padding-bottom: 10px;padding-right: 5px;}
+	/*.mod_highlight{background-color:#76EEC6;color:#fff;}
+	.mod_nohighlight{background-color:#ccc;color:#fff;}*/
+	.mod_rule_title{
+		position: relative;
+		top:-15px;
+		left:-7px;
+		font-size:1.2em;
+		background-color: #fff;
+		color:#fff;
+		width:35%;
+		line-height:30px;
+		text-align:center;
+		-webkit-transform: rotate(-5deg);
+		-moz-transform: rotate(-5deg);
+		-ms-transform: rotate(-5deg);
+		-o-transform: rotate(-5deg);
+		transform: rotate(-5deg);
+		background-color: #76EEC6;
+	}
+	.mod_word_change{
+		font-size:1.3em;color:red;
+		letter-spacing:0.3ch;
+	}
+	
+/* pop */
+.pop{left:0px;width:100%;height:100%;z-index: 10000000;opacity:0.8;}
+.pop_head{position:relative;}
+.pop_head a.close{width:47px;height:46px;background:url(/static/img/close.png);position:absolute;line-height:20px;right:0px;color:#000;text-decoration:none;}
+.pop_body{padding:10px;background:black;height:100%;overflow:hidden;padding: 20px;}
+	
+	.shp-cart-opt{
+		padding: 10px 0px;
+	}
+	.quantity{
+		width: 60px;;
+	}
+	/*.mod_slide{
+		z-index: 9;
+		color:white;
+		position:absolute;
+		margin-left:25%;
+		width: 45%;
+		line-height:25px;
+		background-color:black;
+		padding: 10px;
+		font-weight: bold;
+		display: none;
+		opacity:0.6;
+	}
+	.cricle{display:inline-block;font-size: 1.3em;font-weight: bold;width:20px;height:20px;line-height:20px;border-radius:10px;text-align:center;background-color: white;color:black;margin-right:5px;}*/
+	.groupOn1{
+		width:150px;
+		line-height: 30px;
+		background-color:  #ee7a77;
+		border: solid 1px #ee7a77;
+		margin-top: 5px;
+		color: white;
+		text-align: center;
+	}
+	.groupon1border{
+		width:150px;
+		height:10px;
+		z-index: 2;
+		border-left: solid 1px #ee7a77;
+		border-right: solid 1px #ee7a77;
+		background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAGCAIAAABFHomwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCQ0Q5NTQ2MUUzRUIxMUU0QTIzNEI5OTAyMjk5M0QyOCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCQ0Q5NTQ2MkUzRUIxMUU0QTIzNEI5OTAyMjk5M0QyOCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJDRDk1NDVGRTNFQjExRTRBMjM0Qjk5MDIyOTkzRDI4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJDRDk1NDYwRTNFQjExRTRBMjM0Qjk5MDIyOTkzRDI4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+tmO71QAAAIRJREFUeNpi+Xzxwt/Ll/5dv8bw/z8DDsDIxcVkbMqsrs4oKsb49etXoNC/J4//rF/7/9MnTNVM2jqsHl4MHBxQzRANQABU/XvR/P8fPyKrZjY2YQGqRtaPsJePjzUolIGRESEiKcXi5oFuIYpbpaSYdXThXBYXVwYmJnT/wJ1EJAAIMAARWCg3xidMAwAAAABJRU5ErkJggg==) repeat-x;
+		background-size: 8px;
+	}
+	.groupOn2{
+		width:150px;
+		z-index: -1;
+		position: relative;
+		top:-13px;
+		line-height: 30px;
+		border: solid 1px #ee7a77;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		color: #ee7a77;
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+	<div id="notification_bar"></div>
+	<!--首先设置一个层:-->
+	<div id="pop" class="pop" style="display:none">
+<!-- 	  <div class="pop_head"><a class="close" href="javascript:void(0);" onclick="hide()"></a></div> -->
+	  <div class="pop_body">
+	  	<img src="/static/img/share-demo.png" style="float:right; position: relative;top: -30px;right: -10px;" />
+	  </div>
+	</div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='商品详情',type='normal')" />
+	<div id="part_main" th:object="${sku}">
+		<div class="container">
+			<div id="slides">
+				<img th:each="media, iterStat : *{skuMedia}"
+					 th:src="@{${media.value.url}}" alt="Bottle Closeup" />
+			</div>
+		</div>
+		<!-- 非团购 -->
+		<div class="buy_area">
+			<div class="fn_wrap">
+				<h1 class="fn" id="itemName" th:text="*{name}"></h1>
+				<div class="desc" id="itemDesc" th:text="*{description}"></div>
+                <!--<div class="share">-->
+	                <!--<span class="s-line"></span>-->
+	                <!--<a href="javascript:void(0)" onclick="show();" class="s-bg2 s-start4"></a>-->
+            	<!--</div>-->
+			</div>
+			<div >
+				<div class="price_wrap" id="priceBlock">
+					<th:block th:unless="*{isGroupOn}">
+					<span class="price"
+						id="priceSale" nph:price="*{salePrice}" th:if="*{onSale}"></span>
+					<span class="price"
+						id="priceSale" nph:price="*{retailPrice}" th:unless="*{onSale}"></span>
+					<span class="group" id="priceGroupStyle" style="display: none"></span>
+					<span class="tip_red" id="priceDis" style="display: none"></span>
+					<span class="price_old" id="priceMarket" nph:price="*{retailPrice}" th:if="*{onSale}"></span>
+
+					<!--<th:block  th:object="${sku.comparePrice}">
+						<span onclick="message()">&nbsp;&nbsp;京东价￥<span style="font-weight:bold;color:red;" th:text="*{price}"></span></span>
+					</th:block>-->
+					</th:block>
+				<span style="color:white;aria-setsize:0.8em;font-size:0.8em;background-color: orange;" class="compare" th:each="cp : ${sku.comparePrice}" >
+					<span th:text="${'低' + cp.source}"></span>
+					<span style="font-weight:bold;color:lightgrey;" th:text="${cp.price.subtract(sku.salePrice)}"></span>
+					<span>元</span>
+					<!--<span th:each="dt : ${sku.create_time}" th:object="${dt}" th:each="cp : ${sku.comparePrice}" th:object="${cp}">-->
+					<div class="pop" style="display: none;color:red;"><span th:text="${cp.source+ '要卖'}">京东要卖</span><span
+							th:text="${cp.price + '元'}"></span>, 比价时间:<span th:text="${#dates.format(cp.createTime, 'yyyy-MM-dd HH:mm')}"></span></div>
+					<!--</span>-->
+				</span>
+					</div>
+				<th:block th:unless="*{isGroupOn}">
+					<div th:with="checkInventory=*{inventoryType?.type == 'CHECK_QUANTITY'}">
+						<th:block th:if="${checkInventory}">
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;(库存:<span th:text="*{quantityAvailable}"></span>)</span>
+						</th:block>
+
+					</div>
+				</th:block>
+
+			</div>
+
+		</div>
+		<!--团购 start-->
+		<div class="mod_tab_gap"></div>
+		<!--th:if="*{isGroupOn}"-->
+		<div th:if="*{isGroupOn}" th:remove="tag">
+			<div class="mod_buy_group" th:inline="text">
+				<div id="leftUpBar">
+					<div class="float_left" style="margin-top: 3%;margin-left: 2%;">
+						<span class="mod_word_change">正在团购中</span><br/>
+						<span style="letter-spacing:0.5ch;">已参团<span style="color:orange;font-size:1.3em;">[[${sku.groupOn.participateInCount}]]</span>[[${sku.groupOn.groupUnit}]]</span>
+					</div>
+					<div style="margin-right: 2%;margin-top: 2%;float:right;">
+						<div  class="groupOn1">
+							[[${sku.groupOn.groupPrice}]]元 / [[${sku.groupOn.groupUnit}]]
+						</div>
+						<div class="groupon1border"></div>
+						<div  class="groupOn2">
+							[[${sku.groupOn.minCount}]][[${sku.groupOn.groupUnit}]]起团
+						</div>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+
+				<!--<div  class="float_left" id="leftBuyGroup">
+					<div class="mod_personBtn" id="lg50">小于50人 = 120元/份 </div>
+					<div class="mod_personBtn" id="gt50">大于50人 = 110元/份</div>
+				</div>-->
+				<div class="clear_float"></div>
+				<div class="mod_rule_border">
+					<div style="" class="mod_rule_title">活动规则</div>
+					<div style="padding-left: 10px;">截止日期:&nbsp;&nbsp;<span style="color:red;" th:text="${#dates.format(sku.groupOn.endDate, 'YYYY年MM月dd日')}">2015年08月31日</span></div>
+					<div style="padding-left: 10px;">
+						详细规则:
+						<div style="font-size:0.9em;padding-left: 5px;">
+							<p>
+								1.未达到最低起团[[${sku.groupOn.groupUnit}]]数时,系统会在团购截止日期统一退款;
+							</p>
+							<p>
+								2.活动城市地区:苏州(姑苏区、高新区、工业园区、虎丘区 、吴中区、相城区);
+							</p>
+							<p>
+								3.产品及包装以实物为准;
+							</p>
+							<p>
+								4.活动结束后统一送货;
+							</p>
+							<p>
+								5.最终解释权归品荟所有。
+							</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!--团购 end-->
+		<div class="mod_buy_group" th:if="*{isSeckilling}">
+			<div id="parentTime"  style="margin-bottom:30px;">
+				<div id="activityTime">
+					<span class="mod_time_span" id="time1"></span>
+					<span class="mod_time_word" >天</span>
+					<span class="mod_time_span" id="time2"></span>
+					<span class="mod_time_span" id="time3"></span>
+					<span class="mod_time_word">小时</span>
+					<span class="mod_time_span" id="time4"></span>
+					<span class="mod_time_span" id="time5"></span>
+					<span class="mod_time_word">分</span>
+					<span class="mod_time_span" id="time6"></span>
+					<span class="mod_time_span" id="time7"></span>
+					<span class="mod_time_word">秒</span>
+					<span class="mod_time_word" id="isEnd">后结束</span>
+				</div>
+
+			</div>
+			<div class="mod_rule_border">
+				<div style="" class="mod_rule_title">活动规则</div>
+				<div style="padding-left: 10px;">截止日期:&nbsp;&nbsp;<span style="color:red;" th:text="${#dates.format(sku.seckillingEndDate, 'YYYY年MM月dd日')}">2015年08月31日</span></div>
+				<div style="padding-left: 10px;">
+					详细规则:
+					<div style="font-size:0.9em;padding-left: 5px;">
+						<p th:inline="text">
+							1.每个用户最多购买[[${sku.limit}]]份;
+						</p>
+						<p>
+							2.活动城市地区:苏州(姑苏区、高新区、工业园区、虎丘区 、吴中区、相城区);
+						</p>
+						<p>
+							3.产品及包装以实物为准;
+						</p>
+						<p>
+							4.活动结束后统一送货;
+						</p>
+						<p>
+							5.最终解释权归品荟所有。
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="mod_tab_gap"></div>
+
+		<div class="detail_extra">
+			<div class="detail_row" id="purchaseCount">
+				<h3 class="tit" style="float:left;margin-right: 20px;">购买数量：</h3>
+				<div class="shp-cart-opt" style="float:right;margin-right: 10px;">
+					<div class="quantity-wrapper">
+						<span class="quantity-decrease">-</span>
+						<input type="text" size="7" maxlength="7"
+							   class="quantity" onblur="setCount_1()" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
+						<span class="quantity-increase">+</span>
+					</div>
+				</div>
+			</div>
+			<div class="detail_gap"></div>
+
+			<div class="detail_row" id="itemDetEnter" ptag="7001.1.15">
+				<a href="javascript:;"><h3 class="tit">图文详情</h3></a> <i
+					class="icon_promote"></i>
+			</div>
+			<div class="detail_gap"></div>
+			<nph:ratings itemId="*{product.id}" maxResults="2"/>
+			<div class="detail_row detail_row_cmt" id="summaryEnter"
+				th:attr="skuid=${sku.id}" hashval="summary">
+				<h3 class="tit">评价</h3>
+				<i class="icon_promote" id="summaryEnterIco"></i>
+				<p class="good" th:if="${ratingSummary}">
+					评分 <strong id="evalRate" th:text="${ratingSummary.averageRating}"></strong>
+				</p>
+				<p class="count">
+					共
+					<span th:if="${ratingSummary}" class="num" id="evalNo2" th:text="${ratingSummary.numberOfReviews}"></span>
+					<span th:unless="${ratingSummary}" class="num" id="evalNo2">0</span>
+					 条评价
+				</p>
+			</div>
+
+			<div class="detail_cmt" th:if="${reviewDetails}">
+				<!-- cmt_tag -->
+				<div class="cmt_list_wrap">
+					<ul class="cmt_list" id="evalDet_main">
+						<li th:each="review : ${reviewDetails}" th:object="${review}">
+							<div class="cmt_user">
+								<span class="user" th:text="*{customer.maskName}">g***g</span> 
+								<span class="tip"></span> 
+								<span class="credit">
+								<span th:class="*{'star-width' + #strings.substring(ratingDetail.rating,0,1)}"></span></span> 
+								<span class="date" th:text="*{#dates.format(reviewSubmittedDate, 'yyyy-MM-dd')}"></span>
+							</div>
+							<div class="cmt_cnt" th:text="*{reviewText}">。。。。。。。。。。。</div>
+							<div class="cmt_att"></div>
+						</li>
+					</ul>
+					<span id="summaryEnter2"><a href="javascript:;" th:attr="skuid=${sku.id}" class="cmt_list_more">查看全部评价</a></span>
+				</div>
+				<!-- list -->
+			</div>
+
+			<div class="detail_gap"></div>
+
+			<div id="appdlCon"></div>
+		</div>
+
+		<div id="detailBaseLine" class="mod_tab_gap"></div>
+
+		<div class="mod_fix_wrap">
+			<div class="mod_fix">
+				<div class="mod_tab" id="detailTab">
+					<span class="cur" no="1" ptag="7001.1.12">商品介绍</span> <span no="2"
+						ptag="7001.1.13" class="">商品规格</span> <span no="3"
+						ptag="7001.1.14" class="">产地介绍</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="detail_info_wrap" id="detail">
+			<div class="detail_list" id="detailCont"
+				style="-webkit-transform: translate3d(-5.5px, 0px, 0px); -webkit-transition: 0ms; transition: 0ms;">
+				<!-- 商品介绍 -->
+				<div class="detail_item p_desc" id="detail1"
+					style="position: relative;">
+					<div id="commDesc" class="detail_pc" th:utext="*{longDescription}" />
+
+				</div>
+				<!-- 商品参数 -->
+				<div class="detail_item p_prop" id="detail2">
+					<div id="commDesc" class="detail_pc" th:utext="*{paramDescription}" />
+				</div>
+				<!-- 产地介绍 -->
+				<div class="detail_item p_cmt" id="detail3">
+					<div id="commDesc" class="detail_pc" th:utext="*{originDescription}" />
+					
+				</div>
+			</div>
+		</div>
+
+		<!-- btn_wrap_nocart -->
+		<div class="btn_wrap btn_wrap_fixed" id="btnTools" style="">
+			<th:block
+					th:with="alwaysAvailable=*{inventoryType == null or inventoryType.type == 'ALWAYS_AVAILABLE'},
+					checkQuantity=*{inventoryType?.type == 'CHECK_QUANTITY'},
+					availableInventory=${alwaysAvailable or (checkQuantity and #object.quantityAvailable != null and #object.quantityAvailable != 0 )},
+                                   inCart=${cart.containsSku(#object.id)}">
+				<div class="notice_tip" th:if="${!availableInventory}" id="statusNotice" style="display: block;"><span
+						id="statusNote">此商品已经售完</span></div>
+				<div class="notice_tip" th:if="${sku.isSeckilling and !sku.seckillingValid}" id="statusNotice"
+					 style="display: block;"><span id="statusNote">活动已结束</span></div>
+				<div class="btn_col">
+						<a class="btn btn_cart" th:classappend="${!availableInventory or (sku.isSeckilling and !sku.seckillingValid)}?'btn_buy_disabled'" href="javascript:;" id="addCart" >加入购物车</a>
+						<a class="btn btn_buy" th:classappend="${!availableInventory or (sku.isSeckilling and !sku.seckillingValid)}?'btn_buy_disabled'"  th:attr="skuId=${sku.id}" href="javascript:;" id="buyNow" >立即购买</a>
+					
+				</div>
+			</th:block>
+			<a class="cart_wrap"
+				th:href="@{/cart}"> <i
+				class="i_cart" id="cartNum" th:attr="num=${cart.itemCount}"></i> <span class="cart"></span> <span
+				class="add_num" id="popone">+1</span>
+			</a>
+		</div>
+		
+	</div>
+	
+	<!--<div class="tip_container" >-->
+		<div class="tip_container sku_tip" id="noticePanel"  style="display:none;margin-left:30%;">
+	    <span id="noticeStr">添加成功</span>
+		</div>
+	<!--</div>-->
+	<nph:form method="POST" id="frm">
+		<input type="hidden" name="skuId" th:value="${sku.id}" />
+		<input type="hidden" name="quantity" id="quantity" value="1" />
+	</nph:form>
+	<script th:src="@{/static/js/lib/jquery-1.9.1.js}" />
+	<script th:src="@{/static/js/libs/jquery.slides.js}" />
+	<script th:src="@{/static/js/jweixin-1.0.0.js}"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	/*add by jenny start*/
+	//add 15/9/8
+	function setCount_1(){
+		if($('.quantity').val()==''||$('.quantity').val().substr(0,1)=='0'||parseInt($(".quantity").val())<0){
+			setMinCount();
+		}
+		if([[${sku.inventoryType?.type}]]=='CHECK_QUANTITY'){
+			if(parseInt($(".quantity").val())>[[${sku.quantityAvailable}]]){
+				if((document.getElementById("noticeStr").innerText == "添加成功！")||$("#noticePanel").css("display")=='none'){
+					document.getElementById("noticeStr").innerText = "库存不足！";
+					$("#noticePanel").fadeToggle('slow').delay(2000).slideToggle('slow');
+				}
+				$(".quantity").val([[${sku.quantityAvailable}]]);
+			}
+		}
+	}
+	function setMinCount(){
+		if([[${sku.inventoryType?.type}]]=='CHECK_QUANTITY'){
+			if([[${sku.quantityAvailable}]] >1){
+				$('.quantity').val(1);
+			}else{
+				$('.quantity').val(0);
+			}
+		}else if([[${sku.inventoryType}]]== null||[[${sku.inventoryType?.type}]]=='ALWAYS_AVAILABLE'){
+			$('.quantity').val(1);
+		}else{
+			$('.quantity').val(0);
+		}
+	}
+	//增加商品购买数量
+	$('.quantity-increase').click(function () {
+		var quantity = parseInt($(".quantity").val());
+		if([[${sku.inventoryType?.type}]]=='CHECK_QUANTITY'){
+
+			if(quantity<[[${sku.quantityAvailable}]]){
+			$(".quantity").val(++quantity);
+			}else{
+				if((document.getElementById("noticeStr").innerText == "添加成功！")||$("#noticePanel").css("display")=='none'){
+					document.getElementById("noticeStr").innerText = "库存不足！";
+					$("#noticePanel").fadeToggle('slow').delay(2000).slideToggle('slow');
+				}
+
+				$(".quantity").val([[${sku.quantityAvailable}]]);
+			}
+		}else if([[${sku.inventoryType?.type}]]=='ALWAYS_AVAILABLE'){
+			$(".quantity").val(++quantity);
+		}else{
+			if((document.getElementById("noticeStr").innerText == "添加成功！")||$("#noticePanel").css("display")=='none'){
+				document.getElementById("noticeStr").innerText = "库存不足！";
+				$("#noticePanel").fadeToggle('slow').delay(2000).slideToggle('slow');
+			}
+		}
+	});
+	//减少商品购买数量
+	$('.quantity-decrease').click(function () {
+		var quantity = parseInt($(".quantity").val());
+		if([[${sku.inventoryType?.type}]]=='CHECK_QUANTITY') {
+			if (quantity > 1) {
+				$(".quantity").val(--quantity);
+			}
+		}else if([[${sku.inventoryType?.type}]]=='ALWAYS_AVAILABLE'){
+			if (quantity > 1) {
+				$(".quantity").val(--quantity);
+			}
+		}else{
+			$('.quantity').val(0);
+		}
+	});
+	/*end */
+		$(function(){
+			$("#slides").slidesjs({
+				width:200,
+				height:200,
+				navigation:false
+			});
+
+//			var isStart = -1;
+//			var startTime = new Date(2015,7,18,0,0,0);
+// 			var endTime = new Date(2015,7,15,22,52,40);
+// 			var myDate = new Date();
+			setMinCount();
+ 			var remainendTime = [[${sku.seckillingEndRemainTime}]];
+//  			var remainendTime = 5000;
+			if (remainendTime != -1) {
+			var end_day = Math.floor(remainendTime / (24 * 60 * 60 * 1000));
+			var end_h = Math.floor(( remainendTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+			var end_min = Math.floor(( remainendTime - end_day * (24 * 60 * 60 * 1000) - end_h * (60 * 60 * 1000)) / (60 * 1000));
+			var end_s = Math.floor((remainendTime - end_day * (24 * 60 * 60 * 1000) - end_h * (60 * 60 * 1000) - end_min * (60 * 1000)) / 1000);
+			for(var i=1;i<=7;i++) {
+				$("#time" + i).addClass("mod_time_span_valid");
+				$("#time" + i).removeClass("mod_time_span_invalid");
+			}
+			fillTime(end_s,end_min,end_h, end_day);
+
+			if(remainendTime>0){
+				var endTimeInterval = setInterval(function () {
+					minusSecond(end_s,end_day,end_h,end_min);
+				}, 1000);
+			}else{
+				fillTime(0,0,0, 0);
+				for(var i=1; i <= 7;i++) {
+					$("#time"+i).removeClass("mod_time_span_invalid");
+					$("#time" + i).removeClass("mod_time_span_valid");
+					$("#time" + i).addClass("mod_time_span_invalid");
+					//$("#time"+i).addClass("mod_time_span_invalid");
+				}
+				$("#isEnd").text("已结束");
+				$("#addCart").addClass("btn_buy_disabled");
+				$("#buyNow").addClass("btn_buy_disabled");
+				$("#addCart").unbind("click");
+				$("#buyNow").unbind("click");
+			}
+
+			}
+			function minusSecond(s,day,h,min) {
+				myDate = new Date();
+				remainendTime = remainendTime - 1000;
+				if(remainendTime<1000){
+					day=0;
+					h=0;
+					min=0;
+					s=0;
+					for(var i=1; i <= 7;i++) {
+						$("#time"+i).removeClass("mod_time_span_invalid");
+						$("#time" + i).removeClass("mod_time_span_valid");
+						$("#time" + i).addClass("mod_time_span_invalid");
+						//$("#time"+i).addClass("mod_time_span_invalid");
+					}
+					$("#isEnd").text("已结束");
+					
+					$("#addCart").addClass("btn_buy_disabled");
+					$("#buyNow").addClass("btn_buy_disabled");
+					$("#addCart").unbind("click");
+					$("#buyNow").unbind("click");
+
+					clearInterval(endTimeInterval);
+				}else{
+					day = Math.floor(remainendTime / (24 * 60 * 60 * 1000));
+					h = Math.floor((remainendTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+					min = Math.floor((remainendTime - day * (24 * 60 * 60 * 1000) - h * (60 * 60 * 1000)) / (60 * 1000));
+					s = Math.floor((remainendTime - day * (24 * 60 * 60 * 1000) - h * (60 * 60 * 1000) - min * (60 * 1000)) / 1000);
+				}
+
+				fillTime(s,min,h, day);
+			}
+
+			function fillTime(s,min,h, day) {
+
+				if (s > 0 && s < 10) {
+					$("#time6").text("0");
+					$("#time7").text(s.toString());
+				} else if (s == 0) {
+					$("#time6").text("0");
+					$("#time7").text("0");
+				} else {
+					$("#time6").text(s.toString().substr(0, 1));
+					$("#time7").text(s.toString().substr(1));
+				}
+				if (min < 10) {
+					$("#time4").text("0");
+					$("#time5").text(min.toString());
+				} else {
+					$("#time4").text(min.toString().substr(0, 1));
+					$("#time5").text(min.toString().substr(1));
+				}
+				if (h < 10) {
+					$("#time2").text("0");
+					$("#time3").text(h.toString());
+				} else {
+					$("#time2").text(h.toString().substr(0, 1));
+					$("#time3").text(h.toString().substr(1));
+				}
+				if (day < 10) {
+					$("#time1").text(day.toString());
+				}
+			}
+
+			if (isWechatBrowser()) {
+				$.ajax({
+					url: "/api/requestJssdkSign",
+					type: "POST",
+					dataType: "json",
+					data: {
+						url: location.href
+					},
+					success: function (data) {
+						wx.config({
+							debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+							appId: data.appid, // 必填，公众号的唯一标识
+							timestamp: data.timestamp, // 必填，生成签名的时间戳
+							nonceStr: data.nonceStr, // 必填，生成签名的随机串
+							signature: data.sign,// 必填，签名，见附录1
+							jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+						});
+
+//						wx.error(function(res){
+//							alert(JSON.stringify(res));
+//						});
+
+						wx.ready(function () {
+							wx.onMenuShareTimeline({
+								title: $('#itemName').text(), // 分享标题
+								link: 'http://' + location.host + '/wechat/route?url=' + encodeURIComponent(location.href), // 分享链接
+								imgUrl: encodeURI('http://' + location.host + $($('#slides').find("img")[0]).attr("src")), // 分享图标
+								success: function () {
+//                					alert("分享成功");
+//									wx.closeWindow();
+								}
+							});
+
+							wx.onMenuShareAppMessage({
+								title: $('#itemName').text(), // 分享标题
+								desc: $('#itemDesc').text(), // 分享描述
+								link: 'http://' + location.host + '/wechat/route?url=' + encodeURIComponent(location.href), // 分享链接
+								imgUrl: encodeURI('http://' + location.host + $($('#slides').find("img")[0]).attr("src")), // 分享图标
+								type: 'link', // 分享类型,music、video或link，不填默认为link
+								dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+								success: function () {
+//                					alert("分享成功");
+//									wx.closeWindow();
+								}
+							});
+
+							wx.onMenuShareQQ({
+								title: $('#itemName').text(), // 分享标题
+								desc: $('#itemDesc').text(), // 分享描述
+								link: 'http://' + location.host + '/wechat/route?url=' + encodeURIComponent(location.href), // 分享链接
+								imgUrl: encodeURI('http://' + location.host + $($('#slides').find("img")[0]).attr("src")), // 分享图标
+								success: function () {
+									// 用户确认分享后执行的回调函数
+								},
+								cancel: function () {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+
+							wx.onMenuShareWeibo({
+								title: $('#itemName').text(), // 分享标题
+								desc: $('#itemDesc').text(), // 分享描述
+								link: 'http://' + location.host + '/wechat/route?url=' + encodeURIComponent(location.href), // 分享链接
+								imgUrl: encodeURI('http://' + location.host + $($('#slides').find("img")[0]).attr("src")), // 分享图标
+								success: function () {
+									// 用户确认分享后执行的回调函数
+								},
+								cancel: function () {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+
+							wx.onMenuShareQZone({
+								title: $('#itemName').text(), // 分享标题
+								desc: $('#itemDesc').text(), // 分享描述
+								link: 'http://' + location.host + '/wechat/route?url=' + encodeURIComponent(location.href), // 分享链接
+								imgUrl: encodeURI('http://' + location.host + $($('#slides').find("img")[0]).attr("src")), // 分享图标
+								success: function () {
+									// 用户确认分享后执行的回调函数
+								},
+								cancel: function () {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+						});
+					}
+				});
+			}
+		});
+
+		$("#summaryEnter2 .cmt_list_more").on("click", function(){
+			var skuid = $(this).attr("skuid");
+			location.href = "/sku/comment/" + skuid;
+		})
+		
+		$("#itemDetEnter a").on("click", function(){
+			var top = $("#detailTab").offset().top;
+			$("body").scrollTop(top);
+			$("#detailTab").addClass("mod_tab_fixed");
+		})
+		$(window).on("scroll", function(){	
+			var scrollTop = $("body").scrollTop();
+			var detailTop = $("#detailBaseLine").offset().top;
+			if(scrollTop < detailTop){
+				$("#detailTab").removeClass("mod_tab_fixed");
+			}else{
+				$("#detailTab").addClass("mod_tab_fixed")
+			}
+		})
+		$("#detailTab span").on("click", function(){
+			var no =$(this).attr("no") - 1;
+			var wd = $("#detailTab").width();
+			var v = no * wd;
+			$("#detailCont").css("-webkit-transform","translate3d(-" + v +"px,0px,0px)" );
+			$("#detailTab span.cur").removeClass("cur");
+			$(this).addClass("cur");
+		})
+		$("#summaryEnter").on("click", function(){
+			var skuid = $(this).attr("skuid");
+			location.href = "/sku/comment/" + skuid;
+		})
+
+	function showNotification(notification, delay) {
+	        if (!delay) {
+	            delay = '3500';
+	        }
+	        $('#notification_bar').html(notification).fadeToggle('slow').delay(delay).slideToggle('slow');
+	    }
+	
+	    function serializeObject($object) {
+	        var o = {};
+	        var a = $object.serializeArray();
+	        $.each(a, function () {
+	            if (o[this.name] !== undefined) {
+	                if (!o[this.name].push) {
+	                    o[this.name] = [o[this.name]];
+	                }
+	                o[this.name].push(this.value || '');
+	            } else {
+	                o[this.name] = this.value || '';
+	            }
+	        });
+	        return o;
+	    }
+		
+	    $("#addCart:not(.btn_buy_disabled)").on('click', function() {
+
+			$("#quantity").val($(".quantity").val());
+    		var itemRequest = serializeObject($("#frm"));
+				$.ajax( { url: "/cart/add",
+					type: "POST",
+					dataType: "json",
+					data: itemRequest,
+					success: function(data) {
+						if(data.notEnoughQuantity != null && data.notEnoughQuantity != ""){
+							if((document.getElementById("noticeStr").innerText == "添加成功！")||$("#noticePanel").css("display")=='none'){
+								document.getElementById("noticeStr").innerText = "库存不足！";
+								$("#noticePanel").fadeToggle('slow').delay(2000).slideToggle('slow');
+							}
+						}else{
+							$("#cartNum").attr("num",data.cartItemCount);
+							if((document.getElementById("noticeStr").innerText == "库存不足！")||$("#noticePanel").css("display")=='none'){
+								document.getElementById("noticeStr").innerText = "添加成功！";
+								$("#noticePanel").fadeToggle('slow').delay(2000).slideToggle('slow');
+							}
+						}
+					},
+					error:function(data){
+
+					}
+				});
+     	});
+	    
+	    $("#buyNow:not(.btn_buy_disabled)").on('click', function() {
+    		var skuId = $(this).attr("skuId");
+	    	location.href = "/cart/buyNow/" + skuId+"/"+parseInt($(".quantity").val());
+                     
+     	});
+		/*]]>*/
+
+	$('.compare').click(function(){
+		//
+		$(this).find("> .pop").toggle();
+	});
+
+	var isWechatBrowser = function () {
+		var ua = window.navigator.userAgent.toLowerCase();
+		return ua.match(/MicroMessenger/i) == 'micromessenger';
+	};
+
+	</script>
+	
+	<script type="text/javascript"> 
+		var EX = {
+			addEvent:function(k,v){
+				var me = this;
+				if(me.addEventListener)
+				me.addEventListener(k, v, false);
+				else if(me.attachEvent)
+				me.attachEvent("on" + k, v);
+				else
+				me["on" + k] = v;
+			},
+			removeEvent:function(k,v){
+				var me = this;
+				if(me.removeEventListener)
+				me.removeEventListener(k, v, false);
+				else if(me.detachEvent)
+				me.detachEvent("on" + k, v);
+				else
+				me["on" + k] = null;
+			},
+			stop:function(evt){
+				evt = evt || window.event;
+				evt.stopPropagation?evt.stopPropagation():evt.cancelBubble=true;
+			}
+		};
+		
+		//document.getElementById('pop').onclick = EX.stop;
+		document.getElementById('pop').onclick = hide;
+		var url = '#'; 
+		function show(){ 
+			var o = document.getElementById('pop'); 
+			o.style.display = ""; 
+			setTimeout(function(){
+				EX.addEvent.call(document,'click',hide);
+			});
+		}
+		function hide(){ 
+			var o = document.getElementById('pop'); 
+			o.style.display = "none"; 
+			EX.removeEvent.call(document,'click',hide);
+		} 
+	</script>
+	
+</body>
+</html>

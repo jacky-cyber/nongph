@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='个人中心 - 品荟 ')"></head>
+
+<body>
+    <div id="notification_bar"></div>
+    <header th:substituteby="layout/partials/header(pageTitle='个人中心',type='normal')" />
+    <p class="success" th:if="${successMessage}"
+				th:text="${successMessage}"></p>
+	<div class="common-wrapper">
+		<div class="head-img">
+	    		<span class="my-img" style="background-image:url('/static/img/defaul.png')"></span>
+	    		<p th:text="${customer.name}"></p>
+				<p th:text="${'积分: '+ customer.bonusPoint + '分'}" style="color:#FFF20B;font-weight:bold;"></p>
+	    </div>
+	   	<ul class="padding-list">
+			<li><a href="/account/orders?type=wait4pay">
+					<p id="waite4PaymentSum" th:text="${wait4payCount}">0</p>
+					<p>待付款</p>
+			</a></li>
+			<li><a href="/account/orders?type=wait4receive">
+					<p id="waitDeliveryOrderListSum" th:text="${wait4receiveCount}">2</p>
+					<p>待收货</p>
+			</a></li>
+			<li><a href="/account/orders?type=wait4comment">
+					<p>
+						<span id="infoCount" th:text="${wait4commentCount}"></span>
+					</p>
+					<p>未评价</p>
+			</a></li>
+		</ul>
+	    
+	    <ul th:substituteby="account/partials/accountMenu" />
+	    <a class="logout" th:href="@{/logout}">退出当前账号</a>
+    </div>
+    
+    <div th:substituteby="layout/partials/divfootermenu" />
+    <script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+    <script>
+    	$(".my-img").on("click", function(){
+    		location.href = "/account";
+    	})
+    </script>
+</body>
+</html>

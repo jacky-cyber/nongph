@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.031.001.01" longName="camt.031.001.01" type="camt.031.001.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.031.001.01">
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Justfn" longName="理由" type="CaseAssignmentRejectionJustification"/>
+	</type>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="CaseAssignmentRejectionJustification">
+		<element shortName="RjctnRsn" longName="拒绝原因" type="CaseAssignmentRejection1Code">
+			<enumeration shortName="NFND" longName="下方支付未找到" />
+			<enumeration shortName="NAUT" longName="未对调查授权" />
+			<enumeration shortName="UKNW" longName="未知案例" />
+			<enumeration shortName="RJCT" longName="拒绝" />
+			<enumeration shortName="CNCL" longName="取消" />
+		</element>
+	</type>
+	
+	<type shortName="CaseAssignmentRejection1Code"/>
+</names>

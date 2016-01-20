@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="detail_standard">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>准备付款 - 品荟</title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="x-dns-prefetch-control" content="on" />
+<link rel="stylesheet" href="/static/css/header.css" />
+<link rel="stylesheet" href="/static/css/preparePay.css" />
+</head>
+
+<body>
+<header th:substituteby="layout/partials/header(pageTitle='准备付款',type='normal')"/>
+<div>
+    <div th:substituteby="${templateName}"/>
+
+</div>
+
+</body>
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script th:src="@{/static/js/preparePay.js}"></script>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='使用品荟码- 品荟')"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+	files="checkout.css" />
+<style>
+  .txt-input{
+  width: 100%;
+  height: 44px;
+  padding-left: 10px;
+  padding-top:10px;
+  padding-bottom:10px;
+  background: #FFF none repeat scroll 0% 0%;
+  color: #252525;
+  border-radius: 3px;
+  border: 1px solid #D7D7D7;
+  line-height: normal;
+  font-family: "微软雅黑";
+  font-size: 16px;
+  box-sizing: border-box;
+  }
+</style>
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='使用品荟码',type='normal')" />
+	<div id="checkout_content" class="width_setter group" role="main">
+		<p class="warn" th:if="${responseMsg}" th:text="${responseMsg}"></p>
+		
+		
+		
+		<nph:form method="post" id = "applyCouponCode" action="/checkout/applyCouponCode">
+			<div>
+				<div style="padding:10px;">
+					<input id="code" name="code" type="text" class="txt-input" placeholder="请输入品荟码"/>
+				</div>
+				<div style="padding:10px;">
+					<a href="javascript:submitForm()" class="new-abtn-type mgn">使用</a>
+				</div>
+				
+				<div th:if="${cart.couponCode}" style="padding:10px;">
+					<a href="javascript:cancelCode()" class="new-abtn-type mgn">不使用品荟码</a>
+				</div>
+			</div>
+		</nph:form>
+		
+	</div>
+	<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+	<script>
+		/*<![CDATA[*/
+		function submitForm(){
+			$("#applyCouponCode").submit();
+		}
+		
+		function cancelCode(){
+			location.href = "/checkout/cancelCode";
+		}
+		/*]]>*/
+	</script>
+</body>
+</html>
+

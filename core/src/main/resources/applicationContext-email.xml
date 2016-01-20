@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- A dummy mail sender has been set to send emails for testing purposes only
+         To view the emails sent use "DevNull SMTP" (download separately) with the following setting:
+            Port: 30000 -->
+    <bean id="blMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host"><value>smtp.exmail.qq.com</value></property>
+        <property name="port"><value>25</value></property>
+        <property name="protocol"><value>smtp</value></property>
+        <property name="username">
+            <value>support@globalph.cn</value>
+        </property>
+        <property name="password">
+            <value>@@ph168</value>
+        </property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+                <prop key="mail.smtp.auth">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="blEmailTemplateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+        <property name="prefix" value="emailTemplates/" />
+        <property name="suffix" value=".html" />
+        <property name="characterEncoding" value="utf-8"/>
+        <property name="cacheable" value="${cache.page.templates}"/>
+        <property name="cacheTTLMs" value="${cache.page.templates.ttl}" />
+    </bean>
+
+    <bean id="blEmailTemplateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+        <property name="templateResolvers">
+            <set>
+                <ref bean="blEmailTemplateResolver" />
+            </set>
+        </property>
+        <property name="dialects">
+            <set>
+                <bean class="org.thymeleaf.spring3.dialect.SpringStandardDialect" />
+                <ref bean="blDialect" />
+            </set>
+        </property>
+    </bean>
+
+    <bean id="blMessageCreator" class="cn.globalph.common.email.service.message.ThymeleafMessageCreator">
+        <constructor-arg ref="blEmailTemplateEngine"/>
+        <constructor-arg ref="blMailSender"/>
+    </bean>
+
+<!--     <bean id="blMessageCreator" class="cn.globalph.common.email.service.message.NullMessageCreator"> -->
+<!--         <constructor-arg ref="blMailSender"/> -->
+<!--     </bean> -->
+    
+    <bean id="blEmailInfo" class="cn.globalph.common.email.service.info.EmailInfo">
+        <property name="fromAddress">
+            <value>support@globalph.cn</value>
+        </property>
+        <property name="sendAsyncPriority"><value>2</value></property>
+        <property name="sendEmailReliableAsync"><value>false</value></property>    
+        <property name="encoding"><value>utf-8</value></property> 
+    </bean>
+    
+    <bean id="blRegistrationEmailInfo" parent="blEmailInfo">
+        <property name="subject" value="registerSuccess"/>        
+        <property name="emailTemplate" value="register-email"/>
+    </bean>
+    
+    <bean id="blForgotPasswordEmailInfo" parent="blEmailInfo">
+        <property name="subject" value="resetPasswordRequest"/>
+        <property name="emailTemplate" value="resetPassword-email"/>
+    </bean>
+    
+    <bean id="blOrderConfirmationEmailInfo" parent="blEmailInfo">
+        <property name="subject" value="orderFromPh"/>
+        <property name="emailTemplate" value="orderConfirmation-email"/>
+    </bean>
+    
+    <bean id="phEmailValidationEmailInfo" parent="blEmailInfo">
+        <property name="subject" value="emailValidation"/>
+        <property name="emailTemplate" value="emailValidation-email"/>
+    </bean>
+    
+    <bean id="phSendDeliveryInfoEmailInfo" parent="blEmailInfo">
+        <property name="subject" value="send deliver info"/>
+        <property name="emailTemplate" value="deliveryInfo-email"/>
+    </bean>
+                  
+</beans>

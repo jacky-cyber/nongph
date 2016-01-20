@@ -1,0 +1,85 @@
+<div th:if="${msg}" th:switch="${msg}">
+    <p class="success" th:case="'cancel1'">订单取消成功</p>
+
+    <p class="warn" th:case="'cancel2'">订单取消失败</p>
+
+    <p class="warn" th:case="'cancel3'">取消的订单非当前用户所有</p>
+
+    <p class="success" th:case="complete1">确认收货成功</p>
+
+    <p class="warn" th:case="'complete2'">确认收货失败</p>
+
+    <p class="warn" th:case="complete3">确认收货订单非当前用户所有</p>
+
+    <p th:case="*"></p>
+</div>
+<div id="wrap">
+    <section class="order-con">
+		<div th:unless="${#lists.isEmpty(orders)}">
+			<input type="hidden" id="page" value="1" />
+			<input type="hidden" id="type" name="type" th:value="${type}" />
+	        <ul class="order-list" id="orders_list">
+	            <li class="order" th:each="order : ${orders}" th:object="${order}"
+	                th:attr="data-order-number=*{orderNumber}">
+	                <div class="order-box">
+	                    <a class="new-mu_l2a new-p-re"
+	                       th:href="@{'/account/orders/'+*{orderNumber}}">
+	                        <div class="order-msg">
+	                            <img th:src="*{orderItems.get(0).sku.skuMedia['primary'].url}"/>
+	
+	                            <div class="order-msg">
+	                                <p class="title" th:text="*{orderItems.get(0).sku.name}"></p>
+	
+	                                <p class="price" th:inline="text">
+	                                    [[*{total}]] <span></span>
+	                                </p>
+	
+	                                <p class="order-data"
+	                                   th:text="*{#dates.format(submitDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+	                            </div>
+	                        </div>
+	                    </a>
+	
+	                    <div th:if="*{status.type=='SUBMITTED'}" class="pay-order">
+	                        <a th:href="@{/checkout/} + *{orderNumber}">去付款</a>
+	                    </div>
+	                    <div th:if="*{status.type=='SUBMITTED'}" class="pay-order">
+	                        <a href="javascript:cancelOrder()" class="cancelOrder" th:attr="data-redirect-url=@{/checkout/} + *{orderNumber} + '/cancel'">取消订单</a>
+	                    </div>
+	                    <div th:if="*{status.type=='CONFIRMED' and shipped}" class="pay-order">
+	                        <a href="javascript:comfirmReceive()" class="comfirmReceive" th:attr="data-redirect-url=@{/checkout/} + *{orderNumber} + '/complete'">确认收货</a>
+	                    </div>
+						<div th:if="*{status.type=='CONFIRMED' or status.type=='COMPLETED' or status.type=='ORDER_REFUND' or status.type=='ITEM_REFUND'}" class="pay-order">
+	                        <a th:href="@{/account/orders/log/} + *{orderNumber}">订单追踪</a>
+	                    </div>
+	                    <div class="pay-order"
+	                         th:if="*{status.type=='COMPLETED' and !review}">
+	                        <a th:href="@{'/review/' + *{orderNumber} + '/items'}">评价商品</a>
+	                    </div>
+	                    <div class="pay-order"
+	                         th:if="*{status.type=='COMPLETED' and review}">
+	                        <a th:href="@{'/review/' + *{orderNumber} + '/items'}">查看评价</a>
+	                    </div>
+	                    <div class="pay-order"
+	                         th:if="*{refundAvailable}">
+	                        <a th:href="@{'/refund/' + *{orderNumber} + '/items'}">申请退货</a>
+	                    </div>
+	                    <div class="pay-order" th:if="*{refundOrderAvailable}">
+	                        <a th:href="@{'/refund/' + *{orderNumber} + '/order'}">申请退款</a>
+	                    </div>
+	                    <div class="pay-order" th:if="*{refund}">
+	                        <a href="#" th:text="*{refund.refundStatus.friendlyType}"></a>
+	                    </div>
+	                    <div class="pay-order"
+	                         th:if="*{hasRefundItem}">
+	                        <a th:href="@{'/refund/' + *{orderNumber} + '/items?v=1'}">查看退货进度</a>
+	                    </div>
+	                </div>
+	            </li>
+	        </ul>
+	        <div id="spinner" class="new-spinner" style="margin-left: 557px;"></div>
+        	<div class="new-load-more" style="text-align:center;" id="con_more"><span style="font-size:12px;">加载更多</span></div>
+	    </div>
+        <div th:if="${#lists.isEmpty(orders)}" class="no-order">抱歉，没有找到符合条件的订单</div>
+    </section>
+</div>

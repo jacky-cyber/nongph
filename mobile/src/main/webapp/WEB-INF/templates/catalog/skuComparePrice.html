@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="cn">
+<head th:include="/layout/partials/head (pageTitle='商品比价-品荟')"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+	files="comparePrice/compare-price.css" />
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='商品比价',type='normal')" />
+	<div id="list" style="min-height: 594px;">
+
+		<ul th:unless="${#lists.isEmpty(sku.comparePrice)}" id="searchlist1" class="list_body">
+			<li th:each="cp : ${sku.comparePrice}" th:object="${cp}">
+				<a style="text-decoration: none;"
+				th:href="*{sourceUrl}" class="J_ping">
+						<div style="line-height:32px;font-size:16px;">比
+							<span style="font-weight:bold;color:red;" th:text="*{source}" />
+							便宜
+							<span style="font-weight:bold;color:red;" th:text="*{price}"></span>元
+						</div>
+				</a>
+			</li>
+		</ul>
+		<div th:if="${#lists.isEmpty(sku.comparePrice)}" id="searchlist3" class="not-found">
+			<div class="notice">抱歉，没有找到符合条件的商品</div>
+		</div>
+	</div>
+	<footer th:substituteby="layout/partials/bottom" />
+</body>
+</html>

@@ -1,0 +1,370 @@
+/*
+/std/module/eni/styles/messageContainer.css
+*/
+@charset "utf-8";
+
+form, input, select {
+	padding:0px;
+	margin:0px;
+}
+
+.containerHeader {}
+/* checkbox total width = 30px */
+.checkBoxWrapper {
+	float:left;
+	width:20px;
+	height:20px;
+	padding:4px 4px 4px 6px;
+}
+.checkBoxWrapper>input{
+	margin:3px 3px 3px 4px;
+}
+.headerInfo {
+	float:left;
+	font-size:9pt;
+	/*background:#666666;*/
+}
+.headerLabel {
+	float:left;
+	padding:6px 0 6px 10px;
+	width:150px;
+	overflow:visible;
+	/*background:#999999;*/
+}
+.headerDescription {
+	margin-left:160px;
+	/*background:#666666;*/
+	padding:6px 0 6px 10px;
+}
+.headerUtils {
+	float:right;
+	width:160px;
+	text-align:right;
+}
+.headerUtils a {
+	/*display:inline-block;*/
+	display:block;
+	float:right;
+	font-size:9pt;
+	text-decoration:none;
+	padding:0 8px 0 8px;
+	color:#003884;
+}
+* html div.headerUtils a {
+	line-height:28px;
+}
+.headerUtils a:hover {
+	color:	#2a2a2a;
+	background:#c3c3c3;
+}
+.headerUtils>a {
+	padding:6px 8px;
+}
+.containerBody {
+	/*background:#EDEDED;*/
+}
+
+/*
+ * Composite Container
+ */
+.compositeContainer {
+	clear:both;
+	/*background:#CCCCCC;*/
+	font-family: Arial, Helvetica, sans-serif;
+}
+.compositeHeader {
+	clear:both;
+	height:28px;
+	background:#F7F7F7;
+	border-bottom:#F1F1F1 solid 1px;
+}
+.compositeHeader .headerLabel {
+	font-weight:bold;
+}
+.compositeBody {
+	clear:both;
+	margin-left:30px;
+}
+
+.fieldOptionSelector {
+	float:left;
+	margin:4px 0;
+}
+.fieldOptionSelector select{
+	margin:0 10px;
+	padding:1px;
+	font-size:9pt;
+	line-height:16px;
+	border:#7f9db9 solid 1px;
+}
+/*
+ * Sequence Container
+ */
+.sequenceContainer {
+	clear:both;
+	margin-top:7px;
+	font-family: Arial, Helvetica, sans-serif;
+	border-left:#cccccc solid 1px;
+	border-right:#cccccc solid 1px;
+	border-top:#cccccc solid 1px;
+}
+/* This hack is for the unexpected bottom overflow in IE */
+* html div .sequenceContainer {
+	border-bottom:#f4f4f4 solid 1px;
+}
+.sequenceHeader {
+	clear:both;
+	height:28px;
+	background:#e3e3e3 url(/powerx/std/module/images/sequenceContainerHeader_bg.gif) repeat-x;
+	border-bottom:#cccccc solid 1px;
+}
+a.newOccurBtn {
+	border-left:#cccccc solid 1px;
+	/*border-right:#cccccc solid 1px;*/
+	background:url(/powerx/std/module/images/sequenceContainerHeaderBtn_bg.gif) no-repeat;
+}
+a.newOccurBtn:hover {
+	background:url(/powerx/std/module/images/sequenceContainerHeaderBtnOver_bg.gif) no-repeat;
+}
+a.expandBtn, a.collapseBtn {
+	/*margin-left:-4px;*/
+	border-left:#cccccc solid 1px;
+	width:10px;
+	height: 16px;
+}
+a.expandBtn, a.collapseBtn:hover {
+	/*border-left:#FFFFFF solid 1px;
+	background:none;*/
+	background:url(/powerx/std/module/images/sequenceContainerHeaderExpand.gif) no-repeat center center;
+}
+a.collapseBtn, a.expandBtn:hover {
+	background:url(/powerx/std/module/images/sequenceContainerHeaderCollapse.gif) no-repeat center center;
+}
+/**
+ * This setting is for Firefox, to make the expand/collapse button wide enough.
+ */
+.headerUtils>a.expandBtn, .headerUtils>a.collapseBtn {
+	padding-right:5px;
+	padding-left:11px;
+}
+.sequenceHeader .headerLabel {
+	font-weight:bold;
+}
+.sequenceHeader .headerDescription {
+	font-weight:bold;
+}
+.sequenceBody {
+	clear:both;
+	background:#f4f4f4;
+}
+
+/*
+ * Sequence Item Container
+ */
+.sequenceItemContainer {
+	clear:both;
+/*	padding-bottom:8px;
+	border-bottom:#cccccc solid 1px;
+*/}
+.sequenceItemHeader {
+	clear:both;
+	height:28px;
+	background:none;
+	border-top:0px;
+	border-bottom:0px;
+}
+.sequenceItemHeader .headerLabel {
+	font-weight:bold;
+	font-size:8pt;
+}
+.sequenceItemHeader a.removeBtn {
+	color:#8F8F8F;
+	/*line-height:27px;*/
+	border-bottom:#f4f4f4 solid 1px;
+}
+.sequenceItemHeader .headerUtils>a.removeBtn {
+	padding-top:5px;
+}
+.sequenceItemHeader a.removeBtn:hover {
+	color:#777777;
+	border-left:#cccccc solid 1px;
+	border-bottom:#cccccc solid 1px;
+	background:#E3E3E3;
+}
+.sequenceItemBody {
+	clear:both;
+	padding:0px 8px 8px 8px;
+	border-bottom:#cccccc solid 1px;
+}
+/**
+ * This hack is for the unexpected phenomenon that
+ * the sequenceItem body did not fill up the parent container
+ * in the nested structure in IE.
+ */
+* html div.sequenceItemBody {
+	border-right:#f4f4f4 solid 1px;
+	border-left:#f4f4f4 solid 1px;
+}
+
+/*
+ * Pattern Container
+ */
+.patternContainer {
+	/*background:#D1D1D1;*/
+	clear:both;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:9pt;
+}
+/* 
+ * This hack is for the min-height of the pattern container, 
+ * especially while its body is absent, in IE.
+ */
+* html div .patternContainer {
+	height:29px;
+	overflow:visible;
+}
+.patternContainer:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.patternContainerLabel {
+	float:left;
+	line-height:17px;
+	padding:6px 0 6px 10px;
+	width:150px;
+	overflow:visible;
+	/*background:#999999;*/
+}
+.patternField {
+	padding:4px 0;
+	vertical-align:top;
+}
+.patternField span{
+	vertical-align:top;
+	overflow:hidden;
+}
+.field {
+	float:left;
+	font-size:9pt;
+	line-height:16px;
+	margin-left:10px;
+	padding:2px;
+	white-space:pre;
+	border:#7f9db9 solid 1px;
+}
+.labeledField {
+	float:left;
+	font-size:9pt;
+	line-height:16px;
+	margin-left:10px;
+	padding:2px;
+	white-space:pre;
+}
+.multiField {
+	float:left;
+	width:300px;
+}
+.complexField {
+	float:left;
+}
+.bicExpansionForm {
+	color:#666666;
+}
+.bicExpansionLabel {
+	width:150px;
+	padding:4px 4px 4px 20px;
+}
+.mandatoryField {
+}
+.mandatoryField input, .mandatoryField textarea, .mandatoryField select {
+	background:#b3d7f5;
+}
+.invalidField {
+	background:#fcc19a!important;
+	border:#ed9154 solid 1px!important;
+}
+input.field {
+	/*width: 160px;*/
+}
+select.field {
+	padding:1px;
+}
+textarea.field {
+	padding:2px 4px;
+	overflow-y:scroll;
+	font-family: monospace!important;
+	text-align:left;
+	margin-bottom:4px;
+}
+.format {
+	display:block;
+	float:left;
+	background:url(/powerx/std/module/images/fmt.gif) no-repeat 5px 3px;
+	padding:2px 5px;
+	width:16px;
+	height:14px;
+	line-height:19px;
+	cursor:pointer;
+}
+a.format {
+	overflow:visible;
+	z-index:0; text-decoration:none;
+}
+.patternField>span.format {
+	/*padding-left:21px;*/
+}
+.fieldDescription {
+	line-height:21px;
+	display:block;
+	float:left;
+	padding:0 4px;
+}
+.fieldExtraInfo {
+	display:block;
+	float:left;
+	color:#747474;
+	width:150px;
+	margin-left:6px;
+	padding:0 4px;
+	background:#d7ebfc;
+	border:#88c9ff solid 1px;
+	line-height:21px;
+}
+.fieldErrorInfo {
+	display:block;
+	float:left;
+	color:#ff2b26;
+	margin-left:6px;
+	width:150px;
+	padding:0 4px;
+	background:#fed9c0;
+	border:#ff8f5d solid 1px;
+	line-height:21px;
+}
+.bicExpandInfo {
+	cursor:pointer;
+	color:#747474;
+	text-decoration:none;
+	padding-left:13px;
+	background:url(/powerx/std/module/images/arrow_1_down.gif) no-repeat left bottom;
+}
+.bicExpandInfoCollapsed {
+	background:url(/powerx/std/module/images/arrow_1_down.gif) no-repeat left bottom;
+}
+.bicExpandInfoExpanded {
+	background:url(/powerx/std/module/images/arrow_1_up.gif) no-repeat left bottom;
+}
+.bicExpandInfo:hover {
+	color:#000000;
+}
+
+/* BIC Expansion Container */
+.bicExpansionContainer {
+	clear:both;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:9pt;
+	border:#DDDDDD solid 1px;
+}

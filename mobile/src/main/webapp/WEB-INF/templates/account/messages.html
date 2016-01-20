@@ -1,0 +1,12 @@
+<div th:if="${#lists.isEmpty(customerMessages)}" style="text-align:center;padding:20px;">
+	暂无任何消息
+</div>
+<ul th:unless="${#lists.isEmpty(customerMessages)}">
+	<li th:each="message : ${customerMessages}" th:object="${message}" style="font-size:15px;border-bottom:1px solid #ccc">
+		<div style="display:inline-block;width:100%;padding:7px;">
+			<span th:classappend="${messageStat.index}  &lt; ${newMessagesCount} ? 'active'" style="float:left;" th:text="${message.title}"></span>
+			<span style="float:right" th:text="${#dates.format(message.createTime, 'MM月dd日  HH:mm')}"></span>
+		</div>
+		<div th:utext="${message.messageText}" style="padding:7px;"></div>
+	</li>
+</ul>

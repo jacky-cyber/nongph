@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.035.001.01" longName="camt.035.001.01" type="camt.035.001.01">
+			<expansion></expansion>
+		</element>
+	</type> 
+	
+	<type shortName="camt.035.001.01">
+		<element shortName="Assgnmt" longName="指派" type="CaseAssignment"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="PrtryData" longName="私有数据" type="ProprietaryData"/>
+	</type>
+	
+	<type shortName="AnyBICIdentifier"/> 
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator" minOccurs="0" maxOccurs="1"/>
+	</type> 
+	
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>	
+	
+	<type shortName="ISODateTime"/> 
+	<type shortName="Max35Text"/>
+
+	<type shortName="ProprietaryData">
+		<element shortName="Tp" longName="类型" type="Max35Text"/>
+	</type> 
+	
+	<type shortName="YesNoIndicator"/> 
+	
+</names>

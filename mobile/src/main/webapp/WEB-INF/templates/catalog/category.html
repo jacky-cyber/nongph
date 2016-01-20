@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh">
+<head
+	th:include="/layout/partials/top (pageTitle=${category.name + ' - 品荟'})"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+	files="style.css" />
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+	files="header.css" />
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+	files="category.css" />
+<nph:bundle name="style.css" mapping-prefix="/static/css/"
+	files="goods.css" />
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle=${category.name},type='normal')" />
+	<div id="content" class="width_setter group" role="main">
+		<div th:substituteby="catalog/partials/productSortOptions"></div>
+		<section id="product_show" th:unless="${#lists.isEmpty(skus)}">
+			<ul id="products" class="group">
+				<li th:each="sku : ${skus}" th:object="${sku}"
+					th:include="catalog/partials/sku" class="product_container"></li>
+			</ul>
+			<div th:if="${result.page lt result.totalPages}" id="loadMoreItems">
+				<span style="display: none;" id="loadMoreItemsBtn">加载更多</span> <span
+					style="display: none;" class="cat" th:text="${category.url}"></span>
+				<span style="display: none;" class="page" th:text="${result.page}"></span>
+				<span style="display: none;" class="totalPage"
+					th:text="${result.totalPages}"></span>
+			</div>
+		</section>
+		<div th:if="${#lists.isEmpty(skus)}" id="lists">
+			<div class="no-result">
+				<p class="text">抱歉，没有找到符合条件的商品</p>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/static/js/lib/jquery-1.9.1.js}" />
+	<script th:src="@{/static/js/pagination.js}" />
+	<script th:src="@{/static/js/libs/jquery.lazyload.min.js}"></script>
+	<script>
+		$("img.lazy").lazyload({
+		    threshold : 200
+		}); 
+	</script>
+</body>
+</html>

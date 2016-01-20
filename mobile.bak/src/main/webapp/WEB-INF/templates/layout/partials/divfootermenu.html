@@ -1,0 +1,42 @@
+<div style="margin: 0px auto;">
+	<div style="margin-bottom:51px;"></div>
+	<div id="footermenu">
+		<div class="footermenu-item">
+			<a class="item-link" th:href="@{/}"> <img
+					src="/static/img/home2.png"/>
+
+				<div>首页</div>
+			</a>
+		</div>
+		<div class="footermenu-item">
+			<a class="item-link" th:href="@{/category/all}"> <img
+					src="/static/img/file1.png"/>
+
+				<div>分类</div>
+			</a>
+		</div>
+		<div class="footermenu-item">
+			<a class="item-link" th:href="@{/cart}"> <img
+					src="/static/img/cart2.png"/>
+
+				<div>购物车</div>
+			</a>
+		</div>
+
+		<div th:unless="${customer.anonymous}" class="footermenu-item">
+			<a class="item-link" th:href="@{/account/menu}"> <img
+					src="/static/img/user.png"/>
+
+				<div>我的品荟</div>
+			</a>
+		</div>
+
+		<div th:if="${customer.anonymous}" class="footermenu-item">
+			<a class="item-link" th:href="@{/login}"> <img
+					src="/static/img/user.png"/>
+
+				<div>我的品荟</div>
+			</a>
+		</div>
+	</div>
+</div>

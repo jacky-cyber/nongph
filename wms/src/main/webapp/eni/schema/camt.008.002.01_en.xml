@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.008.002.01" longName="camt.008.002.01" type="camt.008.002.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.008.002.01">
+		<element shortName="Assgnmt" longName="Assignment" type="CaseAssignment"/>
+		<element shortName="Case" longName="Case" type="Case"/>
+		<element shortName="Undrlyg" longName="Undrlyg" type="PaymentInstructionExtract"/>
+		<element shortName="Justfn" longName="Justfn" type="DebitAuthorisationDetails"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Assgnr" longName="Assigner" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="Assignee" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="CreateDateTime" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Cretr" longName="Creator" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="ReopCaseIndctn" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="AssgnrInstrId" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="AssgneInstrId" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="CurrencyAndAmount" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="ValueDate" type="ISODateTime"/>
+		
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<type shortName="DebitAuthorisationDetails">
+		<element shortName="CxlRsn" longName="CxlRsn" type="CancellationReason1Code">
+			<enumeration shortName="CUST" longName="RequestedByCustomer" />
+			<enumeration shortName="DUPL" longName="DuplicatePayment" />
+			<enumeration shortName="AGNT" longName="IncorrectAgent" />
+			<enumeration shortName="CURR" longName="IncorrectCurrency" />
+			<enumeration shortName="UPAY" longName="UnduePayment" />
+		</element>
+		<element shortName="AmtToDbt" longName="AmtToDbt" type="CurrencyAndAmount"/>
+		<element shortName="ValDtToDbt" longName="ValDtToDbt" type="ISODate"/>
+	</type>
+	
+	<type shortName="CancellationReason1Code"/>
+	
+	<type shortName="CurrencyAndAmount"/>
+	
+	<type shortName="ISODate"/>
+	
+</names>

@@ -1,0 +1,35 @@
+/**
+ * @author Leegorous
+ */
+{
+	name : "camt.007.002.02",
+	rules : {
+		"main" : function(doc) {
+			var UndrlygDtChoice = doc.select("/camt.007.002.02/Undrlyg/UndrlygDtChoice")[0];
+			//var UndrlygAmtChoice = doc.select("/camt.007.002.02/Undrlyg/UndrlygAmtChoice");
+			UndrlygDtChoice.setReadOnly(true);
+
+			var hijack = function(readOnly) {
+				if (!!readOnly) proceed();
+				//$win.alert("Hello");proceed();
+				return false;
+			};
+
+			Aspects.addAround(hijack, UndrlygDtChoice, "setReadOnly");
+
+			doc.lazyAddingListener("/camt.007.002.02/Undrlyg/UndrlygAmtChoice", "change", {
+				onChange : function(container) {
+					if (!container.curChild) {
+						UndrlygDtChoice.setChild(-1);
+						return;
+					}
+
+					switch(container.curChild.name) {
+						case "InstdAmt": UndrlygDtChoice.setChild("ReqdExctnDt");break;
+						case "IntrBkSttlmAmt": UndrlygDtChoice.setChild("IntrBkSttlmDt");break;
+					}
+				}
+			});
+		}
+	}
+}

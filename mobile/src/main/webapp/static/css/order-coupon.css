@@ -1,0 +1,158 @@
+@charset "utf-8";
+
+.tbl-type{
+	display:table;
+	width:100%;
+}
+
+.tbl-cell{
+	display:table-cell;
+}
+
+.m-coupon{
+	padding:15px 10px;
+}
+
+.tab-cp1,.tab-cp2{
+	display:block;
+	height:30px;
+	border:1px solid #c00;
+	background:#fff;
+	line-height:30px;
+	font-size:14px;
+	color:#333;
+	text-align:center;
+}
+
+.tab-cp1.on,.tab-cp2.on{
+	background:#c00;
+	color:#f1f1f5;
+}
+
+.tab-cp1{
+	border-radius:7px 0 0 7px;
+}
+
+.tab-cp2{
+	border-radius:0 7px 7px 0;
+}
+
+.coupon-list{
+	padding:0 13px;
+	margin-top:10px;
+}
+
+.coupon-list .tbl-type{
+	margin-bottom:10px;
+}
+
+.coupon-list .tbl-cell{
+	vertical-align:top;
+}
+
+.cp-j,.cp-d,.cp-m{
+	position:relative;
+	padding:15px 35px 17px 30px;
+	background: #3c9 url(../img/bg.jpg) 100% 0 no-repeat;
+	background-size:32px 109px;
+	height:109px;
+}
+
+.cp-d,.cp-m{
+	background:#c33 url(/order/images/html5/order/bg2.png) 100% 0 no-repeat;
+	background-size:32px 109px;
+}
+
+.cp-j .icon,.cp-d .icon,.cp-m .icon{
+	position:absolute;
+	top:-3px;
+	left:-3px;
+	width:63px;
+	height:63px;
+	background:url(/order/images/html5/order/dong.png) 0 0 no-repeat;
+	background-size:63px 63px;
+}
+
+.cp-d .icon{
+	background:url(/order/images/html5/order/jing.png) 0 0 no-repeat;
+	background-size:63px 63px;
+}
+
+.cp-m .icon{
+	background:url(/order/images/html5/order/mianyf.png) 0 0 no-repeat;
+	background-size:63px 63px;
+}
+
+.cp-text{
+	font-size:16px;
+	font-weight:bold;
+	color:#fff;
+}
+
+.cp-text2{
+	font-size:14px;
+	color:#fff;
+}
+
+.cp-text3{
+	margin-top:10px;
+	font-size:12px;
+	color:#fff;
+	text-align:right;
+}
+
+.cp-text4{
+	color:#fff;
+}
+
+.text5{
+	font-size:20px;
+	color:#fff;
+}
+
+.text6{
+	font-size:12px;
+	color:#c00;
+}
+
+.text7{
+	font-size:12px;
+	color:#fff;
+}
+
+.btn-radio2{
+	display:block;
+	height:109px;
+	line-height:109px;
+	text-align:center;
+}
+
+.btn-radio2 span{
+	display:inline-block;
+	width:25px;
+	height:25px;
+	padding:0;
+	background:url(../img/icon_order.png) -28px -54px no-repeat;
+	background-size:100px 100px;
+	vertical-align:-5px;
+}
+
+.btn-radio2.on span{
+	background-position:0 -54px;
+}
+
+.cp-msg{
+	padding:10px 12px;
+	font-size:14px;
+	color:#333;
+}
+
+.cp-lipin,.cp-lipin2{
+	height:109px;
+	background:#f90;
+}
+
+.cp-lipin2{
+	height:auto;
+}
+

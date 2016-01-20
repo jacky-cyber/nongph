@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<nph:form method="post">
+    <input hidden="hidden" id="appid" th:value="${appid}"/>
+    <input hidden="hidden" id="url" th:value="${url}"/>
+</nph:form>
+</body>
+
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script th:src="@{/static/js/transition.js}"></script>
+</html>

@@ -1,0 +1,55 @@
+<ul th:unless="${#lists.isEmpty(orders)}" class="order-list" id="orders_list">
+    <li class="order" th:each="order : ${orders}" th:object="${order}"
+        th:attr="data-order-number=*{orderNumber}">
+        <div class="order-box">
+            <a class="new-mu_l2a new-p-re"
+               th:href="@{*{orderItems.get(0).sku.product.url} + '/' + *{orderItems.get(0).sku.id}}">
+                <div class="order-msg">
+                    <img th:src="*{orderItems.get(0).sku.skuMedia['primary'].url}"/>
+
+                    <div class="order-msg">
+                        <p class="title" th:text="*{orderItems.get(0).sku.name}"></p>
+						<p class="price" th:inline="text">
+                           	 当前参团人数：[[*{groupOn.participateInCount}]] <span></span>
+                        </p>
+                        <p class="order-data" th:inline="text">
+                        	活动截止日期：[[*{#dates.format(groupOn.endDate, 'yyyy-MM-dd')}]]
+                        </p>
+                    </div>
+                </div>
+            </a>
+
+            <div  class="pay-order" th:if="*{groupOn.valid}">
+                <a href="javascript:exitGroupOn()" id="exiteGroupOn" th:attr="data-redirect-url=@{/groupOn/} + *{id} + '/cancel'">退出活动</a>
+                
+            </div>
+            <div  class="pay-order" th:unless="*{groupOn.valid}">
+            	<a th:href="@{/checkout/?oid=} + *{id}">去结算</a>
+            </div>
+        </div>
+    </li>
+</ul>
+<div th:if="${#lists.isEmpty(orders)}">
+	<div style="text-align:center;margin:100px 0;">
+		暂时没有参团活动！
+	</div>
+</div>
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script th:if="${param.message}" th:inline="javascript">
+	if([[${param.message[0]}]] == 'hasGroupOn'){
+		alert("你已经参过这次团购！");
+	}else if([[${param.message[0]}]] == 'success'){
+		alert('参团成功！');
+	}else if([[${param.message[0]}]] == 'exitSuccess'){
+		alert('退出活动成功！');
+	}
+</script>
+<script>
+	function exitGroupOn(){
+		var u = $("#exiteGroupOn").attr("data-redirect-url");
+		var yes = confirm("您确认退出本次团购活动？");
+		if(yes){
+			location.href = u;
+		}
+	}
+</script>

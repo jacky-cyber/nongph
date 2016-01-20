@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='订单详情 - 品荟 ')"></head>
+
+<body>
+	<div id="notification_bar"></div>
+	<header
+		th:substituteby="layout/partials/header(pageTitle='订单详情',type='normal')" />
+	<div th:if="${msg}" th:switch="${msg}">
+		<p class="success" th:case="'cancelsuccess'">订单取消成功</p>
+
+		<p class="warn" th:case="'cancelfail'">订单取消失败</p>
+
+		<p class="success" th:case="completesuccess">确认收货成功</p>
+
+		<p class="warn" th:case="'completefail'">确认收货失败</p>
+
+		<p class="warn" th:case="*" th:text="${msg}"></p>
+	</div>
+	<div class="order-details-container" th:object="${order}">
+		<ul class="shipping-groups">
+			<li>
+				<div class="details">
+					<div>
+						<div style="margin-bottom: 10px">
+							<span class="label">订单编号：</span>
+							<span style="float:right;" th:text="*{orderNumber}"></span>
+						</div>
+						<div style="margin-bottom: 10px" th:unless="*{status.type=='SUBORDER'}">
+							<span class="label">订单金额：</span>
+							<span style="float:right;" nph:price="*{total}"></span>
+						</div>
+						<div style="margin-bottom: 10px">
+							<span class="label">订单日期：</span>
+							<span style="float:right;" th:if="*{status.type=='SUBORDER'}"
+								  th:text="*{#dates.format(order.submitDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+							<span style="float:right;" th:unless="*{status.type=='SUBORDER'}"
+								  th:text="*{#dates.format(submitDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+						</div>
+						<div style="margin-bottom: 10px" th:unless="*{status.type=='SUBORDER'}">
+							<span>订单状态：</span>
+
+							<th:block th:if="*{status.type=='SUBORDER'}">
+								<span style="float:right;" th:if="*{shipped}">配送中</span>
+								<span style="float:right;" th:unless="*{shipped}">处理中</span>
+							</th:block>
+							<th:block th:unless="*{status.type=='SUBORDER'}">
+								<th:block th:if="*{status.type=='CONFIRMED'}">
+									<span style="float:right;" th:if="*{shipped}">配送中</span>
+									<span style="float:right;" th:unless="*{shipped}">处理中</span>
+								</th:block>
+								<th:block th:unless="*{status.type=='CONFIRMED'}">
+									<span style="float:right;" th:text="*{status.friendlyType}"></span>
+								</th:block>
+							</th:block>
+						</div>
+					</div>
+					<div style="text-align: center" th:unless="*{status.type=='SUBORDER'}">
+						<div th:if="*{status.type=='SUBMITTED'}" class="pay-order">
+							<a th:href="@{/checkout/} + *{orderNumber}">去付款</a>
+						</div>
+						<div th:if="*{status.type=='SUBMITTED'}" class="pay-order">
+							<a th:href="@{/checkout/} + *{orderNumber} + '/cancel'">取消订单</a>
+						</div>
+						<div th:if="*{status.type=='CONFIRMED' and shipped}" class="pay-order">
+							<a th:href="@{/checkout/} + *{orderNumber} + '/complete'">确认收货</a>
+						</div>
+						<div th:if="*{status.type=='CONFIRMED' or status.type=='COMPLETED' or status.type=='ORDER_REFUND' or status.type=='ITEM_REFUND'}" class="pay-order">
+							<a th:href="@{/account/orders/log/} + *{orderNumber}">订单追踪</a>
+						</div>
+						<div th:if="*{status.type=='COMPLETED' and !review}" class="pay-order">
+							<a th:href="@{'/review/' + *{orderNumber} + '/items'}">评价商品</a>
+						</div>
+						<div class="pay-order" th:if="*{refundAvailable}">
+	                        <a th:href="@{'/refund/' + *{orderNumber} + '/items'}">申请退货</a>
+	                    </div>
+	                    <div class="pay-order" th:if="*{refundOrderAvailable}">
+	                        <a th:href="@{'/refund/' + *{orderNumber} + '/order'}">申请退款</a>
+	                    </div>
+	                    <div class="pay-order" th:if="*{refund}">
+	                        <a href="#" th:text="*{refund.refundStatus.friendlyType}"></a>
+	                    </div>
+	                    <div class="pay-order"
+	                         th:if="*{hasRefundItem}">
+	                        <a th:href="@{'/refund/' + *{orderNumber} + '/items?v=1'}">查看退货进度</a>
+	                    </div>
+					</div>
+					<div style="text-align: center" th:if="*{status.type=='SUBORDER'}">
+						<div class="pay-order">
+							<a th:href="@{/account/orders/log/} + *{orderNumber}">订单追踪</a>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="details">
+					<div class="cart_item" th:each="item : *{orderItems}"
+						th:object="${item}" th:id="${'productRow' + item.id}">
+						<div class="cart_item_left">
+							<a th:href="@{*{sku.product.url} + '/' + *{sku.id}}"> <img
+								th:if="*{sku.skuMedia['primary']}"
+								th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}"
+								width="60" th:alt="*{sku.name}" />
+							</a>
+						</div>
+
+						<div class="cart_item_right_top">
+							<a th:href="@{*{sku.product.url} + '/' + *{sku.id}}"
+								th:text="*{sku.name}"></a>
+						</div>
+
+						<div>
+							<span style="color:#C00000;float:right" th:text="*{price}"></span>
+						</div>
+						<div class="discount" th:unless="*{adjustmentValue.zero}">
+							<div class="productOptions"
+								th:substituteby="catalog/partials/offers :: offers" />
+							<span>优惠金额：</span><span nph:price="*{totalAdjustmentValue}"></span>
+						</div>
+						<div th:if="*{adjustmentValue.zero}" style="margin:20px;">
+						</div>
+						<div>
+							<span>X</span> <span th:text="*{quantity}"></span>
+						</div>
+						<div class="clearfix" />
+					</div>
+				</div>
+			</li>
+
+			<li th:if="${#lists.size(order.suborderList) > 0}" th:inline="text">
+				<div style="background-color:lightgray; text-align: center;">
+					由于您的货物在不同仓库，此订单分拆为
+					<span th:text="${#lists.size(order.suborderList)}"></span>
+					个子订单分别送达
+				</div>
+				<div class="details">
+					<ul>
+						<li class="cart_item" th:each="suborder:*{suborderList}" th:object="${suborder}">
+							<a class="s-href" th:href="@{'/account/orders/' + *{orderNumber}}">
+						<span th:each="item : *{orderItems}" th:object="${item}">
+							<img th:if="*{sku.skuMedia['primary']}"
+								 th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}"
+								 width="60" th:alt="*{sku.name}"/>
+						</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div>
+					<!--<div class="details" th:if="${order.orderAddress.deliveryType == 'PICKUP'}">
+						<div class="shipping-information">
+							<div class="shipping-type">
+								<div style="margin-bottom: 10px" th:if="${#lists.size(order.suborderList) == 0}">
+									<span>配送方式：自提</span>
+								</div>
+							</div>
+							<div class="fulfillment-group-address" th:inline="text">
+								<div style="margin-bottom: 10px">
+									<span>联系人: [[${order.orderAddress.pickupAddress.sender}]]</span>
+									<span style="margin-left:100px;">联系方式: [[${order.orderAddress.pickupAddress.phone}]]</span>
+								</div>
+								<div style="margin-bottom: 10px">
+									<span>
+										自提地址: [[${order.orderAddress.pickupAddress.address}]]
+										[[${order.orderAddress.pickupAddress.remark}]]
+									</span>
+									<span style="float:right;" th:text="${order.orderAddress.postalCode}"></span>
+								</div>
+							</div>
+						</div>
+					</div>-->
+					<div class="details" th:if="order.orderAddress != null">
+						<div class="shipping-information">
+							<!--<div class="shipping-type">
+								<div style="margin-bottom: 10px" th:if="${#lists.size(order.suborderList) == 0}">
+									<span th:if="${order.orderAddress.deliveryType == 'LOGISTICS'}">配送方式：同城物流</span>
+									<span th:if="${order.orderAddress.deliveryType == 'EXPRESS'}">配送方式：同城快递</span>
+								</div>
+							</div>-->
+							<div class="fulfillment-group-address" th:inline="text">
+								<div style="margin-bottom: 10px">
+									<span th:text="${order.orderAddress.receiver}"></span>
+									<span style="float:right;" th:text="${order.orderAddress.phone}"></span>
+								</div>
+								<div style="margin-bottom: 10px">
+									<span>
+										[[${order.orderAddress.fullAddress}]]
+									</span>
+									<span style="float:right;" th:text="${order.orderAddress.postalCode}"></span>
+								</div>
+								<div style="margin-bottom: 10px">
+									<span th:if="${order.remark!=null}">
+										备注：[[${order.remark}]]
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="payment-information" th:unless="*{status.type=='SUBORDER'}">
+				<div class="details">
+					<div class="order-summary">
+						<div style="margin-bottom: 10px">
+							<span class="label">商品总额：</span>
+							<span style="float:right;color:#C00000" class="price" nph:price="*{subTotal}"></span>
+						</div>
+						<div style="margin-bottom: 10px" th:unless="*{orderAdjustmentsValue.zero}">
+							<span class="label">优惠金额：</span>
+							<span
+								nph:price="*{orderAdjustmentsValue}" style="float:right;color:#C00000"></span>
+						</div>
+						<div style="margin-bottom: 10px" th:unless="*{couponDiscount.zero}">
+							<span class="label">优惠券：</span>
+							<span nph:price="*{couponDiscount}" style="float:right;color:#C00000"></span>
+						</div>
+						<div style="margin-bottom: 10px" th:if="*{deductionBonusPoint > 0}">
+							<span class="label">积分抵扣：</span>
+							<span nph:price="*{deductionBonusPoint*0.01}" style="float:right;color:#C00000"></span>
+						</div>
+						<!--<div style="margin-bottom: 10px">
+							<span class="label">订单总额：</span>
+							<span style="float:right;color:#C00000;" class="price" nph:price="*{total}"></span>
+						</div>-->
+					</div>
+					<div class="payment-details" th:if="${#lists.size(order.payments) == 0}">
+						<div class="payment-method">
+							<div style="margin-bottom: 10px">
+								<span>支付类型：</span> <span style="float:right;">无</span>
+							</div>
+							<div style="margin-bottom: 10px">
+								<span>实付金额：</span> <span style="float:right;color:#C00000"
+														 nph:price="${order.total}"/>
+							</div>
+						</div>
+					</div>
+					<div class="payment-details"
+						 th:unless="${#lists.size(order.payments) == 0}"
+						 th:each="payment : ${order.payments}"
+						 th:object="${payment}" th:inline="text">
+						<div th:if="${payment.active}" class="payment-method">
+							<div style="margin-bottom: 10px">
+								<span>支付类型：</span> <span style="float:right;" th:text="*{type.friendlyType}"/>
+							</div>
+							<div style="margin-bottom: 10px">
+								<span>实付金额：</span> <span style="float:right;color:#C00000"
+														 nph:price="*{amount}"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+
+	<!--<footer th:substituteby="layout/partials/footer" />-->
+	<div th:substituteby="layout/partials/divfootermenu" />
+</body>
+</html>

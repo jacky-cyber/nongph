@@ -1,0 +1,76 @@
+<div th:fragment="payment-method-form">
+
+    <div class="payment_info"
+         th:unless="${showAllPaymentMethods}">
+        <h3><span th:text="#{cart.paymentMethod}">Payment Method</span></h3>
+
+        <ul th:if="${orderContainsThirdPartyPayment}" id="payment_methods">
+            <li><img th:src="@{/img/payment/paypal-curved-32px.png}"/></li>
+        </ul>
+
+        <div class="form100">
+            <nph:form th:action="@{/checkout/complete}"
+                      method="POST" id="complete_checkout"
+                      novalidate="novalidate">
+                <input type="submit" class="medium red" th:value="#{cart.completOrder}"/>
+            </nph:form>
+        </div>
+
+        <div class="form100">
+            <nph:form method="POST" novalidate="novalidate">
+                <input type="submit" class="medium red" onclick="wechatPayCheckout(); return false;" th:value="提交订单"/>
+            </nph:form>
+        </div>
+
+    </div>
+
+    <div class="payment_info"
+         th:if="${showAllPaymentMethods}">
+        <!--         <h3><span>支付方式</span></h3> -->
+
+        <dl id="paymentOptions">
+            <dt>
+                <input type="radio" name="paymentMethod" value="cod" id="paymentMethod_cod" />
+                <label for="paymentMethod_cod"><span>货到付款</span></label>
+            </dt>
+            <dd>
+                <div>
+                    <nph:form th:action="@{/checkout/cod/complete}"
+                              method="POST" id="complete_checkout"
+                              novalidate="novalidate">
+                        <input type="submit" class="medium red" th:value="订单完成"/>
+                    </nph:form>
+                </div>
+            </dd>
+            <dt>
+                <input type="radio" name="paymentMethod" value="wechat"
+                       id="paymentMethod_wechat"/>
+                <label for="paymentMethod_wechat"><span>微信支付</span></label>
+            </dt>
+            <dd>
+                <div>
+                    <nph:form method="POST" novalidate="novalidate">
+                        <input hidden="hidden" id="orderNumber" th:value="${orderNumber}"/>
+                        <input type="submit" class="medium red" onclick="wechatPayCheckout(); return false;"
+                               th:value="提交订单"/>
+                    </nph:form>
+                </div>
+            </dd>
+            <dt>
+                <input type="radio" name="paymentMethod" value="alipayescow" id="paymentMethod_alipayescow"/>
+                <label for="paymentMethod_alipayescow"><span>支付宝</span></label>
+            </dt>
+            <dd>
+                <div>
+                    <nph:form th:action="@{/alipayescow}"
+                              method="POST" id="complete_checkout"
+                              novalidate="novalidate">
+                        <input type="submit" class="medium red" th:value="立刻支付"/>
+                    </nph:form>
+                </div>
+            </dd>
+        </dl>
+
+    </div>
+
+</div>

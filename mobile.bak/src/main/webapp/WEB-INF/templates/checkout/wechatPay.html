@@ -1,0 +1,17 @@
+<div class="clearfix">
+
+    <nph:form method="post">
+        <div class="item">
+            <p style="text-align:center;font: 23px/25px 'Microsoft YaHei',Arial,Helvetica,sans-serif;">
+                总价:&nbsp;<span nph:price="${order.total}"></span>
+            </p>
+        </div>
+        <input hidden="hidden" id="orderNumber" th:value="${order.orderNumber}"/>
+        <input hidden="hidden" id="openId" th:value="${openId}"/>
+
+        <div class="item">
+            <input id="payBtn" type="button" class="pay_button" onclick="performWechatPay()" value="立即支付"/>
+        </div>
+    </nph:form>
+
+</div>

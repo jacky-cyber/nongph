@@ -1,0 +1,90 @@
+<header>
+    <div id="header_content">
+		<div class="header_top">
+			<div id="cart_info">
+				<span style="float:left">
+					收藏品荟
+				</span>
+				<span style="float:left;margin-left:20px;">
+					关注品荟
+				</span>
+				<div th:if="${customer.anonymous}"  th:remove="tag">
+					<span>您好！欢迎来到品荟</span>
+					<a class="account" th:href="@{/login}">
+						<span>[请登录]</span> 
+					</a>
+					<span class="header_sep">|</span>
+					<a class="account" th:href="@{/register}">
+						<span>[免费注册]</span>
+					</a>
+					<span class="header_sep">|</span> 
+				</div>
+				<div th:unless="${customer.anonymous}" th:remove="tag">
+					<span><a class="my-account" th:href="@{/account}" th:text="${customer.name}"></a><span>，欢迎来到品荟</span></span>
+					<span class="header_sep">|</span>
+					<span><span>消费积分&nbsp; </span><span th:text="${customer.bonusPoint}"></span></span>
+					<span class="header_sep">|</span> 
+					<a th:href="@{/logout}">
+						<span>注销</span>
+					</a>
+					<span class="header_sep">|</span>
+				</div>
+				<a href="#">
+					<span>我的订单</span>
+				</a>
+				<span class="header_sep">|</span>
+				<a href="#">
+					<span>客服服务</span>
+				</a>
+				<span class="header_sep">|</span>
+				<a href="#">
+					<span>网站导航</span>
+				</a>
+			</div>
+		</div>
+		  <nph:content contentType="Homepage Middle Promo Snippet"/> 
+        <a th:href="@{/register}" th:if="${contentItem !=null and contentItem['imageUrl'] !=null}" style="text-decoration:none;display:none;">
+            <div id="home_feature">
+				<img style="width:1240px;height:200px;" th:src="${contentItem['imageUrl']}"></img>
+			</div>
+        </a>
+		<div style="width:1240px;margin:0 auto;position:relative;">
+			<div id="logo"><h1><a th:href="@{/}">品荟首页</a></h1></div>
+			<div id="search">
+				<nph:form th:action="@{/search}" method="GET">
+					<input type="search" class="search" name="q" th:value="${originalQuery}" />
+					<input type="submit" id="search_button" value="搜索" />
+				</nph:form>		
+			</div>
+			<div style="position: absolute;top: 60px;left: 400px;">
+				<strong>热门搜索：</strong>
+				<a href="#" style="margin-left:10px;">苹果</a>
+				<a href="#" style="margin-left:10px;color:#999;">陕西高原</a>
+				<a href="#" style="margin-left:10px;color:#999;">陕西平原</a>
+				<a href="#" style="margin-left:10px;color:#999;">梨</a>
+				<a href="#" style="margin-left:10px;color:#999;">葡萄</a>
+				<a href="#" style="margin-left:10px;color:#999;">桃子</a>
+				<a href="#" style="margin-left:10px;color:#999;">提子</a>
+			</div>
+			<div class="my_globalph">
+				<img src="/static/img/my_globalph.png" alt="Shopping Cart Icon" />
+					&nbsp; 
+				<a id="cartLink" class="modalcart" href="#">
+					<span class="headerCartItemsCountWord">我的品荟</span>
+				</a>
+				<b></b>
+			</div>
+			<div class="go_to_check">
+				<img src="/static/img/shopping_cart.png" alt="Shopping Cart Icon" />
+				&nbsp; 
+				<span class="headerCartItems">
+					<span class="headerCartItemsCount" th:text="${cart.itemCount}" />
+				</span>
+				<a id="cartLink" class="modalcart" th:href="@{/cart}">
+					<span class="headerCartItemsCountWord">去购物车结算</span>
+				</a>
+				<b></b>
+			</div>
+		</div>
+    </div>
+</header>

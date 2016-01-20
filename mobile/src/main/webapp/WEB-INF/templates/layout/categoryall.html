@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class="">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>商品分类</title>
+<meta name="charset" content="utf-8" />
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta http-equiv="Cache-Control" content="must-revalidate,no-cache" />
+<link rel="stylesheet" href="/static/css/cate/app.css" />
+<link rel="stylesheet" href="/static/css/header.css" />
+</head>
+<body>
+	<input id="ccid" th:if="${param.ccid}" type="hidden" th:value="${param.ccid[0]}" />
+	<section class="main">
+		<header th:substituteby="layout/partials/header(pageTitle='全部分类',type='normal')" />
+		<div class="search_header" id="category_header" dd_name="分类页头部">
+			<div class="search">
+				<nph:form th:action="@{/search}" method="GET">
+					<div>
+						<input  type="text" class="text"
+							placeholder="搜索商品、品牌、种类"  name="q"
+							 />
+					</div>
+					<input type="submit" value="" class="submit" />
+				</nph:form>
+			</div>
+		</div>
+		<div class="main_box">
+			<nav class="class_list_nav">
+				<div class="class_list_nav_box" id="class_list_nav_box"
+					dd_name="一级分类" style="overflow: hidden;">
+					<ul
+						style="transition-property: transform; -webkit-transition-property: transform; transform-origin: 0px 0px 0px; transform: translate(0px, 0px) scale(1) translateZ(0px);">
+						<ul
+							style="transition-property: transform; transform-origin: 0px 0px 0px; transform: translate(0px, 0px) scale(1) translateZ(0px);">
+								<nph:categories resultVar="cates_lev1" parentCategory="${category.name}"/>
+								<a th:each="cate_lev1 : ${cates_lev1}" 
+									th:object="${cate_lev1}" 
+									th:id = "${cate_lev1.id}"
+									th:name="${'cate_lev1_' + cate_lev1Stat.index}" 
+									th:attr="rel=${cate_lev1Stat.index},dd_name=${cate_lev1.name}">
+									<li class="" th:text="*{name}"></li>
+								</a>
+						</ul>
+
+					</ul>
+				</div>
+			</nav>
+			<div class="class_box">
+				<div class="class_box_inner" id="class_box_inner" dd_name="二级分类"
+					style="overflow: hidden;">
+					<div class="class_box_over"
+						style="transition-property: transform; -webkit-transition-property: transform; transform-origin: 0px 0px 0px; transform: translate(0px, 0px) translateZ(0px);">
+						<div th:each="cate_lev1 : ${cates_lev1}" 
+									th:object="${cate_lev1}" 
+									th:id="${'cate_lev2_div_' + cate_lev1Stat.index}" 
+									th:style="${cate_lev1Stat.index ==0 ? '-webkit-transform-origin: 0px 0px 0px; opacity: 1; -webkit-transform: scale(1, 1); display: none;':''}">
+							<nph:categories resultVar="cates_lev2" parentCategory="${cate_lev1.name}"/>
+							<div th:each="cate_lev2 : ${cates_lev2}" th:object="${cate_lev2}">
+								<h3>
+									<a th:text="${cate_lev2.name}" th:href="${cate_lev2.url}" />
+								</h3>
+								<ul class="clearfix">
+									<nph:categories resultVar="cates_lev3" parentCategory="${cate_lev2.name}"/>
+									<li th:each="cate_lev3 : ${cates_lev3}">
+										<div>
+											<a th:href="@{${cate_lev3.url}}">
+												<img class="cate_icon_img"
+													th:src="
+													${(!#maps.isEmpty(cate_lev3.categoryMedia) 
+													and #maps.containsKey(cate_lev3.categoryMedia,'primary'))
+													? cate_lev3.categoryMedia['primary'].url:''}" 
+													th:attr="data-src=${(!#maps.isEmpty(cate_lev3.categoryMedia) 
+													and #maps.containsKey(cate_lev3.categoryMedia,'primary'))
+													? cate_lev3.categoryMedia['primary'].url:'/static/img/cat-default.png'}"
+													alt="" />
+												<span th:text="${cate_lev3.name}"></span>
+											</a>
+										</div>
+									</li>
+								</ul>
+							</div>		
+						</div>
+												
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="/static/js/cate/zepto.min.js"></script>
+	<script src="/static/js/cate/zepto.lazyload.min.js"></script>
+	<script src="/static/js/cate/iscroll.min.js"></script>
+	<script src="/static/js/cate/common.min.js"></script>
+	<script src="/static/js/cate/nav.min.js"></script>
+	<script src="/static/js/cate/mix_suggest.min.js"></script>
+	<script src="/static/js/cate/js_tracker.js"></script>
+
+</body>
+</html>

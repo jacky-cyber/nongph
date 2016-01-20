@@ -1,0 +1,56 @@
+#sort {
+	font-size:10px;
+	height:41px;
+}
+
+#sort span.heading {
+	display: block;
+	margin-bottom: 6px;
+}
+
+#sort a {
+	padding: 2px 4px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	font-weight: normal;
+	color: #655C5A;
+	text-decoration: none;
+}
+
+#sort a.active {
+	color: #E83B10;
+}
+
+#sort a {
+	float: left;
+	width: 25%;
+	display: inline-block;
+	text-align: center;
+	font-size: 1.3em;
+	color: rgb(98, 98, 98);
+	background-color: rgb(233, 233, 233);
+	border-bottom: 1px solid rgb(201, 201, 201);
+	padding: 10px 0px;
+}
+
+#sort a.asc:after {
+	font-size: 8px;
+	margin-left: 5px;
+	content: "\25B2";
+}
+
+#sort a.desc:after {
+	font-size: 8px;
+	margin-left: 5px;
+	content: "\25BC";
+}
+
+.no-result{
+	padding-top: 20%; 
+	padding-bottom: 30%;
+}
+
+.no-result .text{
+	text-align:center;
+}

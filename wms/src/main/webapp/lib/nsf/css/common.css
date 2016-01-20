@@ -1,0 +1,107 @@
+#header{
+   border: none;
+   background:#1E4176 url(../images/hd-bg.gif) repeat-x 0 0;
+   padding-top:3px;
+   padding-left:3px;
+   height: 34px;
+   width: 100%
+}
+#header_comm_bank {
+  width:100%;
+  float:left;
+  height:100%;
+  background:url(../images/logo.png) no-repeat #d4e1f2;
+}
+
+.ecp-title {
+    font:normal 16px tahoma, arial, sans-serif;
+    color:white;
+    margin:4px;
+	float:left;
+}
+
+.ecp-subtitle {
+    font:normal 11px tahoma, arial, sans-serif;
+    color:white;
+    margin:4px;
+}
+
+.ecp-logout-text {
+	text-align:right;
+	font:normal 12px tahoma, arial, sans-serif;
+    color:white;
+    margin:5px;
+	float:right;
+}
+.a.logout {
+	color:white;
+}
+
+.ecp-mainMenu {
+    color:white;
+}
+
+.icoFind {
+	background-image: url(../images/search.gif) !important;
+	vertical-align: middle;
+}
+
+.icoAdd {
+	background-image: url(../images/drop-add.gif) !important;
+	vertical-align: middle;
+}
+
+.icoImport {
+	background-image: url(../images/page_white_go.png) !important;
+	vertical-align: middle;
+}
+
+.icoDel {
+	background-image: url(../images/delete.png) !important;
+	vertical-align: middle;
+}
+
+.icoCopy {
+	background-image: url(../images/copy.png) !important;
+	vertical-align: middle;
+}
+
+.icoDetail {
+	background-image: url(../images/details.gif) !important;
+	vertical-align: middle;
+}
+
+.icoUpload {
+	background-image: url(../images/pdf.gif) !important;
+	vertical-align: middle;
+}
+        
+.icoReply {
+	background-image: url(../images/cog_go.png) !important;
+	vertical-align: middle;
+}
+
+.icoIn {
+	background-image: url(../nsf/images/in.png) !important;
+	vertical-align: middle;
+}
+
+.icoOut {
+	background-image: url(../images/Out.png) !important;
+	vertical-align: middle;
+}
+
+.icoSyn {
+	background-image: url(../images/server_lightning.png) !important;
+	vertical-align: middle;
+}
+
+.icoUser {
+	background-image: url(../images/user.gif) !important;
+	vertical-align: middle;
+}
+
+.icoOk {
+	background-image: url(../images/tick.png) !important;
+	vertical-align: middle;
+}

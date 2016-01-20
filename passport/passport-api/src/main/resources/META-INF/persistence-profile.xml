@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="blPU" transaction-type="RESOURCE_LOCAL">
+        <mapping-file>config/bc/jpa/domain/Address.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/ChallengeQuestion.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Customer.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CustomerAddress.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CustomerPayment.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/IdGeneration.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Phone.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Role.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Community.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/NetNode.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/WechatCustomer.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CustomerMessage.orm.xml</mapping-file>
+        <class>cn.globalph.passport.domain.AddressImpl</class>
+        <class>cn.globalph.passport.domain.ChallengeQuestionImpl</class>
+        <class>cn.globalph.passport.domain.CustomerPaymentImpl</class>
+        <class>cn.globalph.passport.domain.CustomerImpl</class>
+        <class>cn.globalph.passport.domain.CustomerRoleImpl</class>
+        <class>cn.globalph.passport.domain.CustomerForgotPasswordSecurityTokenImpl</class>
+        <class>cn.globalph.passport.domain.RoleImpl</class>
+        <class>cn.globalph.passport.domain.CommunityImpl</class>
+        <class>cn.globalph.passport.domain.NetNodeImpl</class>
+        <class>cn.globalph.passport.domain.WechatCustomerImpl</class>
+        <class>cn.globalph.passport.domain.CustomerMessageImpl</class>
+    </persistence-unit>
+</persistence>

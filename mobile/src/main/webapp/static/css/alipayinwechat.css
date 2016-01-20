@@ -1,0 +1,63 @@
+*{
+	margin:0 0;
+}
+body{
+	font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+}
+.alipay-logo{
+	text-align:center;
+	margin:20px 0;
+}
+
+.step1{
+	width:50%;
+	float:left;
+}
+
+.steps{
+	padding: 15px 3% 10px 4%;
+}
+
+.step2{
+	width:50%;
+	float:right;
+}
+.tip-b{
+	text-align:center;
+	font-size:30px;
+	color:#6c6c6c;
+	margin:10px 0;
+}
+
+.tip-s{
+	text-align:center;
+	font-size:15px;
+	color:#6c6c6c;
+	margin:10px 0 5px 0;
+	padding-bottom:15px;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.step1-tip, .step2-tip{
+	text-align:center;
+	color:#3c9;
+	font-weight:bold;
+}
+
+.complete{
+	text-align:center;
+	margin-top:20px;
+	margin-botom:100px;
+}
+
+a.btn{
+	text-decoration: none;
+	color:#fff;
+	background-color:#3c9;
+	line-height:35px;
+	font-size:17px;
+	display:inline-block;
+	width:150px;
+	text-align:center;
+	border-radius: 5px
+}

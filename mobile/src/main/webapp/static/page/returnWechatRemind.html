@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="detail_standard">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>支付成功 - 品荟</title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="x-dns-prefetch-control" content="on" />
+<link rel="stylesheet" href="/static/css/header.css" />
+<style type="text/css">
+	.tip{
+		padding:40px 10px 40px 10px;
+	}
+	.tip-b{
+		font-size:20px;
+		text-align:center;
+		font-weight:bold;
+		padding:10px 0;
+	}
+	.tip-s{
+		font-size:13px;
+	}
+</style>
+</head>
+
+<body>
+	<div class="tip">
+		<div>
+			<div class="tip-b">您已成功通过支付宝完成支付！</div>
+			<div class="tip-s">由于您是通过微信浏览器跳转到当前浏览器完成支付，您需要重新打开微信，继续后续操作。</div>
+		</div>
+	</div>
+	
+
+</body>
+<script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+<script>
+	$(".btn").on("click", function(){
+		location.href="/account/orders/" + $("#orderId").val();
+	})
+</script>
+</html>

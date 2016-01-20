@@ -1,0 +1,23 @@
+<header>
+	<div th:if="${type=='normal'}" class="normal_bar">
+		<a class="bar_left" href="javascript:history.back();">
+			<span></span>
+		</a>
+		<h2 th:text="${pageTitle}"></h2>
+		<a class="bar_right" href="/">
+			<span></span>
+		</a>
+	</div>
+	<div th:if="${type=='main'}" class="main_bar">
+		<a href="/"> <span></span>
+		</a>
+		<h2 th:text="${pageTitle}"></h2>
+		<div class="bar_left">
+			<img src="/static/img/child_cat.png" />
+		</div>
+		<input type="hidden" id="ccid" th:if="${category.id}" th:value="${category.id}" />
+	</div>
+	<div id="loading">
+		<img src="/static/img/loading2.gif"/>
+	</div>
+</header>

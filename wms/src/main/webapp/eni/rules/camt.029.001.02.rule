@@ -1,0 +1,84 @@
+/**
+ * @author Leegorous
+ */
+{
+	name : "camt.029.001.02",
+	rules : {
+		// the main entry
+		"main" : function(doc) {
+			//
+			var RtrInf = doc.select("/camt.029.001.02/Sts/RtrInf")[0];
+
+			var hijack = function(readOnly) {
+				if (!!readOnly) proceed();
+				if (arguments[1] == true) proceed();
+			}
+
+			RtrInf.setReadOnly(true);
+
+			Aspects.addAround(hijack, RtrInf, "setReadOnly");
+
+			doc.lazyAddingListener("/camt.029.001.02/Sts/StsChoice/Conf", "change", {
+				onChange : function(container) {
+					var value = container.getValue();
+					//alert(value);
+					if (value == "CNCL" || value == "MODI") {
+						RtrInf.setReadOnly(false, true);
+					} else {
+						RtrInf.setReadOnly(true, true);
+						RtrInf.setEnabled(false);
+					}
+				}
+			});
+
+			doc.lazyAddingListener("/camt.029.001.02/Sts/StsChoice", "change", {
+				onChange : function(container) {
+					if (container.curChild && container.curChild.name == "Conf") {
+						var value = container.curChild.getValue();
+						if (value == "CNCL" || value == "MODI") {
+							RtrInf.setReadOnly(false, true);
+						} else {
+							RtrInf.setReadOnly(true, true);
+							RtrInf.setEnabled(false);
+						}
+					} else {
+						RtrInf.setReadOnly(true, true);
+						RtrInf.setEnabled(false);
+					}
+				}
+			});
+
+			var UndrlygDtChoice;
+
+			doc.lazyAddingListener("/camt.029.001.02/CrrctnTx", "enabled", {
+				onEnabled : function(container) {
+					if (!UndrlygDtChoice) {
+						UndrlygDtChoice = doc.select("/camt.029.001.02/CrrctnTx/UndrlygDtChoice")[0];
+						UndrlygDtChoice.setReadOnly(true);
+
+						/*var hijack = function() {
+							return false;
+						};*/
+
+						Aspects.addAround(hijack, UndrlygDtChoice, "setReadOnly");
+					}
+				}
+			});
+
+			doc.lazyAddingListener("/camt.029.001.02/CrrctnTx/UndrlygAmtChoice", "change", {
+				onChange : function(container) {
+					if (!container.curChild) {
+						UndrlygDtChoice.setChild(-1);
+						return;
+					}
+
+					switch(container.curChild.name) {
+						case "InstdAmt": UndrlygDtChoice.setChild("ReqdExctnDt");break;
+						case "IntrBkSttlmAmt": UndrlygDtChoice.setChild("IntrBkSttlmDt");break;
+					}
+				}
+			});
+
+		}
+	}
+}

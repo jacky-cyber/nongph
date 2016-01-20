@@ -1,0 +1,39 @@
+<div style="margin-bottom: 10px;">
+	<a class="sku_img_lk" th:href="@{*{product.url} + '/' + *{id}}"> <img
+		class="lazy" th:if="*{skuMedia['primary']}"
+		src="/static/img/noimg.jpg"
+		th:attr="data-original=@{*{skuMedia['primary'].url} + '?browse'}"
+		th:alt="*{name}" />
+	</a>
+</div>
+<div class="sku_info">
+	<p class="sku_name">
+		<a th:href="@{*{product.url} + '/' + *{id}}" th:text="*{name}"></a>
+	</p>
+	
+	<p class="sku_salePrice">
+		<span style="display: block;" nph:price="*{salePrice}"
+			th:if="*{onSale}" th:classappend="*{onSale}? 'sale'"></span> <span
+			style="display: block;" nph:price="*{retailPrice}"
+			th:classappend="*{onSale}? 'has-sale'"></span>
+	</p>
+
+	<div th:unless="*{isSeckilling}"
+		style="float: right;">
+		<th:block
+			th:with="checkInventory=*{inventoryType?.type == 'CHECK_QUANTITY'},
+                                   availableInventory=${checkInventory ? #object.quantityAvailable != null and #object.quantityAvailable != 0 : true},
+                                   inCart=${cart.containsSku(#object.id)}">
+			<div class="btn btn_cart"
+				th:unless="${!availableInventory or (sku.isSeckilling and !sku.seckillingValid)}">
+				<nph:form method="POST" th:action="@{/cart/add}">
+					<input type="hidden" name="skuId" th:value="*{id}" />
+					<input type="hidden" name="quantity" value="1" />
+					<a class="addCart" href="javascript:void(0);" style="display:inline-block;padding-top:10px;padding-right:10px;">
+						<img src="/static/img/cart-btn.png"/>
+					</a>	
+				</nph:form>
+			</div>
+		</th:block>
+	</div>
+</div>

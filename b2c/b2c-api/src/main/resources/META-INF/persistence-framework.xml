@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+core persistence 
+-->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="blPU" transaction-type="RESOURCE_LOCAL">
+        <mapping-file>config/bc/jpa/domain/Category.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CategoryXref.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Product.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/ProductOption.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Sku.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Availability.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Order.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/OrderItem.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/OrderMultishipOption.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/OrderPayment.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Offer.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/FulfillmentGroup.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/FulfillmentGroupItem.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/FulfillmentOption.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Store.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Rating.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/SearchRedirect.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Solr.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/OrderAddress.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/OrderLog.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/Refund.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/RefundMedia.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/ComparePrice.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/GroupOn.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/GroupOnAttr.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CouponCode.orm.xml</mapping-file>
+        
+        <class>cn.globalph.b2c.catalog.domain.CategoryImpl</class>
+        <class>cn.globalph.b2c.catalog.domain.CategoryAttributeImpl</class>
+        <class>cn.globalph.b2c.catalog.domain.CategoryProductXrefImpl</class>
+        <class>cn.globalph.b2c.catalog.domain.CategoryXrefImpl</class>
+        <class>cn.globalph.b2c.catalog.domain.CrossSaleProductImpl</class>
+        <class>cn.globalph.b2c.catalog.domain.FeaturedProductImpl</class>
+        
+        <class>cn.globalph.b2c.product.domain.ProductAttributeImpl</class>
+        <class>cn.globalph.b2c.product.domain.ProductImpl</class>
+        <class>cn.globalph.b2c.product.domain.ProductOptionImpl</class>
+        <class>cn.globalph.b2c.product.domain.ProductOptionValueImpl</class>
+        <class>cn.globalph.b2c.product.domain.SkuBundleItemImpl</class>
+        <class>cn.globalph.b2c.product.domain.SkuAttributeImpl</class>
+        <class>cn.globalph.b2c.product.domain.SkuImpl</class>
+        <class>cn.globalph.b2c.product.domain.SkuFeeImpl</class>
+        <class>cn.globalph.b2c.product.domain.SkuBundleImpl</class>
+        <class>cn.globalph.b2c.product.domain.ProductOptionXrefImpl</class>
+        <class>cn.globalph.b2c.product.domain.ComparePriceImpl</class>
+        <class>cn.globalph.b2c.product.domain.GroupOnImpl</class>
+        <class>cn.globalph.b2c.product.domain.GroupOnAttrImpl</class>
+        
+        <class>cn.globalph.b2c.catalog.domain.UpSaleProductImpl</class>
+        <class>cn.globalph.b2c.inventory.domain.SkuAvailabilityImpl</class>
+        <class>cn.globalph.b2c.offer.domain.CandidateFulfillmentGroupOfferImpl</class>
+        <class>cn.globalph.b2c.offer.domain.CandidateItemOfferImpl</class>
+        <class>cn.globalph.b2c.offer.domain.CandidateOrderOfferImpl</class>
+        <class>cn.globalph.b2c.offer.domain.FulfillmentGroupAdjustmentImpl</class>
+        <class>cn.globalph.b2c.offer.domain.OfferAuditImpl</class>
+        <class>cn.globalph.b2c.offer.domain.OfferImpl</class>
+        <class>cn.globalph.b2c.offer.domain.OfferRuleImpl</class>
+        <class>cn.globalph.b2c.offer.domain.OfferInfoImpl</class>
+        <class>cn.globalph.b2c.offer.domain.OrderAdjustmentImpl</class>
+        <class>cn.globalph.b2c.order.domain.OrderItemQualifierImpl</class>
+        <class>cn.globalph.b2c.order.domain.FulfillmentGroupImpl</class>
+        <class>cn.globalph.b2c.order.domain.FulfillmentGroupItemImpl</class>
+        <class>cn.globalph.b2c.order.domain.FulfillmentGroupFeeImpl</class>
+        <class>cn.globalph.b2c.order.domain.FulfillmentOptionImpl</class>
+        <class>cn.globalph.b2c.order.fulfillment.domain.FixedPriceFulfillmentOptionImpl</class>
+        <class>cn.globalph.b2c.order.fulfillment.domain.BandedPriceFulfillmentOptionImpl</class>
+        <class>cn.globalph.b2c.order.fulfillment.domain.BandedWeightFulfillmentOptionImpl</class>
+        <class>cn.globalph.b2c.order.fulfillment.domain.FulfillmentBandImpl</class>
+        <class>cn.globalph.b2c.order.fulfillment.domain.FulfillmentPriceBandImpl</class>
+        <class>cn.globalph.b2c.order.fulfillment.domain.FulfillmentWeightBandImpl</class>
+        <class>cn.globalph.b2c.order.domain.OrderImpl</class>
+        <class>cn.globalph.b2c.order.domain.OrderItemImpl</class>
+        <class>cn.globalph.b2c.order.domain.OrderItemPriceDetailImpl</class>
+        <class>cn.globalph.b2c.offer.domain.OrderItemPriceDetailAdjustmentImpl</class>
+        
+        <class>cn.globalph.b2c.payment.domain.OrderPaymentImpl</class>
+        <class>cn.globalph.b2c.payment.domain.PaymentTransactionImpl</class>
+        
+        <class>cn.globalph.b2c.store.domain.StoreImpl</class>
+        
+        <class>cn.globalph.b2c.search.domain.CategorySearchFacetImpl</class>
+        <class>cn.globalph.b2c.search.domain.FieldImpl</class>
+        <class>cn.globalph.b2c.search.domain.SearchInterceptImpl</class>
+        <class>cn.globalph.b2c.search.domain.SearchSynonymImpl</class>
+        <class>cn.globalph.b2c.search.domain.SearchFacetImpl</class>
+        <class>cn.globalph.b2c.search.domain.SearchFacetRangeImpl</class>
+        <class>cn.globalph.b2c.search.domain.RequiredFacetImpl</class>
+        <class>cn.globalph.b2c.search.domain.CategorySearchFacetImpl</class>
+        <class>cn.globalph.b2c.search.domain.CategorySearchFacetValueImpl</class>
+        <class>cn.globalph.b2c.search.redirect.domain.SearchRedirectImpl</class>
+        
+        <class>cn.globalph.b2c.rating.domain.RatingSummaryImpl</class>
+        <class>cn.globalph.b2c.rating.domain.RatingDetailImpl</class>
+        <class>cn.globalph.b2c.rating.domain.ReviewDetailImpl</class>
+        <class>cn.globalph.b2c.rating.domain.ReviewFeedbackImpl</class>
+        <class>cn.globalph.b2c.offer.domain.OfferItemCriteriaImpl</class>
+        <class>cn.globalph.b2c.offer.domain.CriteriaOfferXref</class>
+        
+        <class>cn.globalph.b2c.catalog.domain.CategorySiteMapGeneratorConfigurationImpl</class>
+        <class>cn.globalph.b2c.order.domain.OrderAddressImpl</class>
+        <class>cn.globalph.b2c.product.domain.ProviderImpl</class>
+        <class>cn.globalph.b2c.order.domain.OrderLogImpl</class>
+        <class>cn.globalph.b2c.product.domain.PickupAddressImpl</class>
+        <class>cn.globalph.b2c.order.domain.RefundImpl</class>
+        <class>cn.globalph.b2c.order.domain.RefundMediaImpl</class>
+        
+        <class>cn.globalph.b2c.coupon.domain.CouponCodeImpl</class>
+    </persistence-unit>
+    
+    <persistence-unit name="blSecurePU" transaction-type="RESOURCE_LOCAL">
+        <mapping-file>config/bc/jpa/domain/GiftCardPaymentInfo.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/CreditCardPaymentInfo.orm.xml</mapping-file>
+        <mapping-file>config/bc/jpa/domain/BankAccountPaymentInfo.orm.xml</mapping-file>
+        <class> cn.globalph.b2c.payment.domain.secure.BankAccountPaymentImpl</class>
+        <class> cn.globalph.b2c.payment.domain.secure.CreditCardPaymentInfoImpl</class>
+        <class> cn.globalph.b2c.payment.domain.secure.GiftCardPaymentImpl</class>
+    </persistence-unit>
+</persistence>

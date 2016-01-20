@@ -1,0 +1,15 @@
+<div style="display: none;" id="child_cat">
+	<nph:categories resultVar="level1cats"
+		parentCategory="${category.name}" maxResults="4" />
+	<div th:each="level1cat : ${level1cats}">
+		<div class="cat_level1">
+			<a th:href="${level1cat.url}" th:text="${level1cat.name}"> </a>
+		</div>
+		<div class="cat_level2">
+			<nph:categories resultVar="level2cats"
+				parentCategory="${level1cat.name}" />
+			<a class="product_link" th:each="level2cat : ${level2cats}"
+				th:href="${level2cat.url}" th:text="${level2cat.name}"> </a>
+		</div>
+	</div>
+</div>

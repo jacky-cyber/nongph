@@ -1,0 +1,37 @@
+<div id="account">  
+    <div style="display:none;" th:fragment="title" th:inline="text">登录品荟</div>
+    
+    <div id="login">
+        <h3><span>欢迎回来！</span></h3>
+
+        <span class="error" th:if="${param.error}">
+            <p><span th:text="#{login.noMatchTryAgain}">电子邮件密码不匹配，请重试</span></p>
+        </span>
+
+        <div class="clearfix">
+            <nph:form th:action="@{/login_post.htm}" method="post">
+                <input type="hidden" name="successUrl" th:if="${successUrl}" th:value="${successUrl}"/>
+                
+                <div class="form50">
+                    <label for="j_username"><span>电子邮箱</span></label>
+                    <input type="email" name="j_username" th:class="${param.error} ? 'field50 fieldError' : 'field50'" />
+                </div>
+                
+                <div class="form50">
+                    <label for="j_password"><span>密码</span></label>
+                    <input type="password" name="j_password" th:class="${param.error} ? 'field50 fieldError' : 'field50'" />
+                </div>
+                
+                <div class="login_register">
+                    <input class="login_button big red" type="submit" th:value="登录"/>
+                </div>
+                
+                <div class="login_register_alt_links">
+                    <a class="account" th:href="@{/register}"><span>免费注册</span></a>
+                    <br/>
+                    <a class="account" th:href="@{/login/forgotPassword}"><span>忘记密码？</span></a>
+                </div>
+            </nph:form>
+        </div>
+    </div>
+</div>

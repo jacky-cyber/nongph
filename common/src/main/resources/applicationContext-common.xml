@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
+	<context:component-scan base-package="cn.globalph.common.config"/>
+	<context:component-scan base-package="cn.globalph.common.email"/>
+	<context:component-scan base-package="cn.globalph.common.enumeration"/>
+	<context:component-scan base-package="cn.globalph.common.i18n"/>
+	<context:component-scan base-package="cn.globalph.common.payment"/>
+	<context:component-scan base-package="cn.globalph.common.resource"/>
+	<context:component-scan base-package="cn.globalph.common.sandbox"/>
+	<context:component-scan base-package="cn.globalph.common.security"/>
+	<context:component-scan base-package="cn.globalph.common.storage"/>
+	<context:component-scan base-package="cn.globalph.common.sitemap"/>
+	<context:component-scan base-package="cn.globalph.common.template"/>
+	<context:component-scan base-package="cn.globalph.common.util"/>
+    <context:component-scan base-package="cn.globalph.common.web"/>
+
+    <bean id="blExploitProtectionService" class="cn.globalph.common.security.service.ExploitProtectionServiceImpl">
+        <property name="xsrfProtectionEnabled" value="${exploitProtection.xsrfEnabled}" />
+        <property name="xssProtectionEnabled" value="${exploitProtection.xssEnabled}" />
+    </bean>
+
+    <bean id="blConfiguration" class="cn.globalph.common.config.RuntimeEnvironmentPropertiesConfigurer" />
+
+    <bean id="blConfigurationManager" class="cn.globalph.common.config.RuntimeEnvironmentPropertiesManager"/>
+
+    <bean id="blMessageCreator" class="cn.globalph.common.email.service.message.NullMessageCreator">
+        <constructor-arg ref="blMailSender"/>
+    </bean>
+
+    <bean id="blDirectCopyIgnorePatterns" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <bean class="cn.globalph.common.extensibility.jpa.copy.DirectCopyIgnorePattern">
+                    <property name="patterns">
+                        <array>
+                            <value>org\.apache.*</value>
+                            <value>javassist.*</value>
+                        </array>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="blDirectCopyTransformTokenMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    <!--This class transformer is responsible for picking up @DirectCopyTransform annotations on entities -->
+    <bean id="blAnnotationDirectCopyClassTransformer" class="cn.globalph.common.extensibility.jpa.copy.DirectCopyClassTransformer">
+        <constructor-arg name="moduleName" value="Annotated Transformation" />
+        <property name="templateTokens" ref="blDirectCopyTransformTokenMap"/>
+    </bean>
+
+    <!-- to be overriden by 3rd party modules -->
+    <bean id="blMergedClassTransformers" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="blAnnotationDirectCopyClassTransformer"/>
+            </list>
+        </property>
+    </bean>
+	
+	<bean id="blVariableExpressions" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+            	<bean class="cn.globalph.common.web.expression.NullVariableExpression" />
+                <bean class="cn.globalph.common.web.expression.BRCVariableExpression" />
+                <bean class="cn.globalph.common.web.expression.PropertiesVariableExpression" />
+                <bean class="cn.globalph.common.web.payment.expression.PaymentGatewayFieldVariableExpression"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="blServerInfo" class="cn.globalph.common.email.service.info.ServerInfo">
+        <property name="serverName" value="localhost"/>
+        <property name="serverPort" value="8080"/>
+    </bean>
+
+    <bean id="blMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host"><value>localhost</value></property>
+        <property name="port"><value>25</value></property>
+        <property name="protocol"><value>smtp</value></property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- This mail sender will log the html content generated for the email to the console  -->
+    <!-- To enable logging set log level in Log4j to INFO  -->
+    <bean id="blLoggingMailSender" class="cn.globalph.common.email.service.LoggingMailSender" />
+
+    <bean id="blVelocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="velocityProperties">
+         <value>
+            resource.loader=class
+            class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            <!-- class.resource.loader.path=classpath:/config/velocity/templates/ -->
+            <!-- Note that jar specification for the .path configuration property conforms to the same rules for the java.net.JarUrlConnection class-->
+            <!-- jar.resource.loader.class =org.apache.velocity.runtime.resource.loader.JarResourceLoader
+            jar.resource.loader.path = jar:file:/broadleaf-profile.jar/emailTemplates
+            file.resource.loader.class=org.apache.velocity.runtime.resource.loader.FileResourceLoader
+            file.resource.loader.cache = false
+            file.resource.loader.path=${file.root}/WEB-INF/config/velocity/templates-->
+         </value>
+      </property>
+   </bean>
+    
+    <bean id="blEmailInfo" class="cn.globalph.common.email.service.info.EmailInfo" />
+    <bean id="blNullEmailInfo" class="cn.globalph.common.email.service.info.NullEmailInfo" />
+    <bean id="blSiteResolver" class="cn.globalph.common.web.NullSiteResolver" />
+    <bean id="blThemeResolver" class="cn.globalph.common.web.NullBroadleafThemeResolver" />
+    
+<!--  Message creator for velocity templates.  Now should be defined in client properties file. -->
+    <!-- bean id="blMessageCreator" class="cn.globalph.common.email.service.message.VelocityMessageCreator">
+        <constructor-arg ref="blVelocityEngine"/>
+        <constructor-arg ref="blMailSender"/>
+        <constructor-arg>
+            <map>
+                <entry key="number">
+                    <bean class="org.apache.velocity.tools.generic.NumberTool" scope="prototype"/>
+                </entry>
+                <entry key="date">
+                    <bean class="org.apache.velocity.tools.generic.ComparisonDateTool" scope="prototype"/>
+                </entry>
+                <entry key="list">
+                    <bean class="org.apache.velocity.tools.generic.ListTool" scope="prototype"/>
+                </entry>
+                <entry key="math">
+                    <bean class="org.apache.velocity.tools.generic.MathTool" scope="prototype"/>
+                </entry>
+                <entry key="iterator">
+                    <bean class="org.apache.velocity.tools.generic.IteratorTool" scope="prototype"/>
+                </entry>
+                <entry key="alternator">
+                    <bean class="org.apache.velocity.tools.generic.AlternatorTool" scope="prototype"/>
+                </entry>
+                <entry key="sorter">
+                    <bean class="org.apache.velocity.tools.generic.SortTool" scope="prototype"/>
+                </entry>
+                <entry key="esc">
+                    <bean class="org.apache.velocity.tools.generic.EscapeTool" scope="prototype"/>
+                </entry>
+                <entry key="serverInfo" value-ref="blServerInfo"/>
+            </map>
+        </constructor-arg>
+    </bean  -->
+
+    <bean id="blPaymentGatewayConfigurationServices" class="org.springframework.beans.factory.config.ListFactoryBean" >
+        <property name="sourceList">
+            <list>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="blVariableExpressionEvaluator" class="cn.globalph.common.web.expression.GlobalphVariableExpressionEvaluator" />
+    <bean id="blDataDrivenEnumerationProcessor" class="cn.globalph.common.web.processor.DataDrivenEnumerationProcessor" />
+    <bean id="blResourceBundleProcessor" class="cn.globalph.common.web.processor.ResourceBundleProcessor" />
+    <bean id="blConfigVariableProcessor" class="cn.globalph.common.web.processor.ConfigVariableProcessor" />    
+    
+    <bean id="blSiteMapGenerators" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <ref bean="blCustomSiteMapGenerator" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="blStatisticsService" class="cn.globalph.common.cache.StatisticsServiceImpl">
+        <property name="appName">
+            <bean class="org.springframework.jndi.JndiObjectFactoryBean">
+                <property name="jndiName">
+                    <value>java:comp/env/appName</value>
+                </property>
+                <property name="defaultObject" value="broadleaf"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="blEntityExtensionManagers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="blCacheManager" class="cn.globalph.common.extensibility.cache.ehcache.MergeEhCacheManagerFactoryBean">
+        <property name="shared" value="true"/>
+    </bean>
+
+</beans>

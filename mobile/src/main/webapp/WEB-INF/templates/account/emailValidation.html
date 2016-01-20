@@ -1,0 +1,31 @@
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='邮箱认证')"></head>
+
+<body>
+	<div id="notification_bar"></div>
+	    <header th:substituteby="layout/partials/header(pageTitle='邮箱认证',type='normal')" />
+
+	<div id="content" class="width_setter group" role="main">
+		<div id="account">
+			<span class="error" th:switch="${errorCode}" th:if="${errorCode}">
+				<p th:case="'invalidCustomer'">系统中未找到您输入的注册邮箱地址</p>
+				<p th:case="'inactiveCustomer'">您输入的邮箱地址未激活，请联系客服激活您的邮箱</p>
+				<p th:case="*">未知错误</p>
+			</span>
+			<span th:unless="${errorCode}">
+				<p>邮件已发送，请前往邮箱激活认证！</p>
+			</span>
+		</div>
+
+	</div>
+
+	<footer th:substituteby="layout/partials/footer" />
+	<div th:substituteby="layout/partials/divfootermenu" />
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head th:include="/layout/partials/head (pageTitle='填写订单 - 品荟', noDefaultCss=true)"></head>
+<nph:bundle name="style.css" mapping-prefix="/static/css/" files="style.css"/>
+<nph:bundle name="style.css" mapping-prefix="/static/css/" files="checkout.css"/>
+<nph:bundle name="style.css" mapping-prefix="/static/css/" files="header.css"/>
+
+<body>
+	<div id="notification_bar"></div>  
+        <header th:substituteby="layout/partials/header(pageTitle='填写订单',type='normal')" />
+    <div id="checkout_content" class="width_setter group" role="main">
+        <div th:substituteby="${templateName}" />
+    
+    </div>
+
+    <!--<footer th:substituteby="layout/partials/footer" />-->
+    <!--<div th:substituteby="layout/partials/divfootermenu" />-->
+
+    <script th:src="@{/static/js/lib/jquery-1.9.1.js}"></script>
+    <script th:src="@{/static/js/cartUtils.js}"></script>
+    <script th:src="@{/static/js/checkoutOperations.js}"></script>
+	<script th:if="${param.errormsg}" th:inline="javascript">
+		HC.showNotification([[${param.errormsg[0]}]], 7000);
+	</script>
+	<script th:if="${param.error}">
+		HC.showNotification("请选择地址", 4000);
+	</script>
+	<script>
+		$("#codeTip").hide();
+		$("#help").on("click", function(){
+			$("#codeTip").toggle();
+		})
+	</script>
+</body>
+</html>

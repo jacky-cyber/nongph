@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.039.001.02" longName="camt.039.001.02" type="camt.039.001.02">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.039.001.02">
+		<element shortName="Hdr" longName="头信息" type="ReportHeader"/>
+		<element shortName="Case" longName="案例" type="Case"/>
+		<element shortName="Sts" longName="状态" type="CaseStatus2"/>
+		<element shortName="NewAssgnmt" longName="新指派" type="CaseAssignment"/>
+	</type>
+	
+	<type shortName="ReportHeader">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Fr" longName="自" type="AnyBICIdentifier"/>
+		<element shortName="To" longName="至" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+	
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Cretr" longName="创建方" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="案例应答标识" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<!--type shortName="CaseStatus">
+		<element shortName="DtTm" longName="日期时间" type="ISODateTime"/>
+		<element shortName="CaseSts" longName="案例状态" type="CaseStatus1Code">
+			<enumeration shortName="CLOSE" longName="已关闭" />
+			<enumeration shortName="ASGN" longName="已指派" />
+			<enumeration shortName="INVE" longName="正在调查" />
+			<enumeration shortName="UKNW" longName="未知" />
+		</element>
+		<element shortName="InvstgtnSts" longName="调查状态" type="InvestigationExecutionConfirmation1Code">
+			<enumeration shortName="CNCL" longName="请求已取消" />
+			<enumeration shortName="MODI" longName="请求已更改" />
+			<enumeration shortName="ACDA" longName="已接受借方授权" />
+			<enumeration shortName="IPAY" longName="开始支付" />
+			<enumeration shortName="ICOV" longName="CoverInitiated" />
+			<enumeration shortName="MCOV" longName="CoverModified" />
+			<enumeration shortName="IPYI" longName="支付指令已开始" />
+			<enumeration shortName="INFO" longName="附加信息已发出" />
+			<enumeration shortName="CONF" longName="确认支付" />
+			<enumeration shortName="CWFW" longName="即将取消" />
+		</element>
+		<element shortName="Rsn" longName="原因" type="Max140Text"/>
+	</type-->
+	<type shortName="CaseStatus2">
+		<element shortName="DtTm" longName="日期时间" type="ISODateTime"/>
+		<element shortName="CaseSts" longName="案例状态" type="CaseStatus2Code">
+			<enumeration shortName="CLSD" longName="已关闭" />
+			<enumeration shortName="ASGN" longName="已指派" />
+			<enumeration shortName="INVE" longName="正在调查" />
+			<enumeration shortName="UKNW" longName="未知" />
+			<enumeration shortName="ODUE" longName="超期" />
+		</element>
+		<element shortName="Rsn" longName="原因" type="Max140Text"/>
+	</type>
+	<type shortName="CaseStatus2Code"/>
+	
+	<type shortName="InvestigationExecutionConfirmation1Code"/>
+	
+	<type shortName="Max140Text"/>
+	
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="标识" type="Max35Text"/>
+		<element shortName="Assgnr" longName="指派人" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="受派人" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="创建时间" type="ISODateTime"/>
+	</type>
+</names>

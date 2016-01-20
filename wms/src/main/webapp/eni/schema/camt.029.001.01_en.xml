@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<names>
+	<element shortName="Document" longName="Document" type="Document"/>
+	<type shortName="Document">
+		<element shortName="camt.029.001.01" longName="camt.029.001.01" type="camt.029.001.01">
+			<expansion></expansion>
+		</element>
+	</type>
+
+	<type shortName="camt.029.001.01">
+		<element shortName="Assgnmt" longName="Assignment" type="CaseAssignment"/>
+		<element shortName="RslvdCase" longName="Case" type="Case"/>
+		<element shortName="Sts" longName="Sts" type="InvestigationStatusChoice"/>
+		<element shortName="CrrctnTx" longName="CrrctnTx" type="PaymentInstructionExtract"/>
+	</type>
+
+	<type shortName="CaseAssignment">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Assgnr" longName="Assigner" type="AnyBICIdentifier"/>
+		<element shortName="Assgne" longName="Assignee" type="AnyBICIdentifier"/>
+		<element shortName="CreDtTm" longName="CreateDateTime" type="ISODateTime"/>
+	</type>
+	
+	<type shortName="Max35Text"/>
+
+	<type shortName="AnyBICIdentifier"/>
+	
+	<type shortName="ISODateTime"/>
+	
+	<type shortName="Case">
+		<element shortName="Id" longName="Id" type="Max35Text"/>
+		<element shortName="Cretr" longName="Creator" type="AnyBICIdentifier"/>
+		<element shortName="ReopCaseIndctn" longName="ReopCaseIndctn" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="YesNoIndicator"/>
+	
+	<type shortName="InvestigationStatusChoice">
+		<element shortName="Conf" longName="Conf" type="InvestigationExecutionConfirmation1Code">
+			<enumeration shortName="CNCL" longName="CancelledAsPerRequest" />
+			<enumeration shortName="MODI" longName="ModifiedAsPerRequest" />
+			<enumeration shortName="ACDA" longName="AcceptedDebitAuthorisation" />
+			<enumeration shortName="IPAY" longName="PaymentInitiated" />
+			<enumeration shortName="ICOV" longName="CoverInitiated" />
+			<enumeration shortName="MCOV" longName="CoverModified" />
+			<enumeration shortName="IPYI" longName="PaymentInstructionInitiated" />
+			<enumeration shortName="INFO" longName="AdditionalInformationSent" />
+			<enumeration shortName="CONF" longName="ConfirmationOfPayment" />
+			<enumeration shortName="CWFW" longName="CancellationWillFollow" />
+		</element>
+		<element shortName="RjctdMod" longName="RjctdMod" type="PaymentModificationRejection1Code">
+			<enumeration shortName="UM01" longName="UnableToModifyRelatedReference" />
+			<enumeration shortName="UM02" longName="UnableToModifyBankOperationCode" />
+			<enumeration shortName="UM03" longName="UnableToModifyInstructionCode" />
+			<enumeration shortName="UM04" longName="UnableToModifyRequestedExecutionDate" />
+			<enumeration shortName="UM05" longName="UnableToModifyValueDate" />
+			<enumeration shortName="UM06" longName="UnableToModifyInterbankSettlementAccount" />
+			<enumeration shortName="UM07" longName="UnableToModifyDebtor" />
+			<enumeration shortName="UM08" longName="UnableToModifyDebtorAccount" />
+			<enumeration shortName="UM09" longName="UnableToModifyReceiverCorrespondent" />
+			<enumeration shortName="UM10" longName="UnableToModifyThirdReimbursementInstitution" />
+			<enumeration shortName="UM11" longName="UnableToModifyPaymentScheme" />
+			<enumeration shortName="UM12" longName="UnableToModifyAccountofBeneficiaryInstitution" />
+			<enumeration shortName="UM13" longName="UnableToModifyCreditor" />
+			<enumeration shortName="UM14" longName="UnableToModifyCreditorAccount" />
+			<enumeration shortName="UM15" longName="UnableToModifyRemittanceInformation" />
+			<enumeration shortName="UM16" longName="UnableToModifyPaymentPurpose" />
+			<enumeration shortName="UM17" longName="UnableToModifyDetailsOfCharges" />
+			<enumeration shortName="UM18" longName="UnableToModifySenderToReceiverInformation" />
+			<enumeration shortName="UM19" longName="UnableToModifyInstructionForFinalAgent" />
+			<enumeration shortName="UM20" longName="InstructionCancelledSubmitNewInstruction" />
+			<enumeration shortName="UM21" longName="UnableToModifySubmitCancellation" />
+		</element>
+		<element shortName="RjctdCxl" longName="RjctdCxl" type="RejectedCancellationJustification"/>
+		<element shortName="DplctOf" longName="DplctOf" type="Case"/>
+		<element shortName="AssgnmtCxlConf" longName="AssgnmtCxlConf" type="YesNoIndicator"/>
+	</type>
+	
+	<type shortName="InvestigationExecutionConfirmation1Code"/>
+	
+	<type shortName="PaymentModificationRejection1Code"/>
+	
+	<type shortName="RejectedCancellationJustification">
+		<element shortName="RsnCd" longName="RsnCd" type="PaymentCancellationRejection1Code">
+			<enumeration shortName="LEGL" longName="LegalDecision" />
+			<enumeration shortName="AGNT" longName="AgentDecision" />
+			<enumeration shortName="CUST" longName="CustomerDecision" />
+		</element>
+		<element shortName="Rsn" longName="Rsn" type="Max140Text"/>
+	</type>
+	
+	<type shortName="PaymentCancellationRejection1Code"/>
+	
+	<type shortName="Max140Text"/>
+	
+	<type shortName="PaymentInstructionExtract">
+		<element shortName="AssgnrInstrId" longName="AssgnrInstrId" type="Max35Text"/>
+		<element shortName="AssgneInstrId" longName="AssgneInstrId" type="Max35Text"/>
+		<element shortName="CcyAmt" longName="CurrencyAndAmount" type="CurrencyAndAmount"/>
+		<element shortName="ValDt" longName="ValueDate" type="ISODateTime"/>
+		
+	</type>
+	
+	<type shortName="CurrencyAndAmount"/>
+</names>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd" version="2.0">
+	<named-query name="PH_READ_ACTIVE_COUPONS_BY_CUSTOMER_ID">
+		<query>SELECT cp FROM cn.globalph.coupon.domain.CustomerCoupon cp
+		WHERE cp.customer.id = :customerId and cp.status = 'A'
+        ORDER BY cp.id</query>
+	</named-query>
+	
+	<named-query name="PH_READ_CUSTOMER_COUPON_BY_CUSTOMER_ID_AND_COUPON_ID">
+		<query>SELECT cp FROM cn.globalph.coupon.domain.CustomerCoupon cp
+		WHERE cp.customer.id = :customerId and cp.coupon.id = :couponId  and cp.status = 'A'
+        ORDER BY cp.id</query>
+	</named-query>
+</entity-mappings>

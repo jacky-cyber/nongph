@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd" version="2.0">
+
+    <named-query name="BC_READ_PRODUCT_IDS_BY_CATEGORY" >
+        <query>SELECT categoryProduct.product.id FROM cn.globalph.b2c.catalog.domain.CategoryProductXrefImpl categoryProduct
+            WHERE categoryProduct.category.id IN :categoryIds
+            ORDER BY categoryProduct.displayOrder
+        </query>
+    </named-query>
+
+    <named-query name="BC_READ_PRODUCT_IDS_BY_CATEGORY_WITH_ORDER" >
+        <query>SELECT NEW cn.globalph.b2c.search.dao.ProductsByCategoryWithOrder(categoryProduct.product.id, categoryProduct.displayOrder) 
+            FROM cn.globalph.b2c.catalog.domain.CategoryProductXrefImpl categoryProduct
+            WHERE categoryProduct.category.id IN :categoryIds
+            ORDER BY categoryProduct.displayOrder
+        </query>
+    </named-query>
+
+    <named-query name="BC_READ_PARENT_CATEGORY_IDS_BY_PRODUCTS" >
+        <query>SELECT NEW cn.globalph.b2c.search.dao.ParentCategoryByProduct(categoryProduct.category.id, categoryProduct.product.id)
+            FROM cn.globalph.b2c.catalog.domain.CategoryProductXrefImpl categoryProduct
+            WHERE categoryProduct.product.id IN :productIds
+            ORDER BY categoryProduct.product.id
+        </query>
+    </named-query>
+
+    <named-query name="BC_READ_PARENT_CATEGORY_IDS_BY_CATEGORIES" >
+        <query>SELECT NEW cn.globalph.b2c.search.dao.ParentCategoryByCategory(categoryXref.category.id, categoryXref.subCategory.defaultParentCategory.id, categoryXref.subCategory.id)
+            FROM cn.globalph.b2c.catalog.domain.CategoryXrefImpl categoryXref
+            WHERE categoryXref.subCategory.id IN :categoryIds
+            ORDER BY categoryXref.subCategory.id
+        </query>
+    </named-query>
+
+</entity-mappings>
